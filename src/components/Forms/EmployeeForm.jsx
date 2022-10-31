@@ -9,8 +9,7 @@ const EmployeeForm = () => {
   const { setModal } = useContext(ModalContext);
 
   const { success } = message;
-  const [createEmployee, { isSuccess, data: res }] =
-    useCreateEmployeeMutation();
+  const [createEmployee] = useCreateEmployeeMutation();
 
   const onFinish = async (values) => {
     formRef.current?.resetFields();

@@ -10,7 +10,7 @@ import { ContextProvider } from "../Hooks/ContextProvider";
 import { Button } from "antd/lib/radio";
 
 const Assets = () => {
-  const [deleteAsset, { isSuccess, data: res }] = useDeleteAssetMutation();
+  const [deleteAsset] = useDeleteAssetMutation();
 
   const query = {
     populate: "employee",
@@ -20,7 +20,7 @@ const Assets = () => {
     deleteAsset(id);
   };
 
-  const { data, error, isLoading } = useGetAssetsQuery(query);
+  const { data, isLoading } = useGetAssetsQuery(query);
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;

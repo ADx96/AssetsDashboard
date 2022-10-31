@@ -7,7 +7,7 @@ import { useGetEmployeesQuery } from "../../Redux/Api/EmployeesApi";
 const AssetsForm = () => {
   const { Option } = Select;
 
-  const { data: resp, error, isLoading } = useGetEmployeesQuery();
+  const { data: resp, isLoading } = useGetEmployeesQuery();
 
   const onSearch = (value) => {
     console.log("search:", value);
@@ -16,7 +16,7 @@ const AssetsForm = () => {
   const { setModal } = useContext(ModalContext);
 
   const { success } = message;
-  const [createAsset, { isSuccess, data: res }] = useCreateAssetMutation();
+  const [createAsset] = useCreateAssetMutation();
 
   const onFinish = async (values) => {
     formRef.current?.resetFields();

@@ -9,9 +9,9 @@ import {
 } from "../Redux/Api/EmployeesApi";
 
 const Employees = () => {
-  const [deleteAsset, { isSuccess, data: res }] = useDeleteEmployeeMutation();
+  const [deleteAsset] = useDeleteEmployeeMutation();
 
-  const { data, error, isLoading } = useGetEmployeesQuery();
+  const { data, isLoading } = useGetEmployeesQuery();
   const ApiData = data?.data.map((data) => {
     return data.attributes;
   });
