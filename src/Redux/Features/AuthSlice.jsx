@@ -13,8 +13,8 @@ export const authSlice = createSlice({
     setUser: (state, action) => {
       const { user, token } = action.payload;
       const { exp } = jwt_decode(token);
-      localStorage.setItem("token", JSON.stringify(token));
-      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("token", token);
+      localStorage.setItem("user", user);
       state.user = user;
       state.token = token;
       state.exp = exp;
