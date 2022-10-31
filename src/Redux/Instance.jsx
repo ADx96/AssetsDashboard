@@ -1,3 +1,3 @@
-const Instance = "http://localhost:1337/api";
+const Instance = "https://ku-assets-api.herokuapp.com/api";
 
 export default Instance;
