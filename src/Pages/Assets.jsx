@@ -24,7 +24,7 @@ const Assets = () => {
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;
-    const employee = data.attributes.employee.data.attributes;
+    const employee = data.attributes.employee.data?.attributes;
     return { id, ...attributes, ...employee };
   });
 
@@ -94,7 +94,9 @@ const Assets = () => {
   return (
     <ContextProvider>
       <AddModal title={"اضافة بيانات العهدة"} children={<AssetsForm />} />
-      <DataTable data={ApiData} columns={columns} />
+      <div style={{ overflow: "auto" }}>
+        <DataTable data={ApiData} columns={columns} />
+      </div>
     </ContextProvider>
   );
 };

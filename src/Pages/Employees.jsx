@@ -13,7 +13,8 @@ const Employees = () => {
 
   const { data, isLoading } = useGetEmployeesQuery();
   const ApiData = data?.data.map((data) => {
-    return data.attributes;
+    const id = data.id;
+    return { id, ...data.attributes };
   });
 
   const handleDelete = async (id) => {
@@ -38,8 +39,8 @@ const Employees = () => {
     },
     {
       title: "Action",
-      dataIndex: "",
-      key: "x",
+      dataIndex: "id",
+      key: "id",
       render: (id) => <Button onClick={() => handleDelete(id)}>Delete</Button>,
     },
   ];
@@ -49,7 +50,9 @@ const Employees = () => {
   return (
     <ContextProvider>
       <AddModal title={"اضافة موظف "} children={<EmployeeForm />} />
-      <DataTable columns={columns} data={ApiData} />
+      <div style={{ overflow: "auto" }}>
+        <DataTable columns={columns} data={ApiData} />
+      </div>
     </ContextProvider>
   );
 };

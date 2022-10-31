@@ -30,10 +30,13 @@ export const EmployeesApi = createAppApi({
       invalidatesTags: ["Employees"],
     }),
     deleteEmployee: builder.mutation({
-      query: (id) => ({
-        url: `/employees/${id}`,
-        method: "DELETE",
-      }),
+      query: (id) => (
+        console.log(id),
+        {
+          url: `/employees/${id}`,
+          method: "DELETE",
+        }
+      ),
       invalidatesTags: ["Employees"],
     }),
   }),
