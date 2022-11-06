@@ -12,7 +12,6 @@ const LoginForms = () => {
   const dispatch = useAppDispatch();
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
       navigate("/Dashboard");
       dispatch(setUser({ token: data.jwt, user: data.user }));
     }
@@ -50,12 +49,12 @@ const LoginForms = () => {
       <Form.Item
         name="remember"
         valuePropName="checked"
-        wrapperCol={{ offset: 8, span: 16 }}
+        wrapperCol={{ offset: 2, span: 16 }}
       >
-        <Checkbox>Remember me</Checkbox>
+        <Checkbox style={{ color: "white" }}>Remember me</Checkbox>
       </Form.Item>
 
-      <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
+      <Form.Item wrapperCol={{ offset: 1, span: 16 }}>
         <Button type="primary" htmlType="submit">
           Submit
         </Button>

@@ -1,34 +1,56 @@
 import React from "react";
 import LoginForms from "../components/Forms/LoginForms";
 import "../styles/LoginStyles.css";
+import { Col, Row } from "antd";
 
 const Login = () => {
   return (
-    <div className="main-wrapper">
-      <div className="LoginContainer eq">
-        <div className="card info col">
-          <div className="logo animated">
-            <img className="login-logo" alt="" src="/images/logo.png" />
-          </div>
+    <>
+      <Row>
+        <Col className="main-container" span={17}>
+          <div className="bg-card">
+            <div className="form-container">
+              <div className="form-title">
+                <h1
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    lineHeight: "7px",
+                    fontFamily: "sans-serif",
+                    fontSize: "40px",
+                  }}
+                >
+                  Kuwait University
+                </h1>
+                <h1
+                  style={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontFamily: "sans-serif",
+                    textAlign: "right",
+                    right: "30px",
+                    position: "relative",
+                    fontSize: "50px",
+                  }}
+                >
+                  جامعة الكويت
+                </h1>
+              </div>
 
-          <h1 className="title animated" style={{ color: "white" }}>
-            العهد
-          </h1>
-          <p className="para animated">
-            We have a sprawling 10 acre campus with vast open spaces. The
-            existing infrastructure has been further enhanced in January 2014 by
-            University.
-          </p>
-          <p className="copy animated">&copy; Alsharia</p>
-        </div>
-        <div className="card col">
-          <h1 className="title animated">Login</h1>
-          <div style={{ width: "70%", margin: "auto", paddingTop: "30px" }}>
-            <LoginForms />
+              <LoginForms />
+            </div>
+            <div className="bg-img-hold">
+              <img src="/images/bg.png" alt="bg-card" />
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
+        </Col>
+        <Col span={6}>
+          <div className="bg-card-right">
+            <img src="/images/logo2.png" alt="" />
+          </div>
+        </Col>
+      </Row>
+    </>
   );
 };
 

@@ -13,7 +13,7 @@ const AssetsForm = () => {
     console.log("search:", value);
   };
   const formRef = createRef();
-  const { setModal } = useContext(ModalContext);
+  const { setModal, isSuccess } = useContext(ModalContext);
 
   const { success } = message;
   const [createAsset] = useCreateAssetMutation();
@@ -23,7 +23,7 @@ const AssetsForm = () => {
     const data = { data: values };
     await createAsset(data);
     setModal(false);
-    success("تم الاضافة بنجاح");
+    if (isSuccess) success("تم الاضافة بنجاح");
   };
 
   return (
