@@ -33,6 +33,7 @@ const Employees = () => {
     try {
       const row = await form.validateFields();
       const newData = { ...ApiData };
+      // const index = newData.find((item) => key === item.id);
 
       newData.push(...row);
       setEditingKey("");
