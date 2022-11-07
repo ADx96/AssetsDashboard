@@ -7,7 +7,7 @@ export const EmployeesApi = createAppApi({
     getEmployees: builder.query({
       query: (data) => ({
         url: "/employees",
-        params: data,
+        params: new URLSearchParams(data),
         keepUnusedDataFor: 60,
       }),
 

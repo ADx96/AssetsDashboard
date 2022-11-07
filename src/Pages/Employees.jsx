@@ -9,14 +9,26 @@ import {
   useDeleteEmployeeMutation,
   useGetEmployeesQuery,
 } from "../Redux/Api/EmployeesApi";
+import qs from "qs";
 
 const Employees = () => {
   const [form] = Form.useForm();
+  const query = qs.stringify(
+    {
+      pagination: {
+        page: 1,
+        pageSize: 50,
+      },
+    },
+    {
+      encodeValuesOnly: true, // prettify URL
+    }
+  );
   const { success } = message;
   const [deleteEmployee] = useDeleteEmployeeMutation();
   const [editingKey, setEditingKey] = useState("");
   const isEditing = (record) => record.id === editingKey;
-  const { data, isLoading } = useGetEmployeesQuery();
+  const { data, isLoading } = useGetEmployeesQuery(query);
 
   const ApiData = data?.data.map((data) => {
     const id = data.id;
@@ -25,7 +37,6 @@ const Employees = () => {
 
   const handleDelete = async (id) => {
     deleteEmployee(id);
-    console.log(id);
     success("تم الحذف بنجاح");
   };
 
