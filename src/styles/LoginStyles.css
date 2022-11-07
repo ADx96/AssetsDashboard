@@ -59,7 +59,7 @@
 }
 
 .form-container {
-  width: 50%;
+  width: 60%;
   padding-top: 15%;
   position: relative;
   left: 60px;
@@ -75,7 +75,7 @@
     transform: translate(0, 0);
     background-color: rgba(99, 188, 220, 255);
     text-align: center;
-    z-index: -10;
+    z-index: 999;
     height: 130vh;
     background-color: rgba(99, 188, 220, 255);
     border-radius: 5px;
@@ -121,7 +121,7 @@
   .form-container {
     width: 80%;
     padding-top: 1rem;
-    z-index: 9999;
+    z-index: 999;
   }
 
   .bg-img-hold {

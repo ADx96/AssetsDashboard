@@ -25,6 +25,7 @@ const Employees = () => {
 
   const handleDelete = async (id) => {
     deleteEmployee(id);
+    console.log(id);
     success("تم الحذف بنجاح");
   };
 
