@@ -5,11 +5,24 @@ import {
   useDeleteAssetMutation,
   useGetAssetsQuery,
 } from "../Redux/Api/AssetsApi";
-import qs from "qs";
 import { ContextProvider } from "../Hooks/ContextProvider";
 import { Space, Button, message, Popconfirm, Form } from "antd";
 import { EditableCell } from "../components/Forms/Editable";
 import { useState } from "react";
+import qs from "qs";
+
+const query = qs.stringify(
+  {
+    populate: "employee",
+    pagination: {
+      page: 1,
+      pageSize: 50,
+    },
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 
 const Assets = () => {
   const [form] = Form.useForm();
@@ -17,17 +30,6 @@ const Assets = () => {
   const { success } = message;
   const [editingKey, setEditingKey] = useState("");
   const isEditing = (record) => record.id === editingKey;
-  const query = qs.stringify(
-    {
-      pagination: {
-        page: 1,
-        pageSize: 60,
-      },
-    },
-    {
-      encodeValuesOnly: true, // prettify URL
-    }
-  );
   const { data, isLoading } = useGetAssetsQuery(query);
 
   const ApiData = data?.data.map((data) => {
