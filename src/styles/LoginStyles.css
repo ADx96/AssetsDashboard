@@ -1,32 +1,51 @@
 .bg-card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.066);
   transition: 0.3s;
-  transform: translate(15px, 55px);
   width: 100%;
-  height: 85vh;
+  height: 100vh;
   text-align: right;
   background-color: #0f6fc6;
   border-radius: 5px;
 }
 
+.logo-mobile {
+  display: none;
+}
+.en-heading {
+  color: white;
+  font-weight: bold;
+  line-height: 7px;
+  font-family: sans-serif;
+  font-size: 40px;
+}
+
+.ar-heading {
+  color: white;
+  font-weight: bold;
+  font-family: sans-serif;
+  text-align: right;
+  font-size: 50px;
+  right: 30px;
+  position: relative;
+}
 .bg-card-right {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.066);
   transition: 0.3s;
   width: 100%;
-  transform: translate(30px, 55px);
+  transform: translate(8px, 0px);
   position: relative;
   background-color: rgba(99, 188, 220, 255);
   text-align: -webkit-right;
   text-align: right;
   z-index: -10;
-  height: 85vh;
+  height: 100vh;
   border-radius: 5px;
 }
 .bg-img-hold {
   display: block;
   position: relative;
   left: 30%;
-  top: -31%;
+  top: -14%;
 }
 
 .main-container {
@@ -49,4 +68,66 @@
 
 .form-title {
   position: relative;
+}
+
+@media (max-width: 768px) {
+  .bg-card {
+    transform: translate(0, 0);
+    background-color: rgba(99, 188, 220, 255);
+    text-align: center;
+    z-index: -10;
+    height: 130vh;
+    background-color: rgba(99, 188, 220, 255);
+    border-radius: 5px;
+  }
+  .bg-img-hold {
+    display: block;
+    position: relative;
+    left: 0;
+    text-align: center;
+    top: 0;
+  }
+  .logo-mobile {
+    display: inline;
+  }
+
+  .bg-img-hold img {
+    width: 88%;
+    position: relative;
+  }
+
+  .en-heading {
+    color: white;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 40px;
+  }
+
+  .ar-heading {
+    color: white;
+    font-weight: bold;
+    font-family: sans-serif;
+    text-align: center;
+    font-size: 50px;
+    right: 0;
+    position: relative;
+  }
+
+  .bg-card-right {
+    display: none;
+  }
+
+  .form-container {
+    width: 80%;
+    padding-top: 1rem;
+    z-index: 9999;
+  }
+
+  .bg-img-hold {
+    display: block;
+    position: relative;
+    left: 0;
+    top: 0;
+  }
 }

@@ -13,7 +13,7 @@ import {
 const Employees = () => {
   const [form] = Form.useForm();
   const { success } = message;
-  const [deleteAsset] = useDeleteEmployeeMutation();
+  const [deleteEmployee] = useDeleteEmployeeMutation();
   const [editingKey, setEditingKey] = useState("");
   const isEditing = (record) => record.id === editingKey;
   const { data, isLoading } = useGetEmployeesQuery();
@@ -24,7 +24,7 @@ const Employees = () => {
   });
 
   const handleDelete = async (id) => {
-    deleteAsset(id);
+    deleteEmployee(id);
     success("تم الحذف بنجاح");
   };
 
@@ -35,7 +35,6 @@ const Employees = () => {
       const index = newData.find((item) => key === item.id);
 
       newData.push(...row);
-      console.log(newData, index);
       setEditingKey("");
     } catch (errInfo) {
       console.log("Validate Failed:", errInfo);

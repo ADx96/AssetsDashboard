@@ -7,34 +7,13 @@ const Login = () => {
   return (
     <>
       <Row>
-        <Col className="main-container" span={17}>
+        <Col className="main-container" md={{ span: 16 }}>
           <div className="bg-card">
             <div className="form-container">
               <div className="form-title">
-                <h1
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    lineHeight: "7px",
-                    fontFamily: "sans-serif",
-                    fontSize: "40px",
-                  }}
-                >
-                  Kuwait University
-                </h1>
-                <h1
-                  style={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontFamily: "sans-serif",
-                    textAlign: "right",
-                    right: "30px",
-                    position: "relative",
-                    fontSize: "50px",
-                  }}
-                >
-                  جامعة الكويت
-                </h1>
+                <img className="logo-mobile" src="/images/logo2.png" alt="" />
+                <h1 className="en-heading">Kuwait University</h1>
+                <h1 className="ar-heading">جامعة الكويت</h1>
               </div>
 
               <LoginForms />
@@ -44,7 +23,7 @@ const Login = () => {
             </div>
           </div>
         </Col>
-        <Col span={6}>
+        <Col xs={{ span: 20 }} md={{ span: 8 }}>
           <div className="bg-card-right">
             <img src="/images/logo2.png" alt="" />
           </div>
