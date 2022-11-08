@@ -8,7 +8,7 @@ const query = {
 const LatestAssets = () => {
   const { data, isLoading } = useGetAssetsQuery(query);
 
-  const ApiData = data?.data.slice(0, 5).map((data) => {
+  const ApiData = data?.data.slice(-5).map((data) => {
     const id = data.id;
     const { attributes } = data;
     const employee = data.attributes.employee.data?.attributes;

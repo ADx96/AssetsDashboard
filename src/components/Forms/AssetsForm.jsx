@@ -13,10 +13,10 @@ const AssetsForm = () => {
     console.log("search:", value);
   };
   const formRef = createRef();
-  const { setModal, isSuccess } = useContext(ModalContext);
+  const { setModal } = useContext(ModalContext);
 
   const { success } = message;
-  const [createAsset] = useCreateAssetMutation();
+  const [createAsset, isSuccess] = useCreateAssetMutation();
 
   const onFinish = async (values) => {
     formRef.current?.resetFields();

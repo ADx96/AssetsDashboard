@@ -13,21 +13,22 @@ import qs from "qs";
 
 const Employees = () => {
   const [form] = Form.useForm();
+  const { success } = message;
+  const [deleteEmployee] = useDeleteEmployeeMutation();
+  const [editingKey, setEditingKey] = useState("");
+  const [currentPage, setCurrentPage] = useState();
+  const isEditing = (record) => record.id === editingKey;
   const query = qs.stringify(
     {
       pagination: {
-        page: 1,
-        pageSize: 50,
+        page: currentPage,
+        pageSize: 10,
       },
     },
     {
       encodeValuesOnly: true, // prettify URL
     }
   );
-  const { success } = message;
-  const [deleteEmployee] = useDeleteEmployeeMutation();
-  const [editingKey, setEditingKey] = useState("");
-  const isEditing = (record) => record.id === editingKey;
   const { data, isLoading } = useGetEmployeesQuery(query);
 
   const ApiData = data?.data.map((data) => {
@@ -135,6 +136,9 @@ const Employees = () => {
     },
   ];
 
+  const total = data?.meta.pagination.total;
+  const PageSize = data?.meta.pagination.pageSize;
+
   if (isLoading) {
     return <h1>loading</h1>;
   }
@@ -168,6 +172,9 @@ const Employees = () => {
             },
           }}
           data={ApiData}
+          total={total}
+          PageSize={PageSize}
+          setCurrentPage={setCurrentPage}
         />
       </div>
     </ContextProvider>

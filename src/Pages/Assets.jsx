@@ -11,27 +11,27 @@ import { EditableCell } from "../components/Forms/Editable";
 import { useState } from "react";
 import qs from "qs";
 
-const query = qs.stringify(
-  {
-    populate: "employee",
-    pagination: {
-      page: 1,
-      pageSize: 50,
-    },
-  },
-  {
-    encodeValuesOnly: true, // prettify URL
-  }
-);
-
 const Assets = () => {
   const [form] = Form.useForm();
   const [deleteAsset] = useDeleteAssetMutation();
   const { success } = message;
+  const [currentPage, setCurrentPage] = useState();
   const [editingKey, setEditingKey] = useState("");
   const isEditing = (record) => record.id === editingKey;
-  const { data, isLoading } = useGetAssetsQuery(query);
+  const query = qs.stringify(
+    {
+      populate: "employee",
+      pagination: {
+        page: currentPage,
+        pageSize: 10,
+      },
+    },
+    {
+      encodeValuesOnly: true, // prettify URL
+    }
+  );
 
+  const { data, isLoading } = useGetAssetsQuery(query);
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;
@@ -182,6 +182,9 @@ const Assets = () => {
     };
   });
 
+  const total = data?.meta.pagination.total;
+  const PageSize = data?.meta.pagination.pageSize;
+
   if (isLoading) {
     return <h1>loading</h1>;
   }
@@ -192,7 +195,10 @@ const Assets = () => {
       <div style={{ overflow: "auto" }}>
         <Form form={form} component={false}>
           <DataTable
+            total={total}
+            PageSize={PageSize}
             data={ApiData}
+            setCurrentPage={setCurrentPage}
             components={{
               body: {
                 cell: EditableCell,
