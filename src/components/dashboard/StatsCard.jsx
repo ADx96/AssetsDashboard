@@ -19,7 +19,9 @@ export const StatsCard = () => {
               <h3>
                 <b>Total Assets</b>
               </h3>
-              <p style={{ fontSize: "20px" }}>{assets?.data.length}</p>
+              <p style={{ fontSize: "20px" }}>
+                {assets?.meta.pagination.total}
+              </p>
             </div>
           </div>
         </Col>
@@ -31,7 +33,9 @@ export const StatsCard = () => {
               <h3>
                 <b>Total Employees</b>
               </h3>
-              <p style={{ fontSize: "20px" }}>{employees?.data.length}</p>
+              <p style={{ fontSize: "20px" }}>
+                {employees?.meta.pagination.total}
+              </p>
             </div>
           </div>
         </Col>
