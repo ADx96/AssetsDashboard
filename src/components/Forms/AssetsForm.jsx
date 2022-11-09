@@ -3,11 +3,22 @@ import { Col, Row, Form, Space, Button, Select, Input, message } from "antd";
 import ModalContext from "../../Hooks/ContextProvider";
 import { useCreateAssetMutation } from "../../Redux/Api/AssetsApi";
 import { useGetEmployeesQuery } from "../../Redux/Api/EmployeesApi";
+import qs from "qs";
 
 const AssetsForm = () => {
   const { Option } = Select;
+  const query = qs.stringify(
+    {
+      pagination: {
+        pageSize: 100,
+      },
+    },
+    {
+      encodeValuesOnly: true, // prettify URL
+    }
+  );
 
-  const { data: resp, isLoading } = useGetEmployeesQuery();
+  const { data: resp, isLoading } = useGetEmployeesQuery(query);
 
   const onSearch = (value) => {
     console.log("search:", value);
