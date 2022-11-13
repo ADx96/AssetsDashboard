@@ -5,7 +5,7 @@ import { useGetCancelRequestsQuery } from "../../Redux/Api/RequestApi";
 const query = {
   populate: "employee",
 };
-const CancelRequests = () => {
+const MoveRequests = () => {
   const { data, isLoading } = useGetCancelRequestsQuery(query);
 
   const ApiData = data?.data.map((data) => {
@@ -22,6 +22,11 @@ const CancelRequests = () => {
       title: "Employee I.D",
       dataIndex: "EmployeeId",
       key: "EmployeeId",
+    },
+    {
+      title: "Reason",
+      dataIndex: "Reason",
+      key: "Reason",
     },
     {
       title: "SERIAL NUMBER",
@@ -44,4 +49,4 @@ const CancelRequests = () => {
   );
 };
 
-export default CancelRequests;
+export default MoveRequests;

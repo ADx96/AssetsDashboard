@@ -4,9 +4,10 @@ import AssetsForm from "../components/Forms/AssetsForm";
 import {
   useDeleteAssetMutation,
   useGetAssetsQuery,
+  useUpdateAssetMutation,
 } from "../Redux/Api/AssetsApi";
 import { ContextProvider } from "../Hooks/ContextProvider";
-import { Space, Button, message, Popconfirm, Form } from "antd";
+import { Space, Button, message, Popconfirm, Form, Input } from "antd";
 import { EditableCell } from "../components/Forms/Editable";
 import { useState } from "react";
 import qs from "qs";
@@ -14,6 +15,11 @@ import qs from "qs";
 const Assets = () => {
   const [form] = Form.useForm();
   const [deleteAsset] = useDeleteAssetMutation();
+  const [updateAsset] = useUpdateAssetMutation();
+  const [search, setSearch] = useState(null);
+  const reg = new RegExp(/^[0-9]+$/);
+
+  const { Search } = Input;
   const { success } = message;
   const [currentPage, setCurrentPage] = useState();
   const [editingKey, setEditingKey] = useState("");
@@ -21,6 +27,16 @@ const Assets = () => {
   const query = qs.stringify(
     {
       populate: "employee",
+      filters: {
+        employee: {
+          Name: {
+            $contains: !reg.test(search) ? search : "",
+          },
+          EmployeeId: {
+            $contains: reg.test(search) ? search : "",
+          },
+        },
+      },
       pagination: {
         page: currentPage,
         pageSize: 10,
@@ -44,9 +60,25 @@ const Assets = () => {
     success("تم الحذف بنجاح");
   };
 
-  const save = async (key) => {};
+  const save = async (key) => {
+    const row = await form.validateFields();
+    const NewData = { row, editingKey };
+    success("تم التعديل بنجاح");
+    updateAsset(NewData);
+    success("تم التعديل بنجاح");
+    setEditingKey("");
+  };
 
   const edit = (record) => {
+    form.setFieldsValue({
+      ItemName: record.ItemName,
+      Serial: record.Serial,
+      Specs: record.Specs,
+      os: record.os,
+      Building: record.Building,
+      Floor: record.Floor,
+      Office: record.Office,
+    });
     setEditingKey(record.id);
   };
   const cancel = () => {
@@ -58,13 +90,11 @@ const Assets = () => {
       title: "Employee Name",
       dataIndex: "Name",
       key: "Name",
-      editable: true,
     },
     {
       title: "Employee I.D",
       dataIndex: "EmployeeId",
       key: "EmployeeId",
-      editable: true,
     },
     {
       title: "SERIAL NUMBER",
@@ -112,7 +142,6 @@ const Assets = () => {
       title: "Add Date",
       dataIndex: "createdAt",
       key: "createdAt",
-      editable: true,
     },
     {
       title: "Action",
@@ -193,20 +222,26 @@ const Assets = () => {
     <ContextProvider>
       <AddModal title={"اضافة بيانات العهدة"} children={<AssetsForm />} />
       <div style={{ overflow: "auto" }}>
-        <Form form={form} component={false}>
-          <DataTable
-            total={total}
-            PageSize={PageSize}
-            data={ApiData}
-            setCurrentPage={setCurrentPage}
-            components={{
-              body: {
-                cell: EditableCell,
-              },
-            }}
-            columns={mergedColumns}
-          />
-        </Form>
+        <Search
+          style={{ width: "40%" }}
+          placeholder="Search By Employee Id And name"
+          onSearch={(value) => {
+            setSearch(value);
+          }}
+        />
+        <DataTable
+          total={total}
+          form={form}
+          PageSize={PageSize}
+          data={ApiData}
+          setCurrentPage={setCurrentPage}
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          columns={mergedColumns}
+        />
       </div>
     </ContextProvider>
   );

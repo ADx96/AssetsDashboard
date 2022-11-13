@@ -22,10 +22,10 @@ export const AssetsApi = createAppApi({
       invalidatesTags: ["Assets"],
     }),
     updateAsset: builder.mutation({
-      query: (data) => ({
-        url: `/assets/${data.id}`,
-        method: "UPDATE",
-        body: data,
+      query: (Update) => ({
+        url: `/assets/${Update.id}`,
+        method: "PUT",
+        body: { data: { ...Update.row } },
       }),
       invalidatesTags: ["Assets"],
     }),

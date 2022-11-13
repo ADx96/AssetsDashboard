@@ -12,6 +12,7 @@ import Employees from "../Pages/Employees";
 import Assets from "../Pages/Assets";
 import PrivateRoutes from "./PrivateRoutes";
 import { Requests } from "../Pages/Requests";
+import Reports from "../Pages/Reports";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -27,9 +28,11 @@ const router = createBrowserRouter(
         }
       >
         <Route path="/dashboard" exact element={<Dashboard />} />
+        <Route path="/dashboard" exact element={<Dashboard />} />
         <Route path="/employees" element={<Employees />} />
         <Route path="/assets" element={<Assets />} />
         <Route path="/requests" element={<Requests />} />
+        <Route path="/Reports" element={<Reports />} />
       </Route>
     </Route>
   )

@@ -11,7 +11,16 @@ export const RequestsApi = createAppApi({
         keepUnusedDataFor: 60,
       }),
 
-      providesTags: ["Requests"],
+      providesTags: ["Cancel-Requests"],
+    }),
+    getMoveRequests: builder.query({
+      query: (data) => ({
+        url: "/move-requests",
+        params: data,
+        keepUnusedDataFor: 60,
+      }),
+
+      providesTags: ["Move-Requests"],
     }),
   }),
 });

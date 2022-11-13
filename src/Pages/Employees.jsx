@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Space, Form, message } from "antd";
+import { Button, Popconfirm, Space, Form, message, Input } from "antd";
 import { useState } from "react";
 import AddModal from "../components/AddModal";
 import DataTable from "../components/DataTable";
@@ -8,18 +8,31 @@ import { ContextProvider } from "../Hooks/ContextProvider";
 import {
   useDeleteEmployeeMutation,
   useGetEmployeesQuery,
+  useUpdateEmployeeMutation,
 } from "../Redux/Api/EmployeesApi";
 import qs from "qs";
 
 const Employees = () => {
   const [form] = Form.useForm();
   const { success } = message;
+  const { Search } = Input;
+  const [search, setSearch] = useState(null);
   const [deleteEmployee] = useDeleteEmployeeMutation();
+  const [updateEmployee] = useUpdateEmployeeMutation();
+  const reg = new RegExp(/^[0-9]+$/);
   const [editingKey, setEditingKey] = useState("");
   const [currentPage, setCurrentPage] = useState();
   const isEditing = (record) => record.id === editingKey;
   const query = qs.stringify(
     {
+      filters: {
+        Name: {
+          $contains: !reg.test(search) ? search : "",
+        },
+        EmployeeId: {
+          $contains: reg.test(search) ? search : "",
+        },
+      },
       pagination: {
         page: currentPage,
         pageSize: 10,
@@ -42,23 +55,17 @@ const Employees = () => {
   };
 
   const save = async (key) => {
-    try {
-      const row = await form.validateFields();
-      const newData = { ...ApiData };
-      // const index = newData.find((item) => key === item.id);
-
-      newData.push(...row);
-      setEditingKey("");
-    } catch (errInfo) {
-      return errInfo;
-    }
+    const row = await form.validateFields();
+    const NewData = { row, editingKey };
+    success("تم التعديل بنجاح");
+    updateEmployee(NewData);
+    setEditingKey("");
   };
 
   const edit = (record) => {
     form.setFieldsValue({
-      Employee: record.Employee,
-      dataIndex: record.dataIndex,
-      ...record,
+      EmployeeId: record.EmployeeId,
+      Name: record.Name,
     });
     setEditingKey(record.id);
   };
@@ -163,7 +170,15 @@ const Employees = () => {
     <ContextProvider>
       <AddModal title={"اضافة موظف "} children={<EmployeeForm />} />
       <div style={{ overflow: "auto" }}>
+        <Search
+          style={{ width: "40%" }}
+          placeholder="Search By Employee Id And name"
+          onSearch={(value) => {
+            setSearch(value);
+          }}
+        />
         <DataTable
+          form={form}
           columns={mergedColumns}
           key="id"
           components={{

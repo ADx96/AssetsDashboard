@@ -2,6 +2,7 @@ import {
   PieChartOutlined,
   UserOutlined,
   TagsOutlined,
+  AreaChartOutlined,
   PullRequestOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, Card, Divider, Button } from "antd";
@@ -27,6 +28,7 @@ const items = [
   getItem("Employees", "Employees", <UserOutlined />),
   getItem("Assets", "Assets", <TagsOutlined />),
   getItem("Requests", "Requests", <PullRequestOutlined />),
+  getItem("Reports", "Reports", <AreaChartOutlined />),
 ];
 
 const DashboardLayout = () => {
@@ -54,6 +56,9 @@ const DashboardLayout = () => {
         break;
       case "Requests":
         path = "/Requests";
+        break;
+      case "Reports":
+        path = "/Reports";
         break;
       default:
     }

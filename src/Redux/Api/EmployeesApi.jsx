@@ -7,7 +7,16 @@ export const EmployeesApi = createAppApi({
     getEmployees: builder.query({
       query: (data) => ({
         url: "/employees",
-        params: new URLSearchParams(data),
+        params: data,
+        keepUnusedDataFor: 60,
+      }),
+
+      providesTags: ["Employees"],
+    }),
+    getEmployeeById: builder.query({
+      query: (data) => ({
+        url: `/employees/${data.id}`,
+        params: data,
         keepUnusedDataFor: 60,
       }),
 
@@ -22,10 +31,10 @@ export const EmployeesApi = createAppApi({
       invalidatesTags: ["Employees"],
     }),
     updateEmployee: builder.mutation({
-      query: (data) => ({
-        url: `/employees/${data.id}`,
-        method: "UPDATE",
-        body: data,
+      query: (Update) => ({
+        url: `/employees/${Update.editingKey}`,
+        method: "PUT",
+        body: { data: { ...Update.row } },
       }),
       invalidatesTags: ["Employees"],
     }),
@@ -41,6 +50,7 @@ export const EmployeesApi = createAppApi({
 
 export const {
   useGetEmployeesQuery,
+  useGetEmployeeByIdQuery,
   useCreateEmployeeMutation,
   useUpdateEmployeeMutation,
   useDeleteEmployeeMutation,

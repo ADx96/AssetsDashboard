@@ -20,9 +20,6 @@ const AssetsForm = () => {
 
   const { data: resp, isLoading } = useGetEmployeesQuery(query);
 
-  const onSearch = (value) => {
-    console.log("search:", value);
-  };
   const formRef = createRef();
   const { setModal } = useContext(ModalContext);
 
@@ -110,7 +107,6 @@ const AssetsForm = () => {
                 showSearch
                 placeholder="Select a person"
                 optionFilterProp="children"
-                onSearch={onSearch}
                 filterOption={(input, option) =>
                   option.children.toLowerCase().includes(input.toLowerCase())
                 }
