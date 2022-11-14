@@ -10,7 +10,7 @@ const AssetsForm = () => {
   const query = qs.stringify(
     {
       pagination: {
-        pageSize: 100,
+        pageSize: 600,
       },
     },
     {

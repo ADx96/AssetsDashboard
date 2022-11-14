@@ -1,8 +1,8 @@
-import { Table } from "antd";
+import { Table, Button } from "antd";
 import React from "react";
 import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 
-const ReportsTable = ({ query }) => {
+const ReportsTable = ({ query, setValues }) => {
   const { data, isLoading } = useGetAssetsQuery(query);
 
   const ApiData = data?.data.map((data) => {
@@ -18,40 +18,47 @@ const ReportsTable = ({ query }) => {
       title: "SERIAL NUMBER",
       dataIndex: "Serial",
       key: "Serial",
+      align: "center",
     },
     {
       title: "ITEM",
       dataIndex: "ItemName",
       key: "ItemName",
+      align: "center",
     },
     {
       title: "SPECIFICATION",
       dataIndex: "Specs",
       key: "Specs",
       editable: true,
+      align: "center",
     },
     {
       title: "OS",
       dataIndex: "os",
       key: "os",
       editable: true,
+      align: "center",
     },
     {
       title: "BUILDING",
       dataIndex: "Building",
       key: "Building",
       editable: true,
+      align: "center",
     },
     {
       title: "FlOOR",
       dataIndex: "Floor",
       key: "Floor",
       editable: true,
+      align: "center",
     },
     {
       title: "OFFICE",
       dataIndex: "Office",
       key: "Office",
+      align: "center",
       editable: true,
     },
 
@@ -59,6 +66,7 @@ const ReportsTable = ({ query }) => {
       title: "Add Date",
       dataIndex: "createdAt",
       key: "createdAt",
+      align: "center",
     },
   ];
 
@@ -72,8 +80,21 @@ const ReportsTable = ({ query }) => {
   const Id = ApiData[0].employee.data.attributes.EmployeeId;
   return (
     <>
-      <h2>Name:{Name} </h2>
-      <h2>Employee ID: {Id}</h2>
+      <div style={{ textAlign: "center" }}>
+        <Button
+          onClick={() => setValues("")}
+          style={{ borderRadius: "5px", width: "150px" }}
+          type="primary"
+          htmlType="submit"
+          size={"large"}
+        >
+          رجوع
+        </Button>
+      </div>
+      <div style={{ textAlign: "right" }}>
+        <h2>الاسم: {Name}</h2>
+        <h2>الرقم الوظيفي: {Id}</h2>
+      </div>
 
       <Table
         rowClassName={() => "editable-row"}

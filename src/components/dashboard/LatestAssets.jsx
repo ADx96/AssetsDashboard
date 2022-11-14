@@ -19,27 +19,32 @@ const LatestAssets = () => {
     {
       title: "Employee Name",
       dataIndex: "Name",
+      align: "center",
       key: "Name",
     },
     {
       title: "Employee I.D",
       dataIndex: "EmployeeId",
       key: "EmployeeId",
+      align: "center",
     },
     {
       title: "SERIAL NUMBER",
       dataIndex: "Serial",
+      align: "center",
       key: "Serial",
     },
     {
       title: "ITEM",
       dataIndex: "ItemName",
+      align: "center",
       key: "ItemName",
     },
 
     {
       title: "Add Date",
       dataIndex: "createdAt",
+      align: "center",
       key: "createdAt",
     },
   ];

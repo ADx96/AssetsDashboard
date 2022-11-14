@@ -78,30 +78,35 @@ const Employees = () => {
       title: "Employee Name",
       dataIndex: "Name",
       key: "Name",
+      align: "center",
       editable: true,
     },
     {
       title: "Employee I.D",
       dataIndex: "EmployeeId",
       key: "EmployeeId",
+      align: "center",
       editable: true,
     },
     {
       title: "Add Date",
       dataIndex: "createdAt",
+      align: "center",
       key: "createdAt",
     },
     {
       title: "Action",
       dataIndex: "operation",
       key: "operation",
+      align: "center",
+
       render: (_, record) => {
         const editable = isEditing(record);
 
         return (
           <div>
             {editable ? (
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <Space>
                   <Popconfirm
                     title="Sure to save edit?"
@@ -120,7 +125,7 @@ const Employees = () => {
                 </Space>
               </div>
             ) : (
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <Space>
                   <Button
                     disabled={editingKey !== ""}

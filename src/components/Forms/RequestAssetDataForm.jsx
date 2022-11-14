@@ -7,7 +7,6 @@ const RequestAssetDataForm = () => {
   const formRef = createRef();
   const { Option } = Select;
   const [value, setValues] = useState("");
-  console.log(value);
 
   const query = qs.stringify(
     {
@@ -41,7 +40,7 @@ const RequestAssetDataForm = () => {
     <>
       {value ? (
         <div style={{ overflow: "auto" }}>
-          <ReportsTable query={query} />
+          <ReportsTable setValues={setValues} query={query} />
         </div>
       ) : (
         <Form
@@ -65,7 +64,6 @@ const RequestAssetDataForm = () => {
             },
           }}
           autoComplete="off"
-          resetFields
         >
           <Form.Item label="Search With" name="Selected">
             <Select>

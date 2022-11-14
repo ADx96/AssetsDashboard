@@ -90,34 +90,40 @@ const Assets = () => {
       title: "Employee Name",
       dataIndex: "Name",
       key: "Name",
+      align: "center",
     },
     {
       title: "Employee I.D",
       dataIndex: "EmployeeId",
       key: "EmployeeId",
+      align: "center",
     },
     {
       title: "SERIAL NUMBER",
       dataIndex: "Serial",
       key: "Serial",
       editable: true,
+      align: "center",
     },
     {
       title: "ITEM",
       dataIndex: "ItemName",
       key: "ItemName",
       editable: true,
+      align: "center",
     },
     {
       title: "SPECIFICATION",
       dataIndex: "Specs",
       key: "Specs",
       editable: true,
+      align: "center",
     },
     {
       title: "OS",
       dataIndex: "os",
       key: "os",
+      align: "center",
       editable: true,
     },
     {
@@ -125,11 +131,13 @@ const Assets = () => {
       dataIndex: "Building",
       key: "Building",
       editable: true,
+      align: "center",
     },
     {
       title: "FlOOR",
       dataIndex: "Floor",
       key: "Floor",
+      align: "center",
       editable: true,
     },
     {
@@ -137,14 +145,17 @@ const Assets = () => {
       dataIndex: "Office",
       key: "Office",
       editable: true,
+      align: "center",
     },
     {
       title: "Add Date",
       dataIndex: "createdAt",
       key: "createdAt",
+      align: "center",
     },
     {
       title: "Action",
+      align: "center",
       dataIndex: "operation",
       key: "operation",
       render: (_, record) => {
@@ -153,7 +164,7 @@ const Assets = () => {
         return (
           <div>
             {editable ? (
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <Space>
                   <Popconfirm
                     title="Sure to save edit?"
@@ -172,7 +183,7 @@ const Assets = () => {
                 </Space>
               </div>
             ) : (
-              <div style={{ display: "flex" }}>
+              <div style={{ display: "flex", justifyContent: "center" }}>
                 <Space>
                   <Button
                     disabled={editingKey !== ""}

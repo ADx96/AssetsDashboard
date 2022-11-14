@@ -17,21 +17,25 @@ const MoveRequests = () => {
       title: "Employee Name",
       dataIndex: "Name",
       key: "Name",
+      align: "center",
     },
     {
       title: "Employee I.D",
       dataIndex: "EmployeeId",
       key: "EmployeeId",
+      align: "center",
     },
     {
       title: "Reason",
       dataIndex: "Reason",
       key: "Reason",
+      align: "center",
     },
     {
       title: "SERIAL NUMBER",
       dataIndex: "SerialNumber",
       key: "SerialNumber",
+      align: "center",
     },
   ];
 
