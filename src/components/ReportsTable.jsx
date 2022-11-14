@@ -1,10 +1,13 @@
 import { Table, Button } from "antd";
 import React from "react";
+import { message } from "antd";
+
+import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 
 const ReportsTable = ({ query, setValues }) => {
   const { data, isLoading } = useGetAssetsQuery(query);
-
+  const { success } = message;
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;
@@ -91,6 +94,16 @@ const ReportsTable = ({ query, setValues }) => {
           رجوع
         </Button>
       </div>
+      <CSVLink
+        filename={"Expense_Table.csv"}
+        data={ApiData}
+        className="btn btn-primary"
+        onClick={() => {
+          success("The file is downloading");
+        }}
+      >
+        Export to CSV
+      </CSVLink>
       <div style={{ textAlign: "right" }}>
         <h2>الاسم: {Name}</h2>
         <h2>الرقم الوظيفي: {Id}</h2>

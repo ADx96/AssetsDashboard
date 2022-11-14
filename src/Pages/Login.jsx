@@ -15,7 +15,6 @@ const Login = () => {
                 <h1 className="en-heading">Kuwait University</h1>
                 <h1 className="ar-heading">جامعة الكويت</h1>
               </div>
-
               <LoginForms />
             </div>
             <div className="bg-img-hold">

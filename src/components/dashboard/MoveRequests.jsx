@@ -7,7 +7,6 @@ const query = {
 };
 const MoveRequests = () => {
   const { data, isLoading } = useGetCancelRequestsQuery(query);
-
   const ApiData = data?.data.map((data) => {
     return { ...data };
   });
@@ -44,12 +43,14 @@ const MoveRequests = () => {
   }
 
   return (
-    <Table
-      rowClassName={() => "editable-row"}
-      bordered
-      dataSource={ApiData}
-      columns={columns}
-    />
+    <>
+      <Table
+        rowClassName={() => "editable-row"}
+        bordered
+        dataSource={ApiData}
+        columns={columns}
+      />
+    </>
   );
 };
 

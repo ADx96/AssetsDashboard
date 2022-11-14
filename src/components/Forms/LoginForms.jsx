@@ -27,6 +27,8 @@ const LoginForms = () => {
       name="basic"
       initialValues={{ remember: true }}
       onFinish={onFinish}
+      labelCol={{ span: 10 }}
+      wrapperCol={{ span: 14 }}
       // onFinishFailed={onFinishFailed}
       autoComplete="off"
     >

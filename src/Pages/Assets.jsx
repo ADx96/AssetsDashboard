@@ -240,6 +240,7 @@ const Assets = () => {
             setSearch(value);
           }}
         />
+
         <DataTable
           total={total}
           form={form}
