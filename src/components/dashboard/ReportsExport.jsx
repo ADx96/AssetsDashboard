@@ -80,7 +80,7 @@ const ReportsExport = () => {
           </Select>
         </Form.Item>
         <Form.Item
-          label="Text"
+          label="ادخل البيانات"
           name="text"
           rules={[{ required: true, message: "Required!" }]}
         >

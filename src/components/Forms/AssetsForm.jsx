@@ -8,6 +8,11 @@ import qs from "qs";
 const AssetsForm = () => {
   const { Option } = Select;
   const [search, setSearch] = useState("");
+  const [scroll, setScroll] = useState({
+    page: 1,
+    size: 20,
+  });
+
   const query = qs.stringify(
     {
       filters: {
@@ -16,8 +21,8 @@ const AssetsForm = () => {
         },
       },
       pagination: {
-        page: 1,
-        pageSize: 10,
+        page: scroll.page,
+        pageSize: scroll.size,
       },
     },
     {
@@ -26,7 +31,6 @@ const AssetsForm = () => {
   );
 
   const { data: resp, isLoading } = useGetEmployeesQuery(query);
-  console.log(resp);
 
   const formRef = createRef();
   const { setModal } = useContext(ModalContext);
@@ -41,7 +45,19 @@ const AssetsForm = () => {
     setModal(false);
     if (isSuccess) success("تم الاضافة بنجاح");
   };
+  const total = resp?.meta.pagination.total;
 
+  const handlePopupScroll = (e) => {
+    const bottom =
+      e.target.scrollHeight - e.target.scrollTop === e.target.clientHeight;
+
+    if (bottom) {
+      setScroll({
+        page: scroll.size === scroll.size + 10 ? scroll.page + 1 : scroll.page,
+        size: total > scroll.size ? scroll.size + 10 : scroll.size,
+      });
+    }
+  };
   return (
     <Form
       name="basic"
@@ -114,6 +130,7 @@ const AssetsForm = () => {
                 style={{ marginBottom: "10px", display: "block" }}
                 showSearch
                 allowClear
+                onPopupScroll={handlePopupScroll}
                 placeholder="Select a person"
                 optionFilterProp="children"
                 onSearch={(value) => setSearch(value)}

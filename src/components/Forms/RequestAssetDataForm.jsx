@@ -65,14 +65,14 @@ const RequestAssetDataForm = () => {
           }}
           autoComplete="off"
         >
-          <Form.Item label="Search With" name="Selected">
+          <Form.Item label="بحث عن طريق" name="Selected">
             <Select>
               <Option value={"EmployeeId"}>Employee ID</Option>
               <Option value={"Serial"}>Serial Number</Option>
             </Select>
           </Form.Item>
           <Form.Item
-            label="Text"
+            label="ادخل البيانات"
             name="text"
             rules={[{ required: true, message: "Required!" }]}
           >
