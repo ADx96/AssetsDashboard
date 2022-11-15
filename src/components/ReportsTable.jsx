@@ -1,7 +1,6 @@
 import { Table, Button } from "antd";
 import React from "react";
 import { message } from "antd";
-
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 

@@ -1,15 +1,17 @@
 import { Table } from "antd";
 import React from "react";
-import { useGetCancelRequestsQuery } from "../../Redux/Api/RequestApi";
+import { useGetMoveRequestsQuery } from "../../Redux/Api/RequestApi";
 
 const query = {
   populate: "employee",
 };
 const MoveRequests = () => {
-  const { data, isLoading } = useGetCancelRequestsQuery(query);
+  const { data, isLoading } = useGetMoveRequestsQuery(query);
   const ApiData = data?.data.map((data) => {
-    return { ...data };
+    const employee = data.attributes.employee.data.attributes;
+    return { ...data.attributes, ...employee };
   });
+  console.log(ApiData);
 
   const columns = [
     {
@@ -25,6 +27,12 @@ const MoveRequests = () => {
       align: "center",
     },
     {
+      title: "Moved Employee Name",
+      dataIndex: "MoveEmployee",
+      key: "MoveEmployee",
+      align: "center",
+    },
+    {
       title: "Reason",
       dataIndex: "Reason",
       key: "Reason",
@@ -32,8 +40,14 @@ const MoveRequests = () => {
     },
     {
       title: "SERIAL NUMBER",
-      dataIndex: "SerialNumber",
-      key: "SerialNumber",
+      dataIndex: "ItemSerial",
+      key: "ItemSerial",
+      align: "center",
+    },
+    {
+      title: "createdAt",
+      dataIndex: "createdAt",
+      key: "createdAt",
       align: "center",
     },
   ];
@@ -43,14 +57,14 @@ const MoveRequests = () => {
   }
 
   return (
-    <>
+    <div style={{ overflow: "auto" }}>
       <Table
         rowClassName={() => "editable-row"}
         bordered
         dataSource={ApiData}
         columns={columns}
       />
-    </>
+    </div>
   );
 };
 

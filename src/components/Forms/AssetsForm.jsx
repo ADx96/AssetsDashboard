@@ -1,4 +1,4 @@
-import React, { createRef, useContext } from "react";
+import React, { createRef, useContext, useState } from "react";
 import { Col, Row, Form, Space, Button, Select, Input, message } from "antd";
 import ModalContext from "../../Hooks/ContextProvider";
 import { useCreateAssetMutation } from "../../Redux/Api/AssetsApi";
@@ -7,10 +7,17 @@ import qs from "qs";
 
 const AssetsForm = () => {
   const { Option } = Select;
+  const [search, setSearch] = useState("");
   const query = qs.stringify(
     {
+      filters: {
+        Name: {
+          $contains: search,
+        },
+      },
       pagination: {
-        pageSize: 600,
+        page: 1,
+        pageSize: 10,
       },
     },
     {
@@ -19,6 +26,7 @@ const AssetsForm = () => {
   );
 
   const { data: resp, isLoading } = useGetEmployeesQuery(query);
+  console.log(resp);
 
   const formRef = createRef();
   const { setModal } = useContext(ModalContext);
@@ -105,8 +113,10 @@ const AssetsForm = () => {
               <Select
                 style={{ marginBottom: "10px", display: "block" }}
                 showSearch
+                allowClear
                 placeholder="Select a person"
                 optionFilterProp="children"
+                onSearch={(value) => setSearch(value)}
                 filterOption={(input, option) =>
                   option.children.toLowerCase().includes(input.toLowerCase())
                 }

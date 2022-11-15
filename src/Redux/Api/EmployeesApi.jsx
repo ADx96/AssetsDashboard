@@ -8,16 +8,13 @@ export const EmployeesApi = createAppApi({
       query: (data) => ({
         url: "/employees",
         params: data,
-        keepUnusedDataFor: 60,
       }),
-
       providesTags: ["Employees"],
     }),
     getEmployeeById: builder.query({
       query: (data) => ({
         url: `/employees/${data.id}`,
         params: data,
-        keepUnusedDataFor: 60,
       }),
 
       providesTags: ["Employees"],

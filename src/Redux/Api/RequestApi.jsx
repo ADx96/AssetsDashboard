@@ -2,27 +2,24 @@ import { createAppApi } from "../CreateAppApi";
 
 export const RequestsApi = createAppApi({
   reducerPath: "requests",
-  tagTypes: ["Requests"],
+  tagTypes: ["Delete", "Move"],
   endpoints: (builder) => ({
     getCancelRequests: builder.query({
       query: (data) => ({
         url: "/delete-requests",
         params: data,
-        keepUnusedDataFor: 60,
       }),
-
-      providesTags: ["Cancel-Requests"],
+      providesTags: ["Delete"],
     }),
     getMoveRequests: builder.query({
       query: (data) => ({
         url: "/move-requests",
         params: data,
-        keepUnusedDataFor: 60,
       }),
-
-      providesTags: ["Move-Requests"],
+      providesTags: ["Move"],
     }),
   }),
 });
 
-export const { useGetCancelRequestsQuery } = RequestsApi;
+export const { useGetCancelRequestsQuery, useGetMoveRequestsQuery } =
+  RequestsApi;

@@ -8,9 +8,7 @@ export const AssetsApi = createAppApi({
       query: (query) => ({
         url: "/assets",
         params: query,
-        keepUnusedDataFor: 60,
       }),
-
       providesTags: ["Assets"],
     }),
     createAsset: builder.mutation({

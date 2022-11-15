@@ -106,7 +106,9 @@ const DashboardLayout = () => {
             <Outlet />
           </Card>
         </Content>
-        <Footer style={{ textAlign: "center" }}>Kuwait University</Footer>
+        <Footer style={{ textAlign: "center", marginTop: "100px" }}>
+          Kuwait University
+        </Footer>
       </Layout>
     </Layout>
   );
