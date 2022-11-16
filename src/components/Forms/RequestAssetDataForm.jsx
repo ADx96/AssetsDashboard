@@ -2,6 +2,7 @@ import React, { createRef, useState } from "react";
 import { Form, Button, Input, Select } from "antd";
 import qs from "qs";
 import ReportsTable from "../ReportsTable";
+import ReportsExport from "../dashboard/ReportsExport";
 
 const RequestAssetDataForm = () => {
   const formRef = createRef();
@@ -17,7 +18,7 @@ const RequestAssetDataForm = () => {
         },
         employee: {
           EmployeeId: {
-            $contains: value.Selected === "EmployeeId" ? value.text : "",
+            $eq: value.Selected === "EmployeeId" ? value.text : "",
           },
         },
       },
@@ -43,53 +44,56 @@ const RequestAssetDataForm = () => {
           <ReportsTable setValues={setValues} query={query} />
         </div>
       ) : (
-        <Form
-          name="basic"
-          ref={formRef}
-          layout="vertical"
-          style={{ textAlign: "center" }}
-          initialValues={{ remember: false }}
-          onFinish={onFinish}
-          labelCol={{
-            sm: {
-              span: 16,
-              offset: 8,
-            },
-          }}
-          wrapperCol={{
-            span: 24,
-            sm: {
-              span: 8,
-              offset: 8,
-            },
-          }}
-          autoComplete="off"
-        >
-          <Form.Item label="بحث عن طريق" name="Selected">
-            <Select>
-              <Option value={"EmployeeId"}>Employee ID</Option>
-              <Option value={"Serial"}>Serial Number</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="ادخل البيانات"
-            name="text"
-            rules={[{ required: true, message: "Required!" }]}
+        <>
+          <Form
+            name="basic"
+            ref={formRef}
+            layout="vertical"
+            style={{ textAlign: "center" }}
+            initialValues={{ remember: false }}
+            onFinish={onFinish}
+            labelCol={{
+              sm: {
+                span: 16,
+                offset: 8,
+              },
+            }}
+            wrapperCol={{
+              span: 24,
+              sm: {
+                span: 8,
+                offset: 8,
+              },
+            }}
+            autoComplete="off"
           >
-            <Input />
-          </Form.Item>
-
-          <div style={{ textAlign: "center" }}>
-            <Button
-              style={{ borderRadius: "5px", width: "150px" }}
-              type="primary"
-              htmlType="submit"
-              size={"large"}
+            <Form.Item label="بحث عن طريق" name="Selected">
+              <Select>
+                <Option value={"EmployeeId"}>Employee ID</Option>
+                <Option value={"Serial"}>Serial Number</Option>
+              </Select>
+            </Form.Item>
+            <Form.Item
+              label="ادخل البيانات"
+              name="text"
+              rules={[{ required: true, message: "Required!" }]}
             >
-              استعلام
-            </Button>
-          </div>
-        </Form>
+              <Input />
+            </Form.Item>
+
+            <div style={{ textAlign: "center" }}>
+              <Button
+                style={{ borderRadius: "5px", width: "150px" }}
+                type="primary"
+                htmlType="submit"
+                size={"large"}
+              >
+                استعلام
+              </Button>
+            </div>
+          </Form>
+          <ReportsExport />
+        </>
       )}
     </>
   );

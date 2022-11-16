@@ -93,16 +93,23 @@ const ReportsTable = ({ query, setValues }) => {
           رجوع
         </Button>
       </div>
-      <CSVLink
-        filename={"Expense_Table.csv"}
-        data={ApiData}
-        className="btn btn-primary"
-        onClick={() => {
-          success("The file is downloading");
-        }}
+      <Button
+        style={{ borderRadius: "5px", width: "150px" }}
+        type="outline"
+        htmlType="submit"
+        size={"large"}
       >
-        Export to CSV
-      </CSVLink>
+        <CSVLink
+          filename={"Expense_Table.csv"}
+          data={ApiData}
+          className="btn btn-primary"
+          onClick={() => {
+            success("The file is downloading");
+          }}
+        >
+          Export to CSV
+        </CSVLink>
+      </Button>
       <div style={{ textAlign: "right" }}>
         <h2>الاسم: {Name}</h2>
         <h2>الرقم الوظيفي: {Id}</h2>

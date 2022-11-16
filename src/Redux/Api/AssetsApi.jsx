@@ -34,11 +34,23 @@ export const AssetsApi = createAppApi({
       }),
       invalidatesTags: ["Assets"],
     }),
+    getAsset: builder.query({
+      query: (Serial) => ({
+        url: `/assets/`,
+        params: Serial,
+      }),
+      transformResponse: (responseData) => {
+        const id = responseData.data[0].attributes.employee.data.id;
+        return id;
+      },
+      providesTags: ["Assets"],
+    }),
   }),
 });
 
 export const {
   useGetAssetsQuery,
+  useGetAssetQuery,
   useCreateAssetMutation,
   useUpdateAssetMutation,
   useDeleteAssetMutation,

@@ -5,12 +5,22 @@ import {
   AreaChartOutlined,
   PullRequestOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, Card, Divider, Button } from "antd";
+import {
+  Layout,
+  Menu,
+  Card,
+  Divider,
+  Button,
+  Space,
+  Popover,
+  Badge,
+} from "antd";
 import React, { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useAppDispatch } from "../../Hooks/ReduxHooks";
 import { logOut } from "../../Redux/Features/AuthSlice";
+import { BellOutlined } from "@ant-design/icons";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -91,7 +101,27 @@ const DashboardLayout = () => {
       <Layout className="site-layout">
         <Header style={{ backgroundColor: "white" }}>
           <div style={{ textAlign: "right" }}>
-            <Button onClick={SignOut}>تسجيل الاخروج</Button>
+            <Space>
+              <Popover
+                placement="bottom"
+                title={"test"}
+                content={<></>}
+                trigger="click"
+              >
+                <div style={{ marginRight: "10px" }}>
+                  <Badge count={10}>
+                    <Button
+                      type="primary"
+                      shape="circle"
+                      icon={<BellOutlined />}
+                      size={"large"}
+                    />
+                  </Badge>
+                </div>
+              </Popover>
+
+              <Button onClick={SignOut}>تسجيل الاخروج</Button>
+            </Space>
           </div>
         </Header>
         <Content style={{ margin: "0 16px" }}>

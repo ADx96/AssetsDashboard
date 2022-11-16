@@ -18,8 +18,19 @@ export const RequestsApi = createAppApi({
       }),
       providesTags: ["Move"],
     }),
+    updateMoveRequest: builder.mutation({
+      query: (id) => ({
+        url: `/move-requests/${id}`,
+        method: "PUT",
+        body: { data: { isApproved: true } },
+      }),
+      invalidatesTags: ["Move"],
+    }),
   }),
 });
 
-export const { useGetCancelRequestsQuery, useGetMoveRequestsQuery } =
-  RequestsApi;
+export const {
+  useGetCancelRequestsQuery,
+  useGetMoveRequestsQuery,
+  useUpdateMoveRequestMutation,
+} = RequestsApi;

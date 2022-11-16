@@ -42,7 +42,7 @@ const Employees = () => {
       encodeValuesOnly: true, // prettify URL
     }
   );
-  const { data, isLoading } = useGetEmployeesQuery(query);
+  const { data, isLoading, refetch } = useGetEmployeesQuery(query);
 
   const ApiData = data?.data.map((data) => {
     const id = data.id;
@@ -173,7 +173,21 @@ const Employees = () => {
 
   return (
     <ContextProvider>
-      <AddModal title={"اضافة موظف "} children={<EmployeeForm />} />
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <Space>
+          <AddModal title={"اضافة موظف "} children={<EmployeeForm />} />
+          <div style={{ paddingBottom: "30px" }}>
+            <Button
+              onClick={() => refetch()}
+              style={{ borderRadius: "5px", textAlign: "left" }}
+              type="primary"
+              size={"large"}
+            >
+              Refresh
+            </Button>
+          </div>
+        </Space>
+      </div>
       <div style={{ overflow: "auto" }}>
         <Search
           style={{ width: "40%" }}

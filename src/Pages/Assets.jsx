@@ -47,7 +47,7 @@ const Assets = () => {
     }
   );
 
-  const { data, isLoading } = useGetAssetsQuery(query);
+  const { data, isLoading, refetch } = useGetAssetsQuery(query);
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;
@@ -231,7 +231,21 @@ const Assets = () => {
 
   return (
     <ContextProvider>
-      <AddModal title={"اضافة بيانات العهدة"} children={<AssetsForm />} />
+      <div style={{ display: "flex", justifyContent: "end" }}>
+        <Space>
+          <AddModal title={"اضافة بيانات العهدة"} children={<AssetsForm />} />
+          <div style={{ paddingBottom: "30px" }}>
+            <Button
+              onClick={() => refetch()}
+              style={{ borderRadius: "5px", textAlign: "left" }}
+              type="primary"
+              size={"large"}
+            >
+              Refresh
+            </Button>
+          </div>
+        </Space>
+      </div>
       <div style={{ overflow: "auto" }}>
         <Search
           style={{ width: "40%" }}

@@ -1,17 +1,46 @@
-import { Table } from "antd";
-import React from "react";
-import { useGetMoveRequestsQuery } from "../../Redux/Api/RequestApi";
+import { Table, Button, Popconfirm } from "antd";
+import qs from "qs";
+import React, { useState } from "react";
+import {
+  useGetAssetQuery,
+  useUpdateAssetMutation,
+} from "../../Redux/Api/AssetsApi";
+import {
+  useGetMoveRequestsQuery,
+  useUpdateMoveRequestMutation,
+} from "../../Redux/Api/RequestApi";
 
 const query = {
   populate: "employee",
 };
+
 const MoveRequests = () => {
+  const [serial, setSerial] = useState("C915HEBYG1056519");
   const { data, isLoading } = useGetMoveRequestsQuery(query);
+  const [updateMoveRequest] = useUpdateMoveRequestMutation();
+  const [updateAsset] = useUpdateAssetMutation();
+
+  const query2 = qs.stringify(
+    {
+      populate: "employee",
+      filters: {
+        Serial: {
+          $contains: serial,
+        },
+      },
+    },
+    {
+      encodeValuesOnly: true, // prettify URL
+    }
+  );
+
+  const { data: id } = useGetAssetQuery(query2);
+
   const ApiData = data?.data.map((data) => {
+    const id = data.id;
     const employee = data.attributes.employee.data.attributes;
-    return { ...data.attributes, ...employee };
+    return { id, ...data.attributes, ...employee };
   });
-  console.log(ApiData);
 
   const columns = [
     {
@@ -45,10 +74,54 @@ const MoveRequests = () => {
       align: "center",
     },
     {
+      title: "isApproved",
+      dataIndex: "isApproved",
+      align: "center",
+      key: "isApproved",
+      render: (value) => {
+        return value ? "Approved" : "Pending";
+      },
+    },
+    {
       title: "createdAt",
       dataIndex: "createdAt",
       key: "createdAt",
       align: "center",
+    },
+    {
+      title: "Action",
+      align: "center",
+      dataIndex: "operation",
+      key: "operation",
+      render: (_, record) => {
+        const update = {
+          id,
+          employee: {},
+        };
+
+        return (
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <Popconfirm
+              disabled={record.isApproved}
+              title="Sure to update?"
+              onConfirm={() => {
+                updateAsset(update);
+                updateMoveRequest(record.id);
+              }}
+            >
+              <Button
+                disabled={record.isApproved}
+                onClick={() => setSerial(record.ItemSerial)}
+                style={{
+                  marginRight: 8,
+                }}
+              >
+                قبول
+              </Button>
+            </Popconfirm>
+          </div>
+        );
+      },
     },
   ];
 
