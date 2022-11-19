@@ -46,7 +46,7 @@ const EmployeeForm = () => {
             <Form.Item
               label="Employee I.D"
               name="EmployeeId"
-              rules={[{ required: true, message: "EmployeeId is Required!" }]}
+              rules={[{ required: true, message: "Employee is Required!" }]}
             >
               <Input
                 style={{ marginBottom: "10px" }}

@@ -15,12 +15,16 @@ import {
   Popover,
   Badge,
 } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { useAppDispatch } from "../../Hooks/ReduxHooks";
 import { logOut } from "../../Redux/Features/AuthSlice";
 import { BellOutlined } from "@ant-design/icons";
+import {
+  useGetCancelRequestsQuery,
+  useGetMoveRequestsQuery,
+} from "../../Redux/Api/RequestApi";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -42,7 +46,17 @@ const items = [
 ];
 
 const DashboardLayout = () => {
+  const { data, isLoading } = useGetMoveRequestsQuery({ pollingInterval: 120 });
+  const { data: data2, isLoading: isLoading2 } = useGetCancelRequestsQuery({
+    pollingInterval: 120,
+  });
+
   const [collapsed, setCollapsed] = useState(false);
+  const [Notifications, setNotifications] = useState({
+    MoveRequests: [],
+    DeleteRequests: [],
+  });
+
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -76,6 +90,66 @@ const DashboardLayout = () => {
     navigate(`${path}`);
   };
 
+  useEffect(() => {
+    const LastMoveRequests = data?.data?.map((data) => {
+      return { ...data.attributes };
+    });
+
+    const LastDeleteRequests = data2?.data?.map((data2) => {
+      return { ...data2.attributes };
+    });
+
+    setNotifications({
+      MoveRequests: LastMoveRequests,
+      DeleteRequests: LastDeleteRequests,
+    });
+  }, [data, data2]);
+
+  const MoveRequestsCount = () => {
+    if (isLoading2 || isLoading) {
+      return;
+    }
+    const total =
+      Notifications.MoveRequests?.length ||
+      0 + Notifications.DeleteRequests?.length ||
+      0;
+
+    return total;
+  };
+
+  const NotificationsContent = () => {
+    const message = Notifications.MoveRequests.map((request, key) => {
+      return (
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/Requests")}
+          key={key}
+        >
+          <li> New Move Requests</li>
+          <li> {request.createdAt}</li>
+        </div>
+      );
+    });
+    const message1 = Notifications.DeleteRequests.map((request, key) => {
+      return (
+        <div
+          style={{ cursor: "pointer" }}
+          onClick={() => navigate("/Requests")}
+          key={key}
+        >
+          <li> New Delete Requests</li>
+          <li> {request.createdAt}</li>
+        </div>
+      );
+    });
+    return (
+      <Space direction="vertical">
+        {message.length > 0 && <Card>{message}</Card>}
+        {message1.length > 0 && <Card>{message1} </Card>}
+      </Space>
+    );
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
       <Sider
@@ -104,12 +178,12 @@ const DashboardLayout = () => {
             <Space>
               <Popover
                 placement="bottom"
-                title={"test"}
-                content={<></>}
+                title={"Notifications"}
+                content={<NotificationsContent />}
                 trigger="click"
               >
                 <div style={{ marginRight: "10px" }}>
-                  <Badge count={10}>
+                  <Badge count={MoveRequestsCount()}>
                     <Button
                       type="primary"
                       shape="circle"

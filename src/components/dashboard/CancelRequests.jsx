@@ -31,6 +31,12 @@ const CancelRequests = () => {
       key: "SerialNumber",
       align: "center",
     },
+    {
+      title: "Reason",
+      dataIndex: "Reason",
+      key: "Reason",
+      align: "center",
+    },
   ];
 
   if (isLoading) {

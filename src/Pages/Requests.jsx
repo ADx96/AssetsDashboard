@@ -4,22 +4,31 @@ import CancelRequests from "../components/dashboard/CancelRequests";
 import MoveRequests from "../components/dashboard/MoveRequests";
 
 export const Requests = () => {
-  return (
-    <Tabs>
-      <Tabs.TabPane tab="طلبات نقل العهد" key="item-1">
-        <h2 style={{ fontSize: "30px", textAlign: "center" }}>
-          طلبات نقل العهد
-        </h2>
-
-        <MoveRequests />
-      </Tabs.TabPane>
-      <Tabs.TabPane tab="طلبات اسقاط العهد" key="item-2">
-        <h2 style={{ fontSize: "30px", textAlign: "center" }}>
-          طلبات اسقاط العهد
-        </h2>
-
-        <CancelRequests />
-      </Tabs.TabPane>
-    </Tabs>
-  );
+  const items = [
+    {
+      label: "طلبات نقل العهد",
+      key: "item-1",
+      children: (
+        <>
+          <h2 style={{ fontSize: "30px", textAlign: "center" }}>
+            طلبات نقل العهد
+          </h2>
+          <MoveRequests />
+        </>
+      ),
+    },
+    {
+      label: "طلبات اسقاط العهد",
+      key: "item-2",
+      children: (
+        <>
+          <h2 style={{ fontSize: "30px", textAlign: "center" }}>
+            طلبات اسقاط العهد
+          </h2>
+          <CancelRequests />
+        </>
+      ),
+    },
+  ];
+  return <Tabs items={items} />;
 };

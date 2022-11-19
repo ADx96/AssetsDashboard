@@ -18,7 +18,7 @@ const RequestAssetDataForm = () => {
         },
         employee: {
           EmployeeId: {
-            $eq: value.Selected === "EmployeeId" ? value.text : "",
+            $contains: value.Selected === "EmployeeId" ? value.text : "",
           },
         },
       },

@@ -106,7 +106,7 @@ const MoveRequests = () => {
               title="Sure to update?"
               onConfirm={() => {
                 updateAsset(update);
-                updateMoveRequest(record.id);
+                updateMoveRequest({ data: { EmployeeId: record.Trans_EmpId } });
               }}
             >
               <Button
