@@ -9,7 +9,8 @@ const CancelRequests = () => {
   const { data, isLoading } = useGetCancelRequestsQuery(query);
 
   const ApiData = data?.data.map((data) => {
-    return { ...data };
+    const employee = data.attributes.employee.data;
+    return { ...data.attributes, ...employee };
   });
 
   const columns = [

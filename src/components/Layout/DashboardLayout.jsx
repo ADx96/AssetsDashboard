@@ -125,8 +125,10 @@ const DashboardLayout = () => {
           onClick={() => navigate("/Requests")}
           key={key}
         >
-          <li> New Move Requests</li>
-          <li> {request.createdAt}</li>
+          <Card>
+            <li> New Move Requests</li>
+            <li> {request.createdAt}</li>
+          </Card>
         </div>
       );
     });
@@ -137,15 +139,17 @@ const DashboardLayout = () => {
           onClick={() => navigate("/Requests")}
           key={key}
         >
-          <li> New Delete Requests</li>
-          <li> {request.createdAt}</li>
+          <Card>
+            <li> New Delete Requests</li>
+            <li> {request.createdAt}</li>
+          </Card>
         </div>
       );
     });
     return (
-      <Space direction="vertical">
-        {message.length > 0 && <Card>{message}</Card>}
-        {message1.length > 0 && <Card>{message1} </Card>}
+      <Space style={{ overflow: "auto" }} direction="vertical">
+        {message.length > 0 && message}
+        {message1.length > 0 && message1}
       </Space>
     );
   };

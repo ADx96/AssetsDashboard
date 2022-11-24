@@ -15,7 +15,7 @@ const query = {
 };
 
 const MoveRequests = () => {
-  const [serial, setSerial] = useState("C915HEBYG1056519");
+  const [serial, setSerial] = useState("");
   const { data, isLoading } = useGetMoveRequestsQuery(query);
   const [updateMoveRequest] = useUpdateMoveRequestMutation();
   const [updateAsset] = useUpdateAssetMutation();
@@ -38,7 +38,7 @@ const MoveRequests = () => {
 
   const ApiData = data?.data.map((data) => {
     const id = data.id;
-    const employee = data.attributes.employee.data.attributes;
+    const employee = data.attributes.employee.data?.attributes;
     return { id, ...data.attributes, ...employee };
   });
 
@@ -96,7 +96,9 @@ const MoveRequests = () => {
       render: (_, record) => {
         const update = {
           id,
-          employee: {},
+          employee: {
+            data: { EmployeeId: record.Trans_EmpId },
+          },
         };
 
         return (
@@ -105,8 +107,8 @@ const MoveRequests = () => {
               disabled={record.isApproved}
               title="Sure to update?"
               onConfirm={() => {
-                updateAsset(update);
-                updateMoveRequest({ data: { EmployeeId: record.Trans_EmpId } });
+                id && updateAsset(update);
+                updateMoveRequest(record.id);
               }}
             >
               <Button

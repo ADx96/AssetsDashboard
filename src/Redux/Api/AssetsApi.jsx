@@ -23,7 +23,7 @@ export const AssetsApi = createAppApi({
       query: (Update) => ({
         url: `/assets/${Update.id}`,
         method: "PUT",
-        body: { data: { ...Update.row } },
+        body: { data: { ...Update.row } || Update.employee },
       }),
       invalidatesTags: ["Assets"],
     }),
