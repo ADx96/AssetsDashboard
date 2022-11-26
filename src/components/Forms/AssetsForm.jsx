@@ -168,7 +168,7 @@ const AssetsForm = () => {
             <Form.Item
               label="Floor"
               name="Floor"
-              rules={[{ required: true, message: "EmployeeId is Required!" }]}
+              rules={[{ required: true, message: "Floor is Required!" }]}
             >
               <Input
                 style={{ marginBottom: "10px" }}
@@ -180,7 +180,7 @@ const AssetsForm = () => {
             <Form.Item
               label="Office"
               name="Office"
-              rules={[{ required: true, message: "EmployeeId is Required!" }]}
+              rules={[{ required: true, message: "Office is Required!" }]}
             >
               <Input
                 style={{ marginBottom: "10px" }}

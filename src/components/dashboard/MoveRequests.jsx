@@ -22,7 +22,6 @@ const MoveRequests = () => {
 
   const query2 = qs.stringify(
     {
-      populate: "employee",
       filters: {
         Serial: {
           $contains: serial,
@@ -44,7 +43,7 @@ const MoveRequests = () => {
 
   const columns = [
     {
-      title: "Employee Name",
+      title: "Employee Name(القديم)",
       dataIndex: "Name",
       key: "Name",
       align: "center",
@@ -56,7 +55,7 @@ const MoveRequests = () => {
       align: "center",
     },
     {
-      title: "Moved Employee Name",
+      title: "Moved Employee Name(الجديد)",
       dataIndex: "MoveEmployee",
       key: "MoveEmployee",
       align: "center",
@@ -96,9 +95,7 @@ const MoveRequests = () => {
       render: (_, record) => {
         const update = {
           id,
-          employee: {
-            data: { EmployeeId: record.Trans_EmpId },
-          },
+          employeeId: record.Trans_EmpId,
         };
 
         return (
@@ -107,7 +104,7 @@ const MoveRequests = () => {
               disabled={record.isApproved}
               title="Sure to update?"
               onConfirm={() => {
-                id && updateAsset(update);
+                updateAsset(update);
                 updateMoveRequest(record.id);
               }}
             >

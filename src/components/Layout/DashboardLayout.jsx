@@ -110,9 +110,7 @@ const DashboardLayout = () => {
       return;
     }
     const total =
-      Notifications.MoveRequests?.length ||
-      0 + Notifications.DeleteRequests?.length ||
-      0;
+      Notifications.MoveRequests?.length + Notifications.DeleteRequests?.length;
 
     return total;
   };

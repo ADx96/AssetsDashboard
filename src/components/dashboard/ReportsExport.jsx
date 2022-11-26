@@ -8,6 +8,8 @@ const ReportsExport = () => {
   const formRef = createRef();
   const { Option } = Select;
   const [value, setValues] = useState("");
+  const [option, setOption] = useState("");
+
   const { success } = message;
 
   const query = qs.stringify(
@@ -24,29 +26,39 @@ const ReportsExport = () => {
         },
       },
       pagination: {
-        pageSize: 1000,
+        start: 0,
+        limit: 1000,
       },
     },
     {
       encodeValuesOnly: true, // prettify URL
     }
   );
-  const { data, isLoading } = useGetAssetsQuery(query);
+  const { data, isLoading, refetch } = useGetAssetsQuery(query);
 
   const ApiData = data?.data.map((data) => {
-    const id = data.id;
-    const { attributes } = data;
+    const { Serial, ItemName, Building, Floor, Office, CreatedAt } =
+      data.attributes;
     const employee = data.attributes.employee.data?.attributes;
-    return { id, ...attributes, ...employee };
+    const { EmployeeId, Name } = employee;
+
+    return {
+      EmployeeId,
+      Name,
+      Serial,
+      ItemName,
+      Building,
+      Floor,
+      Office,
+      CreatedAt,
+    };
   });
 
   const onFinish = (values) => {
     setValues(values);
     formRef.current?.resetFields();
+    refetch();
   };
-  if (isLoading) {
-    return <h1>loading</h1>;
-  }
 
   return (
     <div style={{ marginTop: "30px", textAlign: "center" }}>
@@ -74,35 +86,39 @@ const ReportsExport = () => {
         autoComplete="off"
       >
         <Form.Item label="اختار" name="Selected">
-          <Select>
+          <Select onChange={(value) => setOption(value)}>
             <Option value={"AllEmployees"}>جميع الموظفين</Option>
             <Option value={"Employee"}>موظف</Option>
           </Select>
         </Form.Item>
-        <Form.Item
-          label="ادخل البيانات"
-          name="text"
-          rules={[{ required: true, message: "Required!" }]}
-        >
-          <Input />
-        </Form.Item>
-        <CSVLink
-          filename={"assets.csv"}
-          data={ApiData}
-          className="btn btn-primary"
-          onClick={() => {
-            success("The file is downloading");
-          }}
-        >
+        {option !== "AllEmployees" && (
+          <Form.Item
+            label="ادخل البيانات"
+            name="text"
+            rules={[{ required: true, message: "Required!" }]}
+          >
+            <Input />
+          </Form.Item>
+        )}
+        {!isLoading && (
           <Button
             style={{ borderRadius: "5px", width: "150px" }}
             type="primary"
             htmlType="submit"
             size={"large"}
           >
-            Export to CSV
+            <CSVLink
+              filename={"assets.csv"}
+              data={ApiData}
+              className="btn btn-primary"
+              onClick={() => {
+                success("The file is downloading");
+              }}
+            >
+              Export to CSV
+            </CSVLink>
           </Button>
-        </CSVLink>
+        )}
       </Form>
     </div>
   );

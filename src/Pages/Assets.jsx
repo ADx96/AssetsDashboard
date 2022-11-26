@@ -48,6 +48,7 @@ const Assets = () => {
   );
 
   const { data, isLoading, refetch } = useGetAssetsQuery(query);
+
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;

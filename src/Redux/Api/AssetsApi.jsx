@@ -23,7 +23,7 @@ export const AssetsApi = createAppApi({
       query: (Update) => ({
         url: `/assets/${Update.id}`,
         method: "PUT",
-        body: { data: { ...Update.row } || Update.employee },
+        body: { data: { employee: Update.employeeId } },
       }),
       invalidatesTags: ["Assets"],
     }),
@@ -40,7 +40,7 @@ export const AssetsApi = createAppApi({
         params: Serial,
       }),
       transformResponse: (responseData) => {
-        const id = responseData.data[0].attributes.employee.data.id;
+        const id = responseData.data[0].id;
         return id;
       },
       providesTags: ["Assets"],
