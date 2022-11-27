@@ -4,7 +4,7 @@ export const RequestsApi = createAppApi({
   reducerPath: "requests",
   tagTypes: ["Delete", "Move"],
   endpoints: (builder) => ({
-    getCancelRequests: builder.query({
+    getDropRequests: builder.query({
       query: (data) => ({
         url: "/delete-requests",
         params: data,
@@ -26,11 +26,20 @@ export const RequestsApi = createAppApi({
       }),
       invalidatesTags: ["Move"],
     }),
+    updateDropRequest: builder.mutation({
+      query: (id) => ({
+        url: `/delete-requests/${id}`,
+        method: "PUT",
+        body: { data: { isApproved: true } },
+      }),
+      invalidatesTags: ["Delete"],
+    }),
   }),
 });
 
 export const {
-  useGetCancelRequestsQuery,
+  useGetDropRequestsQuery,
   useGetMoveRequestsQuery,
+  useUpdateDropRequestMutation,
   useUpdateMoveRequestMutation,
 } = RequestsApi;

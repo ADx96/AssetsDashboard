@@ -95,7 +95,9 @@ const MoveRequests = () => {
       render: (_, record) => {
         const update = {
           id,
-          employeeId: record.Trans_EmpId,
+          Submit: {
+            employee: record.Trans_EmpId,
+          },
         };
 
         return (

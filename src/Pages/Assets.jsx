@@ -62,8 +62,9 @@ const Assets = () => {
   };
 
   const save = async (key) => {
-    const row = await form.validateFields();
-    const NewData = { row, editingKey };
+    const Submit = await form.validateFields();
+    const id = editingKey;
+    const NewData = { Submit, id };
     success("تم التعديل بنجاح");
     updateAsset(NewData);
     success("تم التعديل بنجاح");

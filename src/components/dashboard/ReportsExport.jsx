@@ -3,6 +3,7 @@ import { Button, message, Form, Select, Input } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
+import ExportPdf from "../ExportPdf";
 
 const ReportsExport = () => {
   const formRef = createRef();
@@ -27,7 +28,7 @@ const ReportsExport = () => {
       },
       pagination: {
         start: 0,
-        limit: 1000,
+        limit: -1,
       },
     },
     {
@@ -119,6 +120,7 @@ const ReportsExport = () => {
             </CSVLink>
           </Button>
         )}
+        <ExportPdf />
       </Form>
     </div>
   );

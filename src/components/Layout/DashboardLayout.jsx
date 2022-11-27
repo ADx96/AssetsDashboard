@@ -3,6 +3,7 @@ import {
   UserOutlined,
   TagsOutlined,
   AreaChartOutlined,
+  UserDeleteOutlined,
   PullRequestOutlined,
 } from "@ant-design/icons";
 import {
@@ -22,7 +23,7 @@ import { useAppDispatch } from "../../Hooks/ReduxHooks";
 import { logOut } from "../../Redux/Features/AuthSlice";
 import { BellOutlined } from "@ant-design/icons";
 import {
-  useGetCancelRequestsQuery,
+  useGetDropRequestsQuery,
   useGetMoveRequestsQuery,
 } from "../../Redux/Api/RequestApi";
 
@@ -41,13 +42,14 @@ const items = [
   getItem("Dashboard", "Dashboard", <PieChartOutlined />),
   getItem("Employees", "Employees", <UserOutlined />),
   getItem("Assets", "Assets", <TagsOutlined />),
+  getItem("DroppedAssets", "DroppedAssets", <UserDeleteOutlined />),
   getItem("Requests", "Requests", <PullRequestOutlined />),
   getItem("Reports", "Reports", <AreaChartOutlined />),
 ];
 
 const DashboardLayout = () => {
   const { data, isLoading } = useGetMoveRequestsQuery({ pollingInterval: 120 });
-  const { data: data2, isLoading: isLoading2 } = useGetCancelRequestsQuery({
+  const { data: data2, isLoading: isLoading2 } = useGetDropRequestsQuery({
     pollingInterval: 120,
   });
 
@@ -83,6 +85,9 @@ const DashboardLayout = () => {
         break;
       case "Reports":
         path = "/Reports";
+        break;
+      case "DroppedAssets":
+        path = "/DroppedAssets";
         break;
       default:
     }
