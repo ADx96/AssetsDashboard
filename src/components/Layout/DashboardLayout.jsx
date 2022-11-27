@@ -96,13 +96,18 @@ const DashboardLayout = () => {
   };
 
   useEffect(() => {
-    const LastMoveRequests = data?.data?.map((data) => {
-      return { ...data.attributes };
-    });
+    const LastMoveRequests = data?.data
+      ?.filter((data) => data.attributes.isApproved === false)
+      .map((data) => {
+        return { ...data.attributes };
+      });
 
-    const LastDeleteRequests = data2?.data?.map((data2) => {
-      return { ...data2.attributes };
-    });
+    const LastDeleteRequests = data2?.data
+      ?.filter((data) => data.attributes.isApproved === false)
+      .map((data2) => {
+        return { ...data2.attributes };
+      });
+    console.log(LastDeleteRequests);
 
     setNotifications({
       MoveRequests: LastMoveRequests,

@@ -1,5 +1,5 @@
 import React, { createRef, useState } from "react";
-import { Button, message, Form, Select, Input } from "antd";
+import { Button, message, Form, Select, Input, Space } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
@@ -101,26 +101,28 @@ const ReportsExport = () => {
             <Input />
           </Form.Item>
         )}
-        {!isLoading && (
-          <Button
-            style={{ borderRadius: "5px", width: "150px" }}
-            type="primary"
-            htmlType="submit"
-            size={"large"}
-          >
-            <CSVLink
-              filename={"assets.csv"}
-              data={ApiData}
-              className="btn btn-primary"
-              onClick={() => {
-                success("The file is downloading");
-              }}
+        <Space>
+          {!isLoading && (
+            <Button
+              style={{ borderRadius: "5px", width: "150px" }}
+              type="primary"
+              htmlType="submit"
+              size={"large"}
             >
-              Export to CSV
-            </CSVLink>
-          </Button>
-        )}
-        <ExportPdf />
+              <CSVLink
+                filename={"assets.csv"}
+                data={ApiData}
+                className="btn btn-primary"
+                onClick={() => {
+                  success("The file is downloading");
+                }}
+              >
+                Export to CSV
+              </CSVLink>
+            </Button>
+          )}
+          <ExportPdf />
+        </Space>
       </Form>
     </div>
   );

@@ -8,7 +8,7 @@ import { useState } from "react";
 import qs from "qs";
 
 const DroppedAssets = () => {
-  const [search, setSearch] = useState(null);
+  const [search, setSearch] = useState();
 
   const { Search } = Input;
   const [currentPage, setCurrentPage] = useState();
@@ -18,6 +18,9 @@ const DroppedAssets = () => {
       filters: {
         Serial: {
           $contains: search,
+        },
+        isDropped: {
+          $eq: true,
         },
       },
       pagination: {
@@ -32,30 +35,13 @@ const DroppedAssets = () => {
 
   const { data, isLoading } = useGetAssetsQuery(query);
 
-  const ApiData = data?.data
-    // .filter((data) => data.isDropped)
-    .map((data) => {
-      const id = data.id;
-      const { attributes } = data;
-      const employee = data.attributes.employee.data?.attributes;
-      return { id, ...attributes, ...employee };
-    });
-
-  console.log(ApiData);
+  const ApiData = data?.data.map((data) => {
+    const id = data.id;
+    const { attributes } = data;
+    return { id, ...attributes };
+  });
 
   const columns = [
-    {
-      title: "Employee Name",
-      dataIndex: "Name",
-      key: "Name",
-      align: "center",
-    },
-    {
-      title: "Employee I.D",
-      dataIndex: "EmployeeId",
-      key: "EmployeeId",
-      align: "center",
-    },
     {
       title: "SERIAL NUMBER",
       dataIndex: "Serial",
@@ -97,6 +83,15 @@ const DroppedAssets = () => {
       dataIndex: "Office",
       key: "Office",
       align: "center",
+    },
+    {
+      title: "Dropped",
+      dataIndex: "isAccepted",
+      key: "isAccepted",
+      align: "center",
+      render: (value) => {
+        return value && "عهدج ساقطة";
+      },
     },
     {
       title: "Add Date",

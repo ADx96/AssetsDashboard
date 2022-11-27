@@ -175,7 +175,7 @@ const Employees = () => {
     <ContextProvider>
       <div style={{ display: "flex", justifyContent: "end" }}>
         <Space>
-          <AddModal title={"اضافة موظف "} children={<EmployeeForm />} />
+          <AddModal title={"اضافة موظف"} children={<EmployeeForm />} />
           <div style={{ paddingBottom: "30px" }}>
             <Button
               onClick={() => refetch()}

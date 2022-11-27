@@ -118,12 +118,14 @@ const CancelRequests = () => {
   }
 
   return (
-    <Table
-      rowClassName={() => "editable-row"}
-      bordered
-      dataSource={ApiData}
-      columns={columns}
-    />
+    <div style={{ overflow: "auto" }}>
+      <Table
+        rowClassName={() => "editable-row"}
+        bordered
+        dataSource={ApiData}
+        columns={columns}
+      />
+    </div>
   );
 };
 
