@@ -86,11 +86,11 @@ const DroppedAssets = () => {
     },
     {
       title: "Dropped",
-      dataIndex: "isAccepted",
-      key: "isAccepted",
+      dataIndex: "isDropped",
+      key: "isDropped",
       align: "center",
       render: (value) => {
-        return value && "عهدج ساقطة";
+        return value && "عهد ساقطة";
       },
     },
     {
