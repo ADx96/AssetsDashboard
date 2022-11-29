@@ -7,6 +7,7 @@ import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 const ReportsTable = ({ query, setValues }) => {
   const { data, isLoading } = useGetAssetsQuery(query);
   const { success } = message;
+
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;
@@ -78,8 +79,8 @@ const ReportsTable = ({ query, setValues }) => {
   const total = data?.meta.pagination.total;
   const PageSize = data?.meta.pagination.pageSize;
 
-  const Name = ApiData[0].employee.data.attributes.Name;
-  const Id = ApiData[0].employee.data.attributes.EmployeeId;
+  const Name = ApiData[0]?.employee?.data.attributes.Name;
+  const Id = ApiData[0]?.employee?.data.attributes.EmployeeId;
   return (
     <>
       <div style={{ textAlign: "center" }}>

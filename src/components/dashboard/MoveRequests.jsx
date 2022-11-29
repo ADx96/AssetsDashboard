@@ -135,6 +135,7 @@ const MoveRequests = () => {
       <Table
         rowClassName={() => "editable-row"}
         bordered
+        rowKey={(record) => record.id}
         dataSource={ApiData}
         columns={columns}
       />

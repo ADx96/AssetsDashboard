@@ -7,6 +7,7 @@ const DataTable = ({
   components,
   setCurrentPage,
   form,
+  rowKey,
   total,
   PageSize,
 }) => {
@@ -14,6 +15,7 @@ const DataTable = ({
     <Form form={form} component={false}>
       <Table
         columns={columns}
+        rowKey={rowKey}
         components={components}
         pagination={{
           total: total,

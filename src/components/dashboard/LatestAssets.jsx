@@ -58,6 +58,7 @@ const LatestAssets = () => {
       rowClassName={() => "editable-row"}
       bordered
       pagination={false}
+      rowKey={(record) => record.id}
       dataSource={ApiData}
       columns={columns}
     />

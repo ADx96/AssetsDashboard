@@ -198,8 +198,8 @@ const Employees = () => {
         />
         <DataTable
           form={form}
+          rowKey={(record) => record.id}
           columns={mergedColumns}
-          key="id"
           components={{
             body: {
               cell: EditableCell,

@@ -36,7 +36,9 @@ const CancelRequests = () => {
 
   const ApiData = data?.data.map((data) => {
     const employee = data.attributes.employee.data;
-    return { ...data.attributes, ...employee };
+    const id = data.id;
+
+    return { id, ...data.attributes, ...employee };
   });
 
   const columns = [

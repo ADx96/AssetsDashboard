@@ -107,7 +107,6 @@ const DashboardLayout = () => {
       .map((data2) => {
         return { ...data2.attributes };
       });
-    console.log(LastDeleteRequests);
 
     setNotifications({
       MoveRequests: LastMoveRequests,

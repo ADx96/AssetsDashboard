@@ -7,7 +7,7 @@ export const Requests = () => {
   const items = [
     {
       label: "طلبات نقل العهد",
-      key: "item-1",
+      key: "1",
       children: (
         <>
           <h2 style={{ fontSize: "30px", textAlign: "center" }}>
@@ -19,7 +19,7 @@ export const Requests = () => {
     },
     {
       label: "طلبات اسقاط العهد",
-      key: "item-2",
+      key: "2",
       children: (
         <>
           <h2 style={{ fontSize: "30px", textAlign: "center" }}>

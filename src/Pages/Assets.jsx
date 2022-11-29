@@ -259,6 +259,7 @@ const Assets = () => {
 
         <DataTable
           total={total}
+          rowKey={(record) => record.id}
           form={form}
           PageSize={PageSize}
           data={ApiData}
