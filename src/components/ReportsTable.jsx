@@ -117,11 +117,12 @@ const ReportsTable = ({ query, setValues }) => {
         </Button>
         <ExportPdf pdfRef={pdfRef} />
       </Space>
-      <div style={{ textAlign: "right" }}>
-        <h2>الاسم: {Name}</h2>
-        <h2>الرقم الوظيفي: {Id}</h2>
-      </div>
       <div ref={pdfRef}>
+        <div style={{ textAlign: "right" }}>
+          <h2>الاسم: {Name}</h2>
+          <h2>الرقم الوظيفي: {Id}</h2>
+        </div>
+
         <Table
           rowClassName={() => "editable-row"}
           bordered

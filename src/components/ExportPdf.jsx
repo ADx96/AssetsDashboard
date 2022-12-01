@@ -1,6 +1,5 @@
 import React from "react";
 import jsPDF from "jspdf";
-import { renderToString } from "react-dom/server";
 import html2canvas from "html2canvas";
 import { Button } from "antd";
 
