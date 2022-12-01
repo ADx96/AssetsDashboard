@@ -34,6 +34,22 @@ export const RequestsApi = createAppApi({
       }),
       invalidatesTags: ["Delete"],
     }),
+    deleteMoveRequest: builder.mutation({
+      query: (id) => ({
+        url: `/move-requests/${id}`,
+        method: "DELETE",
+        body: { data: { isApproved: true } },
+      }),
+      invalidatesTags: ["Move"],
+    }),
+    deleteDropRequest: builder.mutation({
+      query: (id) => ({
+        url: `/delete-requests/${id}`,
+        method: "DELETE",
+        body: { data: { isApproved: true } },
+      }),
+      invalidatesTags: ["Delete"],
+    }),
   }),
 });
 
@@ -42,4 +58,6 @@ export const {
   useGetMoveRequestsQuery,
   useUpdateDropRequestMutation,
   useUpdateMoveRequestMutation,
+  useDeleteDropRequestMutation,
+  useDeleteMoveRequestMutation,
 } = RequestsApi;

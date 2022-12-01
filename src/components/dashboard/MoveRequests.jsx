@@ -1,4 +1,4 @@
-import { Table, Button, Popconfirm } from "antd";
+import { Table, Button, Popconfirm, Space, message } from "antd";
 import qs from "qs";
 import React, { useState } from "react";
 import {
@@ -8,6 +8,7 @@ import {
 import {
   useGetMoveRequestsQuery,
   useUpdateMoveRequestMutation,
+  useDeleteMoveRequestMutation,
 } from "../../Redux/Api/RequestApi";
 
 const query = {
@@ -15,9 +16,12 @@ const query = {
 };
 
 const MoveRequests = () => {
+  const { success } = message;
   const [serial, setSerial] = useState("");
   const { data, isLoading } = useGetMoveRequestsQuery(query);
   const [updateMoveRequest] = useUpdateMoveRequestMutation();
+  const [deleteMoveRequest] = useDeleteMoveRequestMutation();
+
   const [updateAsset] = useUpdateAssetMutation();
 
   const query2 = qs.stringify(
@@ -41,6 +45,10 @@ const MoveRequests = () => {
     return { id, ...data.attributes, ...employee };
   });
 
+  const handleDelete = async (id) => {
+    deleteMoveRequest(id);
+    success("تم الحذف بنجاح");
+  };
   const columns = [
     {
       title: "Employee Name(القديم)",
@@ -102,24 +110,33 @@ const MoveRequests = () => {
 
         return (
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <Popconfirm
-              disabled={record.isApproved}
-              title="Sure to update?"
-              onConfirm={() => {
-                updateAsset(update);
-                updateMoveRequest(record.id);
-              }}
-            >
-              <Button
+            <Space>
+              <Popconfirm
                 disabled={record.isApproved}
-                onClick={() => setSerial(record.ItemSerial)}
-                style={{
-                  marginRight: 8,
+                title="Sure to update?"
+                onConfirm={() => {
+                  updateAsset(update);
+                  updateMoveRequest(record.id);
                 }}
               >
-                قبول
-              </Button>
-            </Popconfirm>
+                <Button
+                  disabled={record.isApproved}
+                  onClick={() => setSerial(record.ItemSerial)}
+                  style={{
+                    marginRight: 8,
+                  }}
+                >
+                  قبول
+                </Button>
+              </Popconfirm>
+
+              <Popconfirm
+                title="Sure to delete?"
+                onConfirm={() => handleDelete(record.id)}
+              >
+                <Button>Delete</Button>
+              </Popconfirm>
+            </Space>
           </div>
         );
       },

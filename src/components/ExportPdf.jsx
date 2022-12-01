@@ -6,12 +6,6 @@ import { Button } from "antd";
 
 const ExportPdf = ({ pdfRef }) => {
   const exportPDF = () => {
-    // const string = doc.html(renderToString(children), {
-    //   callback: function (doc) {
-    //     doc.save("sample.pdf");
-    //   },
-    // });
-
     html2canvas(pdfRef.current).then((canvas) => {
       let imgWidth = 208;
       let imgHeight = (canvas.height * imgWidth) / canvas.width;

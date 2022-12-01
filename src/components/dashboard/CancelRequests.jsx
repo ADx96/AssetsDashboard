@@ -1,8 +1,9 @@
-import { Button, Table, Popconfirm } from "antd";
+import { Button, Table, Popconfirm, message } from "antd";
 import React, { useState } from "react";
 import {
   useGetDropRequestsQuery,
   useUpdateDropRequestMutation,
+  useDeleteDropRequestMutation,
 } from "../../Redux/Api/RequestApi";
 import {
   useUpdateAssetMutation,
@@ -15,9 +16,12 @@ const query = {
   populate: "employee",
 };
 const CancelRequests = () => {
+  const { success } = message;
   const [serial, setSerial] = useState("");
   const [updateAsset] = useUpdateAssetMutation();
   const [updateDropRequest] = useUpdateDropRequestMutation();
+  const [deleteDropRequest] = useDeleteDropRequestMutation();
+
   const { data, isLoading } = useGetDropRequestsQuery(query);
 
   const query2 = qs.stringify(
@@ -41,6 +45,10 @@ const CancelRequests = () => {
     return { id, ...data.attributes, ...employee };
   });
 
+  const handleDelete = async (id) => {
+    deleteDropRequest(id);
+    success("تم الحذف بنجاح");
+  };
   const columns = [
     {
       title: "Employee Name",
@@ -108,6 +116,12 @@ const CancelRequests = () => {
               >
                 قبول
               </Button>
+            </Popconfirm>
+            <Popconfirm
+              title="Sure to delete?"
+              onConfirm={() => handleDelete(record.id)}
+            >
+              <Button>Delete</Button>
             </Popconfirm>
           </div>
         );
