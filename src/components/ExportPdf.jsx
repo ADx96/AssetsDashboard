@@ -1,18 +1,27 @@
 import React from "react";
-
 import jsPDF from "jspdf";
-import ReactDOMServer from "react-dom/server";
+import { renderToString } from "react-dom/server";
+import html2canvas from "html2canvas";
 import { Button } from "antd";
 
-const ExportPdf = ({ children }) => {
+const ExportPdf = ({ pdfRef }) => {
   const exportPDF = () => {
-    const doc = new jsPDF("p", "pt", "letter");
-    doc.html(ReactDOMServer.renderToString(children), {
-      callback: function (doc) {
-        doc.save("sample.pdf");
-      },
+    // const string = doc.html(renderToString(children), {
+    //   callback: function (doc) {
+    //     doc.save("sample.pdf");
+    //   },
+    // });
+
+    html2canvas(pdfRef.current).then((canvas) => {
+      let imgWidth = 208;
+      let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("download.pdf");
     });
   };
+
   return (
     <Button
       style={{ borderRadius: "5px", width: "150px" }}

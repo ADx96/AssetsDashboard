@@ -1,10 +1,13 @@
-import { Table, Button } from "antd";
-import React from "react";
+import { Table, Button, Space } from "antd";
+import React, { useRef } from "react";
 import { message } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
+import ExportPdf from "./ExportPdf";
 
 const ReportsTable = ({ query, setValues }) => {
+  const pdfRef = useRef(null);
+
   const { data, isLoading } = useGetAssetsQuery(query);
   const { success } = message;
 
@@ -94,36 +97,40 @@ const ReportsTable = ({ query, setValues }) => {
           رجوع
         </Button>
       </div>
-      <Button
-        style={{ borderRadius: "5px", width: "150px" }}
-        type="outline"
-        htmlType="submit"
-        size={"large"}
-      >
-        <CSVLink
-          filename={"Expense_Table.csv"}
-          data={ApiData}
-          className="btn btn-primary"
-          onClick={() => {
-            success("The file is downloading");
-          }}
+      <Space>
+        <Button
+          style={{ borderRadius: "5px", width: "150px" }}
+          type="outline"
+          htmlType="submit"
+          size={"large"}
         >
-          Export to CSV
-        </CSVLink>
-      </Button>
+          <CSVLink
+            filename={"Expense_Table.csv"}
+            data={ApiData}
+            className="btn btn-primary"
+            onClick={() => {
+              success("The file is downloading");
+            }}
+          >
+            Export to CSV
+          </CSVLink>
+        </Button>
+        <ExportPdf pdfRef={pdfRef} />
+      </Space>
       <div style={{ textAlign: "right" }}>
         <h2>الاسم: {Name}</h2>
         <h2>الرقم الوظيفي: {Id}</h2>
       </div>
-
-      <Table
-        rowClassName={() => "editable-row"}
-        bordered
-        total={total}
-        PageSize={PageSize}
-        dataSource={ApiData}
-        columns={columns}
-      />
+      <div ref={pdfRef}>
+        <Table
+          rowClassName={() => "editable-row"}
+          bordered
+          total={total}
+          PageSize={PageSize}
+          dataSource={ApiData}
+          columns={columns}
+        />
+      </div>
     </>
   );
 };
