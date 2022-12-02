@@ -40,13 +40,13 @@ const MoveRequests = () => {
   const { data: id } = useGetAssetQuery(query2);
 
   const ApiData = data?.data.map((data) => {
-    const id = data.id;
+    const ReqId = data.id;
     const employee = data.attributes.employee.data?.attributes;
-    return { id, ...data.attributes, ...employee };
+    return { ReqId, ...data.attributes, ...employee };
   });
 
-  const handleDelete = async (id) => {
-    deleteMoveRequest(id);
+  const handleDelete = async (ReqId) => {
+    deleteMoveRequest(ReqId);
     success("تم الحذف بنجاح");
   };
   const columns = [
@@ -116,7 +116,7 @@ const MoveRequests = () => {
                 title="Sure to update?"
                 onConfirm={() => {
                   updateAsset(update);
-                  updateMoveRequest(record.id);
+                  updateMoveRequest(record.ReqId);
                 }}
               >
                 <Button
@@ -132,7 +132,7 @@ const MoveRequests = () => {
 
               <Popconfirm
                 title="Sure to delete?"
-                onConfirm={() => handleDelete(record.id)}
+                onConfirm={() => handleDelete(record.ReqId)}
               >
                 <Button>Delete</Button>
               </Popconfirm>
@@ -152,7 +152,7 @@ const MoveRequests = () => {
       <Table
         rowClassName={() => "editable-row"}
         bordered
-        rowKey={(record) => record.id}
+        rowKey={(record) => record.ReqId}
         dataSource={ApiData}
         columns={columns}
       />

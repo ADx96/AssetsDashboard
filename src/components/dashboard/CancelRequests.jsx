@@ -40,13 +40,13 @@ const CancelRequests = () => {
 
   const ApiData = data?.data.map((data) => {
     const employee = data.attributes.employee.data;
-    const id = data.id;
+    const ReqId = data.id;
 
-    return { id, ...data.attributes, ...employee };
+    return { ReqId, ...data.attributes, ...employee };
   });
 
-  const handleDelete = async (id) => {
-    deleteDropRequest(id);
+  const handleDelete = async (RequestID) => {
+    deleteDropRequest(RequestID);
     success("تم الحذف بنجاح");
   };
   const columns = [
@@ -89,6 +89,7 @@ const CancelRequests = () => {
       dataIndex: "operation",
       key: "operation",
       render: (_, record) => {
+        console.log(record);
         const update = {
           id,
           Submit: {
@@ -119,7 +120,7 @@ const CancelRequests = () => {
             </Popconfirm>
             <Popconfirm
               title="Sure to delete?"
-              onConfirm={() => handleDelete(record.id)}
+              onConfirm={() => handleDelete(record.ReqId)}
             >
               <Button>Delete</Button>
             </Popconfirm>
