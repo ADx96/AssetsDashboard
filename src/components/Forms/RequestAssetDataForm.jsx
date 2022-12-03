@@ -3,12 +3,17 @@ import { Form, Button, Input, Select } from "antd";
 import qs from "qs";
 import ReportsTable from "../ReportsTable";
 import ReportsExport from "../dashboard/ReportsExport";
+import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 
 const RequestAssetDataForm = () => {
   const pdfRef = useRef(null);
   const formRef = createRef();
   const { Option } = Select;
-  const [value, setValues] = useState("");
+  const [total, setTotal] = useState("");
+  const [value, setValues] = useState({
+    selected: "",
+    text: "",
+  });
 
   const query = qs.stringify(
     {
@@ -16,36 +21,42 @@ const RequestAssetDataForm = () => {
       populate: "employee",
       filters: {
         Serial: {
-          $contains: value.Selected === "Serial" ? value.text : "",
+          $contains: value.selected === "Serial" ? value.text : "",
         },
         employee: {
           EmployeeId: {
-            $contains: value.Selected === "EmployeeId" ? value.text : "",
+            $contains: value.selected === "EmployeeId" ? value.text : "",
           },
         },
       },
-    },
-
-    {
       pagination: {
-        start: 0,
-        limit: 1000,
+        pageSize: total,
       },
     },
     {
       encodeValuesOnly: true, // prettify URL
     }
   );
+  const { data, isLoading, refetch } = useGetAssetsQuery(query);
 
   const onFinish = (values) => {
+    const getTotal = data?.meta.pagination.total;
+    setTotal(getTotal);
     setValues(values);
     formRef.current?.resetFields();
+    refetch();
   };
   return (
     <>
-      {value ? (
+      {value.text ? (
         <div style={{ overflow: "auto" }}>
-          <ReportsTable pdfRef={pdfRef} setValues={setValues} query={query} />
+          <ReportsTable
+            data={data}
+            isLoading={isLoading}
+            pdfRef={pdfRef}
+            setValues={setValues}
+            query={query}
+          />
         </div>
       ) : (
         <>
@@ -71,7 +82,7 @@ const RequestAssetDataForm = () => {
             }}
             autoComplete="off"
           >
-            <Form.Item label="بحث عن طريق" name="Selected">
+            <Form.Item label="بحث عن طريق" name="selected">
               <Select>
                 <Option value={"EmployeeId"}>Employee ID</Option>
                 <Option value={"Serial"}>Serial Number</Option>

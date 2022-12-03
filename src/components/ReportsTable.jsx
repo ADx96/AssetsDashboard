@@ -2,11 +2,9 @@ import { Table, Button, Space } from "antd";
 import React from "react";
 import { message } from "antd";
 import { CSVLink } from "react-csv";
-import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 import ExportPdf from "./ExportPdf";
 
-const ReportsTable = ({ query, setValues, pdfRef }) => {
-  const { data, isLoading } = useGetAssetsQuery(query);
+const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
   const { success } = message;
 
   const ApiData = data?.data.map((data) => {
@@ -85,8 +83,8 @@ const ReportsTable = ({ query, setValues, pdfRef }) => {
     return <h1>loading</h1>;
   }
 
-  const Name = ApiData[0]?.employee?.data.attributes.Name;
-  const Id = ApiData[0]?.employee?.data.attributes.EmployeeId;
+  const Name = ApiData[0]?.Name;
+  const Id = ApiData[0]?.EmployeeId;
   return (
     <>
       <div style={{ textAlign: "center" }}>
