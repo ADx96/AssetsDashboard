@@ -1,10 +1,9 @@
 import React, { createRef, useState } from "react";
-import { Button, message, Form, Select, Input, Space, Table } from "antd";
+import { Button, message, Form, Select, Input, Space } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
 import ExportPdf from "../ExportPdf";
-import { columns } from "../TableColumns";
 
 const ReportsExport = ({ pdfRef }) => {
   const formRef = createRef();
