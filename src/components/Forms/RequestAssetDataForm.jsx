@@ -1,10 +1,11 @@
-import React, { createRef, useState } from "react";
+import React, { createRef, useState, useRef } from "react";
 import { Form, Button, Input, Select } from "antd";
 import qs from "qs";
 import ReportsTable from "../ReportsTable";
 import ReportsExport from "../dashboard/ReportsExport";
 
 const RequestAssetDataForm = () => {
+  const pdfRef = useRef(null);
   const formRef = createRef();
   const { Option } = Select;
   const [value, setValues] = useState("");
@@ -25,7 +26,7 @@ const RequestAssetDataForm = () => {
     },
     {
       pagination: {
-        pageSize: 300,
+        limit: -1,
       },
     },
     {
@@ -41,7 +42,7 @@ const RequestAssetDataForm = () => {
     <>
       {value ? (
         <div style={{ overflow: "auto" }}>
-          <ReportsTable setValues={setValues} query={query} />
+          <ReportsTable pdfRef={pdfRef} setValues={setValues} query={query} />
         </div>
       ) : (
         <>
@@ -92,7 +93,7 @@ const RequestAssetDataForm = () => {
               </Button>
             </div>
           </Form>
-          <ReportsExport />
+          <ReportsExport pdfRef={pdfRef} />
         </>
       )}
     </>

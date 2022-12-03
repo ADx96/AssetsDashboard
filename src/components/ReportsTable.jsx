@@ -1,13 +1,11 @@
 import { Table, Button, Space } from "antd";
-import React, { useRef } from "react";
+import React from "react";
 import { message } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 import ExportPdf from "./ExportPdf";
 
-const ReportsTable = ({ query, setValues }) => {
-  const pdfRef = useRef(null);
-
+const ReportsTable = ({ query, setValues, pdfRef }) => {
   const { data, isLoading } = useGetAssetsQuery(query);
   const { success } = message;
 
@@ -36,28 +34,24 @@ const ReportsTable = ({ query, setValues }) => {
       title: "SPECIFICATION",
       dataIndex: "Specs",
       key: "Specs",
-      editable: true,
       align: "center",
     },
     {
       title: "OS",
       dataIndex: "os",
       key: "os",
-      editable: true,
       align: "center",
     },
     {
       title: "BUILDING",
       dataIndex: "Building",
       key: "Building",
-      editable: true,
       align: "center",
     },
     {
       title: "FlOOR",
       dataIndex: "Floor",
       key: "Floor",
-      editable: true,
       align: "center",
     },
     {
@@ -65,7 +59,6 @@ const ReportsTable = ({ query, setValues }) => {
       dataIndex: "Office",
       key: "Office",
       align: "center",
-      editable: true,
     },
 
     {
@@ -79,8 +72,6 @@ const ReportsTable = ({ query, setValues }) => {
   if (isLoading) {
     return <h1>loading</h1>;
   }
-  const total = data?.meta.pagination.total;
-  const PageSize = data?.meta.pagination.pageSize;
 
   const Name = ApiData[0]?.employee?.data.attributes.Name;
   const Id = ApiData[0]?.employee?.data.attributes.EmployeeId;
@@ -126,8 +117,7 @@ const ReportsTable = ({ query, setValues }) => {
         <Table
           rowClassName={() => "editable-row"}
           bordered
-          total={total}
-          PageSize={PageSize}
+          pagination={false}
           dataSource={ApiData}
           columns={columns}
         />

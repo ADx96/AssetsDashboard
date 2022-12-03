@@ -1,11 +1,12 @@
 import React, { createRef, useState } from "react";
-import { Button, message, Form, Select, Input, Space } from "antd";
+import { Button, message, Form, Select, Input, Space, Table } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
 import ExportPdf from "../ExportPdf";
+import { columns } from "../TableColumns";
 
-const ReportsExport = () => {
+const ReportsExport = ({ pdfRef }) => {
   const formRef = createRef();
   const { Option } = Select;
   const [value, setValues] = useState("");
@@ -27,7 +28,6 @@ const ReportsExport = () => {
         },
       },
       pagination: {
-        start: 0,
         limit: -1,
       },
     },
@@ -38,7 +38,7 @@ const ReportsExport = () => {
   const { data, isLoading, refetch } = useGetAssetsQuery(query);
 
   const ApiData = data?.data.map((data) => {
-    const { Serial, ItemName, Building, Floor, Office, CreatedAt } =
+    const { Serial, ItemName, Building, Floor, Office, createdAt } =
       data.attributes;
     const employee = data.attributes.employee.data?.attributes;
     const { EmployeeId, Name } = employee;
@@ -51,7 +51,7 @@ const ReportsExport = () => {
       Building,
       Floor,
       Office,
-      CreatedAt,
+      createdAt,
     };
   });
 
@@ -121,7 +121,7 @@ const ReportsExport = () => {
               </CSVLink>
             </Button>
           )}
-          <ExportPdf />
+          <ExportPdf pdfRef={pdfRef} />
         </Space>
       </Form>
     </div>

@@ -6,11 +6,23 @@ import { Button } from "antd";
 const ExportPdf = ({ pdfRef }) => {
   const exportPDF = () => {
     html2canvas(pdfRef.current).then((canvas) => {
-      let imgWidth = 208;
+      let imgWidth = 295;
       let imgHeight = (canvas.height * imgWidth) / canvas.width;
+      let heightLeft = imgHeight;
+      let pageHeight = 350;
+
       const imgData = canvas.toDataURL("img/png");
-      const pdf = new jsPDF("p", "mm", "a4");
+      const pdf = new jsPDF("l", "mm", "a4");
       pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      let position = 2;
+      heightLeft -= pageHeight;
+
+      while (heightLeft >= 0) {
+        position = heightLeft - imgHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+        heightLeft -= pageHeight;
+      }
       pdf.save("download.pdf");
     });
   };
