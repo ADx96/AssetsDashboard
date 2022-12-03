@@ -1,33 +1,20 @@
 import React, { createRef, useState } from "react";
-import { Button, message, Form, Select, Input, Space } from "antd";
+import { Button, message, Form, Select, Space } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
-import ExportPdf from "../ExportPdf";
 
 const ReportsExport = ({ pdfRef }) => {
   const formRef = createRef();
   const { Option } = Select;
-  const [value, setValues] = useState("");
-  const [option, setOption] = useState("");
-
+  const [total, setTotal] = useState("");
   const { success } = message;
 
   const query = qs.stringify(
     {
       populate: "employee",
-      filters: {
-        employee: {
-          Name: {
-            $contains: value,
-          },
-          EmployeeId: {
-            $contains: value,
-          },
-        },
-      },
       pagination: {
-        limit: -1,
+        limit: total,
       },
     },
     {
@@ -39,8 +26,9 @@ const ReportsExport = ({ pdfRef }) => {
   const ApiData = data?.data.map((data) => {
     const { Serial, ItemName, Building, Floor, Office, createdAt } =
       data.attributes;
-    const employee = data.attributes.employee.data?.attributes;
-    const { EmployeeId, Name } = employee;
+    const employee = data.attributes?.employee?.data?.attributes;
+    const EmployeeId = employee?.EmployeeId;
+    const Name = employee?.Name;
 
     return {
       EmployeeId,
@@ -54,9 +42,9 @@ const ReportsExport = ({ pdfRef }) => {
     };
   });
 
-  const onFinish = (values) => {
-    setValues(values);
-    formRef.current?.resetFields();
+  const onFinish = () => {
+    const getTotal = data?.meta.pagination.total;
+    setTotal(getTotal);
     refetch();
   };
 
@@ -86,20 +74,11 @@ const ReportsExport = ({ pdfRef }) => {
         autoComplete="off"
       >
         <Form.Item label="اختار" name="Selected">
-          <Select onChange={(value) => setOption(value)}>
+          <Select>
             <Option value={"AllEmployees"}>جميع الموظفين</Option>
-            <Option value={"Employee"}>موظف</Option>
           </Select>
         </Form.Item>
-        {option !== "AllEmployees" && (
-          <Form.Item
-            label="ادخل البيانات"
-            name="text"
-            rules={[{ required: true, message: "Required!" }]}
-          >
-            <Input />
-          </Form.Item>
-        )}
+
         <Space>
           {!isLoading && (
             <Button
@@ -120,7 +99,6 @@ const ReportsExport = ({ pdfRef }) => {
               </CSVLink>
             </Button>
           )}
-          <ExportPdf pdfRef={pdfRef} />
         </Space>
       </Form>
     </div>

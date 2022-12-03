@@ -38,7 +38,7 @@ const AddModal = ({ children, title }) => {
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        {children}
+        {children || ""}
       </Modal>
     </>
   );

@@ -12,6 +12,7 @@ const RequestAssetDataForm = () => {
 
   const query = qs.stringify(
     {
+      sort: ["id"],
       populate: "employee",
       filters: {
         Serial: {
@@ -24,9 +25,11 @@ const RequestAssetDataForm = () => {
         },
       },
     },
+
     {
       pagination: {
-        limit: -1,
+        start: 0,
+        limit: 1000,
       },
     },
     {

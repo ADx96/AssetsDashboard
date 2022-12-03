@@ -10,11 +10,23 @@ const ReportsTable = ({ query, setValues, pdfRef }) => {
   const { success } = message;
 
   const ApiData = data?.data.map((data) => {
-    const id = data.id;
-    const { attributes } = data;
+    const { Serial, ItemName, Building, os, Specs, Floor, Office, createdAt } =
+      data.attributes;
     const employee = data.attributes.employee.data?.attributes;
+    const { EmployeeId, Name } = employee;
 
-    return { id, ...attributes, ...employee };
+    return {
+      EmployeeId,
+      Specs,
+      Name,
+      os,
+      Serial,
+      ItemName,
+      Building,
+      Floor,
+      Office,
+      createdAt,
+    };
   });
 
   const columns = [
