@@ -28,6 +28,9 @@ const Assets = () => {
     {
       populate: "employee",
       filters: {
+        isDropped: {
+          $eq: false,
+        },
         employee: {
           Name: {
             $contains: !reg.test(search) ? search : "",

@@ -45,6 +45,7 @@ const CancelRequests = () => {
     return { ReqId, ...data.attributes, ...employee };
   });
 
+  console.log(ApiData);
   const handleDelete = async (RequestID) => {
     deleteDropRequest(RequestID);
     success("تم الحذف بنجاح");
@@ -76,8 +77,8 @@ const CancelRequests = () => {
     },
     {
       title: "Accepted",
-      dataIndex: "isAccepted",
-      key: "isAccepted",
+      dataIndex: "isApproved",
+      key: "isApproved",
       align: "center",
       render: (value) => {
         return value ? "Approved" : "Pending";
@@ -89,11 +90,10 @@ const CancelRequests = () => {
       dataIndex: "operation",
       key: "operation",
       render: (_, record) => {
-        console.log(record);
         const update = {
           id,
           Submit: {
-            employee: 0,
+            employee: null,
             isDropped: true,
           },
         };
@@ -105,7 +105,7 @@ const CancelRequests = () => {
               title="Sure to update?"
               onConfirm={() => {
                 updateAsset(update);
-                updateDropRequest(record.id);
+                updateDropRequest(record.ReqId);
               }}
             >
               <Button
