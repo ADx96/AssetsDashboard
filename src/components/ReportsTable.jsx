@@ -11,8 +11,8 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
     const { Serial, ItemName, Building, os, Specs, Floor, Office, createdAt } =
       data.attributes;
     const employee = data.attributes.employee.data?.attributes;
-    const { EmployeeId, Name } = employee;
-
+    const Name = employee?.Name;
+    const EmployeeId = employee?.EmployeeId;
     return {
       EmployeeId,
       Specs,

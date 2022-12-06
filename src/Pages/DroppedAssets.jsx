@@ -6,13 +6,11 @@ import { Button, Input, Popconfirm } from "antd";
 import { EditableCell } from "../components/Forms/Editable";
 import { useState } from "react";
 import qs from "qs";
-import { useUpdateDropRequestMutation } from "../Redux/Api/RequestApi";
 import { useUpdateAssetMutation } from "../Redux/Api/AssetsApi";
 
 const DroppedAssets = () => {
   const [search, setSearch] = useState();
   const [updateAsset] = useUpdateAssetMutation();
-  const [updateDropRequest] = useUpdateDropRequestMutation();
 
   const { Search } = Input;
   const [currentPage, setCurrentPage] = useState();
@@ -109,9 +107,9 @@ const DroppedAssets = () => {
       dataIndex: "operation",
       key: "operation",
       render: (_, record) => {
-        const AssetId = record.id;
+        const id = record.id;
         const update = {
-          AssetId,
+          id,
           Submit: {
             employee: null,
             isDropped: false,
@@ -124,11 +122,9 @@ const DroppedAssets = () => {
               title="Sure to update?"
               onConfirm={() => {
                 updateAsset(update);
-                updateDropRequest(record.ReqId);
               }}
             >
               <Button
-                disabled={record.isApproved}
                 style={{
                   marginRight: 8,
                 }}

@@ -10,10 +10,7 @@ const RequestAssetDataForm = () => {
   const formRef = createRef();
   const { Option } = Select;
   const [total, setTotal] = useState("");
-  const [value, setValues] = useState({
-    selected: "",
-    text: "",
-  });
+  const [value, setValues] = useState("");
 
   const query = qs.stringify(
     {
@@ -23,11 +20,7 @@ const RequestAssetDataForm = () => {
         Serial: {
           $contains: value.selected === "Serial" ? value.text : "",
         },
-        employee: {
-          EmployeeId: {
-            $contains: value.selected === "EmployeeId" ? value.text : "",
-          },
-        },
+        employee: {},
       },
       pagination: {
         pageSize: total,

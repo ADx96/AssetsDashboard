@@ -38,7 +38,6 @@ export const RequestsApi = createAppApi({
       query: (id) => ({
         url: `/move-requests/${id}`,
         method: "DELETE",
-        body: { data: { isApproved: true } },
       }),
       invalidatesTags: ["Move"],
     }),
@@ -46,7 +45,6 @@ export const RequestsApi = createAppApi({
       query: (id) => ({
         url: `/delete-requests/${id}`,
         method: "DELETE",
-        body: { data: { isApproved: true } },
       }),
       invalidatesTags: ["Delete"],
     }),
