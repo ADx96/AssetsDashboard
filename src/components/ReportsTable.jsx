@@ -85,6 +85,7 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
 
   const Name = ApiData[0]?.Name;
   const Id = ApiData[0]?.EmployeeId;
+
   return (
     <>
       <div style={{ textAlign: "center" }}>
@@ -120,8 +121,8 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
       </Space>
       <div ref={pdfRef}>
         <div style={{ textAlign: "right" }}>
-          <h2>الاسم: {Name}</h2>
-          <h2>الرقم الوظيفي: {Id}</h2>
+          <h2> {Name} :الاسم</h2>
+          <h2>{Id} :الوظيفي الرقم</h2>
         </div>
 
         <Table

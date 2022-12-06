@@ -12,6 +12,11 @@ const RequestAssetDataForm = () => {
   const [total, setTotal] = useState("");
   const [value, setValues] = useState("");
 
+  const FilterEmp =
+    value.selected === "EmployeeId"
+      ? { EmployeeId: { $contains: value.text } }
+      : "";
+
   const query = qs.stringify(
     {
       sort: ["id"],
@@ -20,7 +25,9 @@ const RequestAssetDataForm = () => {
         Serial: {
           $contains: value.selected === "Serial" ? value.text : "",
         },
-        employee: {},
+        employee: {
+          ...FilterEmp,
+        },
       },
       pagination: {
         pageSize: total,
