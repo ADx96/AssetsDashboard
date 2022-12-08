@@ -1,13 +1,13 @@
-import React, { useState, Modal } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, message, Space } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
-import SelectEmployee from "../Forms/SelectEmployee";
+import ExportPdf from "../ExportPdf";
 
 const ReportsExport = () => {
   const [total, setTotal] = useState("");
-  const [open, setOpen] = "";
+  const [isPdf, setIsPdf] = useState(false);
   const { success } = message;
 
   const query = qs.stringify(
@@ -22,6 +22,15 @@ const ReportsExport = () => {
     }
   );
   const { data, isLoading, refetch } = useGetAssetsQuery(query);
+  const getTotal = data?.meta.pagination.total;
+
+  useEffect(() => {
+    const ChangeData = () => {
+      refetch();
+      setTotal(getTotal);
+    };
+    ChangeData();
+  }, [refetch, getTotal]);
 
   const ApiData = data?.data.map((data) => {
     const { Serial, ItemName, Building, Floor, Office, createdAt } =
@@ -42,40 +51,21 @@ const ReportsExport = () => {
     };
   });
 
-  const OnClick = () => {
-    refetch();
+  const handleClick = () => {
     success("The file is downloading");
-    const getTotal = data?.meta.pagination.total;
-    setTotal(getTotal);
   };
 
-  const handleOk = () => {
-    setOpen(false);
-  };
-
-  const handleCancel = () => {
-    setOpen(false);
-  };
   return (
     <div style={{ marginTop: "30px", textAlign: "center" }}>
       <h2 style={{ fontSize: "30px", textAlign: "center" }}>
         Csv طباعة العهد جميع الموظفين
       </h2>
-      <Modal
-        title={"ارجاع العهدة"}
-        open={open}
-        footer={false}
-        onOk={handleOk}
-        onCancel={handleCancel}
-      >
-        <SelectEmployee />
-      </Modal>
       <Space>
         {!isLoading && (
           <Button
             style={{ borderRadius: "5px", width: "150px" }}
+            onClick={handleClick}
             type="primary"
-            onClick={OnClick}
             size={"large"}
           >
             <CSVLink
@@ -87,6 +77,9 @@ const ReportsExport = () => {
             </CSVLink>
           </Button>
         )}
+        <div onClick={() => setIsPdf(true)}>
+          <ExportPdf isPdf={isPdf} ApiData={ApiData} />
+        </div>
       </Space>
     </div>
   );

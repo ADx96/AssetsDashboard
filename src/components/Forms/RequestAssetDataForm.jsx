@@ -40,11 +40,11 @@ const RequestAssetDataForm = () => {
   const { data, isLoading, refetch } = useGetAssetsQuery(query);
 
   const onFinish = (values) => {
+    refetch();
     const getTotal = data?.meta.pagination.total;
     setTotal(getTotal);
     setValues(values);
     formRef.current?.resetFields();
-    refetch();
   };
   return (
     <>

@@ -1,5 +1,4 @@
 import DataTable from "../components/DataTable";
-
 import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 import { ContextProvider } from "../Hooks/ContextProvider";
 import { Input } from "antd";
