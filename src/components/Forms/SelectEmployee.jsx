@@ -57,7 +57,7 @@ const SelectEmployee = ({ newData }) => {
     const update = {
       newData,
       Submit: {
-        employee: null,
+        employee: values.employee,
         isDropped: false,
       },
     };
