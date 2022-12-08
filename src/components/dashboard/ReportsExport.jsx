@@ -1,13 +1,13 @@
-import React, { createRef, useState } from "react";
-import { Button, message, Form, Select, Space } from "antd";
+import React, { useState, Modal } from "react";
+import { Button, message, Space } from "antd";
 import { CSVLink } from "react-csv";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
+import SelectEmployee from "../Forms/SelectEmployee";
 
-const ReportsExport = ({ pdfRef }) => {
-  const formRef = createRef();
-  const { Option } = Select;
+const ReportsExport = () => {
   const [total, setTotal] = useState("");
+  const [open, setOpen] = "";
   const { success } = message;
 
   const query = qs.stringify(
@@ -42,65 +42,52 @@ const ReportsExport = ({ pdfRef }) => {
     };
   });
 
-  const onFinish = () => {
+  const OnClick = () => {
+    refetch();
+    success("The file is downloading");
     const getTotal = data?.meta.pagination.total;
     setTotal(getTotal);
-    refetch();
   };
 
+  const handleOk = () => {
+    setOpen(false);
+  };
+
+  const handleCancel = () => {
+    setOpen(false);
+  };
   return (
     <div style={{ marginTop: "30px", textAlign: "center" }}>
-      <h2 style={{ fontSize: "30px", textAlign: "center" }}>csv طباعة العهد</h2>
-      <Form
-        name="basic"
-        ref={formRef}
-        layout="vertical"
-        style={{ textAlign: "center" }}
-        initialValues={{ remember: false }}
-        onFinish={onFinish}
-        labelCol={{
-          sm: {
-            span: 16,
-            offset: 8,
-          },
-        }}
-        wrapperCol={{
-          span: 24,
-          sm: {
-            span: 8,
-            offset: 8,
-          },
-        }}
-        autoComplete="off"
+      <h2 style={{ fontSize: "30px", textAlign: "center" }}>
+        Csv طباعة العهد جميع الموظفين
+      </h2>
+      <Modal
+        title={"ارجاع العهدة"}
+        open={open}
+        footer={false}
+        onOk={handleOk}
+        onCancel={handleCancel}
       >
-        <Form.Item label="اختار" name="Selected">
-          <Select>
-            <Option value={"AllEmployees"}>جميع الموظفين</Option>
-          </Select>
-        </Form.Item>
-
-        <Space>
-          {!isLoading && (
-            <Button
-              style={{ borderRadius: "5px", width: "150px" }}
-              type="primary"
-              htmlType="submit"
-              size={"large"}
+        <SelectEmployee />
+      </Modal>
+      <Space>
+        {!isLoading && (
+          <Button
+            style={{ borderRadius: "5px", width: "150px" }}
+            type="primary"
+            onClick={OnClick}
+            size={"large"}
+          >
+            <CSVLink
+              filename={"assets.csv"}
+              data={ApiData}
+              className="btn btn-primary"
             >
-              <CSVLink
-                filename={"assets.csv"}
-                data={ApiData}
-                className="btn btn-primary"
-                onClick={() => {
-                  success("The file is downloading");
-                }}
-              >
-                Export to CSV
-              </CSVLink>
-            </Button>
-          )}
-        </Space>
-      </Form>
+              Export to CSV
+            </CSVLink>
+          </Button>
+        )}
+      </Space>
     </div>
   );
 };

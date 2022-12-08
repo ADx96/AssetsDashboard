@@ -2,18 +2,21 @@ import DataTable from "../components/DataTable";
 
 import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 import { ContextProvider } from "../Hooks/ContextProvider";
-import { Button, Input, Popconfirm } from "antd";
+import { Input } from "antd";
 import { EditableCell } from "../components/Forms/Editable";
 import { useState } from "react";
 import qs from "qs";
-import { useUpdateAssetMutation } from "../Redux/Api/AssetsApi";
+import AddModal from "../components/AddModal";
+import SelectEmployee from "../components/Forms/SelectEmployee";
 
 const DroppedAssets = () => {
   const [search, setSearch] = useState();
-  const [updateAsset] = useUpdateAssetMutation();
-
+  const [newData, setNewData] = useState(null);
   const { Search } = Input;
   const [currentPage, setCurrentPage] = useState();
+
+  console.log(newData);
+
   const query = qs.stringify(
     {
       populate: "employee",
@@ -108,30 +111,18 @@ const DroppedAssets = () => {
       key: "operation",
       render: (_, record) => {
         const id = record.id;
-        const update = {
-          id,
-          Submit: {
-            employee: null,
-            isDropped: false,
-          },
-        };
 
         return (
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Popconfirm
-              title="Sure to update?"
-              onConfirm={() => {
-                updateAsset(update);
-              }}
-            >
-              <Button
-                style={{
-                  marginRight: 8,
-                }}
-              >
-                ارجاع
-              </Button>
-            </Popconfirm>
+          <div
+            onClick={() => setNewData(id)}
+            style={{ display: "flex", justifyContent: "center" }}
+          >
+            <ContextProvider>
+              <AddModal
+                title={"ارجاع"}
+                children={<SelectEmployee newData={newData} />}
+              />
+            </ContextProvider>
           </div>
         );
       },
@@ -146,30 +137,28 @@ const DroppedAssets = () => {
   }
 
   return (
-    <ContextProvider>
-      <div style={{ overflow: "auto" }}>
-        <Search
-          style={{ width: "40%" }}
-          placeholder="Search By Item Serial"
-          onSearch={(value) => {
-            setSearch(value);
-          }}
-        />
+    <div style={{ overflow: "auto" }}>
+      <Search
+        style={{ width: "40%" }}
+        placeholder="Search By Item Serial"
+        onSearch={(value) => {
+          setSearch(value);
+        }}
+      />
 
-        <DataTable
-          total={total}
-          PageSize={PageSize}
-          data={ApiData}
-          setCurrentPage={setCurrentPage}
-          components={{
-            body: {
-              cell: EditableCell,
-            },
-          }}
-          columns={columns}
-        />
-      </div>
-    </ContextProvider>
+      <DataTable
+        total={total}
+        PageSize={PageSize}
+        data={ApiData}
+        setCurrentPage={setCurrentPage}
+        components={{
+          body: {
+            cell: EditableCell,
+          },
+        }}
+        columns={columns}
+      />
+    </div>
   );
 };
 

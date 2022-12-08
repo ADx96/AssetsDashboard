@@ -65,7 +65,6 @@ const AssetsForm = () => {
       layout={"vertical"}
       initialValues={{ remember: true }}
       onFinish={onFinish}
-      // onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Space direction="vertical" size="middle" style={{ display: "flex" }}>
