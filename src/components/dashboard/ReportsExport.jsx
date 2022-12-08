@@ -52,6 +52,7 @@ const ReportsExport = () => {
   });
 
   const handleClick = () => {
+    setIsPdf(true);
     success("The file is downloading");
   };
 
@@ -68,13 +69,17 @@ const ReportsExport = () => {
             type="primary"
             size={"large"}
           >
-            <CSVLink
-              filename={"assets.csv"}
-              data={ApiData}
-              className="btn btn-primary"
-            >
-              Export to CSV
-            </CSVLink>
+            {isPdf ? (
+              <CSVLink
+                filename={"assets.csv"}
+                data={ApiData}
+                className="btn btn-primary"
+              >
+                Export to CSV
+              </CSVLink>
+            ) : (
+              "Export to CSV"
+            )}
           </Button>
         )}
         <div onClick={() => setIsPdf(true)}>

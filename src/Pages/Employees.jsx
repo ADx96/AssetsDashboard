@@ -22,6 +22,7 @@ const Employees = () => {
   const reg = new RegExp(/^[0-9]+$/);
   const [editingKey, setEditingKey] = useState("");
   const [currentPage, setCurrentPage] = useState();
+
   const isEditing = (record) => record.id === editingKey;
   const query = qs.stringify(
     {

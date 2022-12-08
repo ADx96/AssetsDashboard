@@ -1,7 +1,7 @@
 import React from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-// import autoTable from "jspdf-autotable";
+import autoTable from "jspdf-autotable";
 import font from "../components/AmiriFont";
 import { Button } from "antd";
 
@@ -30,45 +30,42 @@ const ExportPdf = ({ pdfRef, ApiData, isPdf }) => {
         pdf.save("download.pdf");
       });
     } else {
-      // autoTable(pdf, {
-      //   bodyStyles: { StyleDef: { font: "Amiri" } },
-      //   head: [
-      //     [
-      //       "EmployeeId",
-      //       "Name",
-      //       "Serial",
-      //       "ItemName",
-      //       "Building",
-      //       "Floor",
-      //       "Office",
-      //       "createdAt",
-      //     ],
-      //   ],
-      //   body: ApiData,
-      //   columns: [
-      //     { header: "EmployeeId", dataKey: "EmployeeId" },
-      //     { header: "Name", dataKey: "Name" },
-      //     { header: "ItemName", dataKey: "ItemName" },
-      //     { header: "Building", dataKey: "Building" },
-      //     { header: "Floor", dataKey: "Floor" },
-      //     { header: "Office", dataKey: "Office" },
-      //     { header: "createdAt", dataKey: "createdAt" },
-      //   ],
-      // });
-      const callAddFont = () => {
-        pdf.addFileToVFS(
-          "NotoSansArabic-VariableFont_wdth,wght-normal.ttf",
-          font
-        );
-        pdf.addFont(
-          "NotoSansArabic-VariableFont_wdth,wght-normal.ttf",
-          "NotoSansArabic-VariableFont_wdth,wght",
-          "normal"
-        );
-      };
-      jsPDF.API.events.push(["addFonts", callAddFont]);
+      pdf.addFileToVFS(
+        "NotoSansArabic-VariableFont_wdth,wght-normal.ttf",
+        font
+      );
+      pdf.addFont(
+        "NotoSansArabic-VariableFont_wdth,wght-normal.ttf",
+        "NotoSansArabic-VariableFont_wdth,wght",
+        "normal"
+      );
+      pdf.setFont("NotoSansArabic-VariableFont_wdth,wght", "normal");
+      autoTable(pdf, {
+        bodyStyles: { font: "NotoSansArabic-VariableFont_wdth,wght" },
+        head: [
+          [
+            "EmployeeId",
+            "Name",
+            "Serial",
+            "ItemName",
+            "Building",
+            "Floor",
+            "Office",
+            "createdAt",
+          ],
+        ],
+        body: ApiData,
+        columns: [
+          { header: "EmployeeId", dataKey: "EmployeeId" },
+          { header: "Name", dataKey: "Name" },
+          { header: "ItemName", dataKey: "ItemName" },
+          { header: "Building", dataKey: "Building" },
+          { header: "Floor", dataKey: "Floor" },
+          { header: "Office", dataKey: "Office" },
+          { header: "createdAt", dataKey: "createdAt" },
+        ],
+      });
 
-      pdf.text("عربي!", 1, 1);
       pdf.save("download.pdf");
     }
   };
