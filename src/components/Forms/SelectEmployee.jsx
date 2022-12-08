@@ -6,7 +6,7 @@ import { useGetEmployeesQuery } from "../../Redux/Api/EmployeesApi";
 import ModalContext from "../../Hooks/ContextProvider";
 import { useUpdateAssetMutation } from "../../Redux/Api/AssetsApi";
 
-const SelectEmployee = ({ newData }) => {
+const SelectEmployee = ({ id }) => {
   const { setModal } = useContext(ModalContext);
   const [updateAsset, isSuccess] = useUpdateAssetMutation();
   const { success } = message;
@@ -55,7 +55,7 @@ const SelectEmployee = ({ newData }) => {
   const onFinish = async (values) => {
     formRef.current?.resetFields();
     const update = {
-      newData,
+      id,
       Submit: {
         employee: values.employee,
         isDropped: false,
@@ -68,6 +68,7 @@ const SelectEmployee = ({ newData }) => {
   return (
     <Form
       name="basic"
+      ref={formRef}
       layout={"vertical"}
       initialValues={{ remember: true }}
       onFinish={onFinish}

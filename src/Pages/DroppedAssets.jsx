@@ -10,11 +10,10 @@ import SelectEmployee from "../components/Forms/SelectEmployee";
 
 const DroppedAssets = () => {
   const [search, setSearch] = useState();
-  const [newData, setNewData] = useState(null);
+  const [id, setId] = useState(null);
   const { Search } = Input;
   const [currentPage, setCurrentPage] = useState();
-
-  console.log(newData);
+  console.log(id);
 
   const query = qs.stringify(
     {
@@ -113,14 +112,11 @@ const DroppedAssets = () => {
 
         return (
           <div
-            onClick={() => setNewData(id)}
+            onClick={() => setId(id)}
             style={{ display: "flex", justifyContent: "center" }}
           >
             <ContextProvider>
-              <AddModal
-                title={"ارجاع"}
-                children={<SelectEmployee newData={newData} />}
-              />
+              <AddModal title={"ارجاع"} children={<SelectEmployee id={id} />} />
             </ContextProvider>
           </div>
         );

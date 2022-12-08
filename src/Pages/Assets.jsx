@@ -16,37 +16,20 @@ const Assets = () => {
   const [form] = Form.useForm();
   const [deleteAsset] = useDeleteAssetMutation();
   const [updateAsset] = useUpdateAssetMutation();
-  const [search, setSearch] = useState(null);
-  const reg = new RegExp(/^[0-9]+$/);
+  const [search, setSearch] = useState("");
 
   const { Search } = Input;
   const { success } = message;
   const [currentPage, setCurrentPage] = useState();
   const [editingKey, setEditingKey] = useState("");
   const isEditing = (record) => record.id === editingKey;
+
   const query = qs.stringify(
     {
       populate: "employee",
       filters: {
-        $or: [
-          {
-            isDropped: {
-              $null: true,
-            },
-          },
-          {
-            isDropped: {
-              $eq: false,
-            },
-          },
-        ],
-        employee: {
-          Name: {
-            $contains: !reg.test(search) ? search : "",
-          },
-          EmployeeId: {
-            $contains: reg.test(search) ? search : "",
-          },
+        Serial: {
+          $contains: search,
         },
       },
       pagination: {
@@ -64,7 +47,7 @@ const Assets = () => {
   const ApiData = data?.data.map((data) => {
     const id = data.id;
     const { attributes } = data;
-    const employee = data.attributes.employee.data?.attributes;
+    const employee = data.attributes.employee?.data?.attributes;
     return { id, ...attributes, ...employee };
   });
 
@@ -263,7 +246,7 @@ const Assets = () => {
       <div style={{ overflow: "auto" }}>
         <Search
           style={{ width: "40%" }}
-          placeholder="Search By Employee Id And name"
+          placeholder="Search By Serial"
           onSearch={(value) => {
             setSearch(value);
           }}
