@@ -121,7 +121,7 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
       </Space>
       <div ref={pdfRef}>
         <div style={{ textAlign: "right" }}>
-          <h2> {Name} :الاسم</h2>
+          <h2> الاسم: {Name} </h2>
           <h2>{Id} :الوظيفي الرقم</h2>
         </div>
 
