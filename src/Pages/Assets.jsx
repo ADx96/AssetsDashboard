@@ -31,6 +31,9 @@ const Assets = () => {
         Serial: {
           $contains: search,
         },
+        isDropped: {
+          $eq: false,
+        },
       },
       pagination: {
         page: currentPage,
