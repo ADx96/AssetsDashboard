@@ -12,10 +12,19 @@ import {
 
 import qs from "qs";
 
-const query = {
-  populate: "employee",
-};
-const CancelRequests = () => {
+const query = qs.stringify(
+  {
+    filters: {
+      isApproved: {
+        $eq: false,
+      },
+    },
+  },
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
+const DropRequests = () => {
   const { success } = message;
   const [serial, setSerial] = useState("");
   const [updateAsset] = useUpdateAssetMutation();
@@ -45,7 +54,6 @@ const CancelRequests = () => {
     return { ReqId, ...data.attributes, ...employee };
   });
 
-  console.log(ApiData);
   const handleDelete = async (RequestID) => {
     deleteDropRequest(RequestID);
     success("تم الحذف بنجاح");
@@ -146,4 +154,4 @@ const CancelRequests = () => {
   );
 };
 
-export default CancelRequests;
+export default DropRequests;

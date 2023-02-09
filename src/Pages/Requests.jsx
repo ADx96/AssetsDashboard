@@ -1,6 +1,6 @@
 import { Tabs } from "antd";
 import React from "react";
-import CancelRequests from "../components/dashboard/CancelRequests";
+import DropRequests from "../components/dashboard/DropRequests";
 import MoveRequests from "../components/dashboard/MoveRequests";
 
 export const Requests = () => {
@@ -25,7 +25,7 @@ export const Requests = () => {
           <h2 style={{ fontSize: "30px", textAlign: "center" }}>
             طلبات اسقاط العهد
           </h2>
-          <CancelRequests />
+          <DropRequests />
         </>
       ),
     },

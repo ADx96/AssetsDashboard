@@ -13,7 +13,6 @@ const DroppedAssets = () => {
   const [id, setId] = useState(null);
   const { Search } = Input;
   const [currentPage, setCurrentPage] = useState();
-  console.log(id);
 
   const query = qs.stringify(
     {
@@ -108,11 +107,11 @@ const DroppedAssets = () => {
       dataIndex: "operation",
       key: "operation",
       render: (_, record) => {
-        const id = record.id;
+        const Id = record.id;
 
         return (
           <div
-            onClick={() => setId(id)}
+            onClick={() => setId(Id)}
             style={{ display: "flex", justifyContent: "center" }}
           >
             <ContextProvider>

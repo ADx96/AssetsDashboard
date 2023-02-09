@@ -11,9 +11,9 @@ import {
   useDeleteMoveRequestMutation,
 } from "../../Redux/Api/RequestApi";
 
-const query = {
+const query = qs.stringify({
   populate: "employee",
-};
+});
 
 const MoveRequests = () => {
   const { success } = message;

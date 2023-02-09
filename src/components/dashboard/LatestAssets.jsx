@@ -1,15 +1,22 @@
 import { Table } from "antd";
 import React from "react";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
+import qs from "qs";
 
-const query = {
-  populate: "employee",
-  filters: {
-    isDropped: {
-      $eq: false,
+const query = qs.stringify(
+  {
+    populate: "employee",
+
+    filters: {
+      isDropped: {
+        $eq: false,
+      },
     },
   },
-};
+  {
+    encodeValuesOnly: true, // prettify URL
+  }
+);
 const LatestAssets = () => {
   const { data, isLoading } = useGetAssetsQuery(query);
 
