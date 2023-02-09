@@ -4,6 +4,11 @@ import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 
 const query = {
   populate: "employee",
+  filters: {
+    isDropped: {
+      $eq: false,
+    },
+  },
 };
 const LatestAssets = () => {
   const { data, isLoading } = useGetAssetsQuery(query);
