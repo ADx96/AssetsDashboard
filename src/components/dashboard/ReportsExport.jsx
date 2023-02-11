@@ -33,7 +33,7 @@ const ReportsExport = () => {
   }, [refetch, getTotal]);
 
   const ApiData = data?.data.map((data) => {
-    const { Serial, ItemName, Building, Floor, Office, createdAt } =
+    const { Serial, ItemName, Building, Floor, Office, createdAt, status } =
       data.attributes;
     const employee = data.attributes?.employee?.data?.attributes;
     const EmployeeId = employee?.EmployeeId;
@@ -44,6 +44,7 @@ const ReportsExport = () => {
       Name,
       Serial,
       ItemName,
+      status,
       Building,
       Floor,
       Office,

@@ -52,7 +52,12 @@ const LatestAssets = () => {
       align: "center",
       key: "ItemName",
     },
-
+    {
+      title: "STATUS",
+      dataIndex: "status",
+      align: "center",
+      key: "status",
+    },
     {
       title: "Add Date",
       dataIndex: "createdAt",

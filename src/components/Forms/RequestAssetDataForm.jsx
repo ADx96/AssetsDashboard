@@ -26,7 +26,7 @@ const RequestAssetDataForm = () => {
           $contains: value.selected === "Serial" ? value.text : "",
         },
         employee: {
-          ...FilterEmp,
+          FilterEmp,
         },
       },
       pagination: {

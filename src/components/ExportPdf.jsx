@@ -51,6 +51,7 @@ const ExportPdf = ({ pdfRef, ApiData, isPdf }) => {
             "Building",
             "Floor",
             "Office",
+            "status",
             "createdAt",
           ],
         ],
@@ -62,6 +63,7 @@ const ExportPdf = ({ pdfRef, ApiData, isPdf }) => {
           { header: "Building", dataKey: "Building" },
           { header: "Floor", dataKey: "Floor" },
           { header: "Office", dataKey: "Office" },
+          { header: "Status", dataKey: "status" },
           { header: "createdAt", dataKey: "createdAt" },
         ],
       });

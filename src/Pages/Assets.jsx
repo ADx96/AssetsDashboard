@@ -148,6 +148,12 @@ const Assets = () => {
       align: "center",
     },
     {
+      title: "Status",
+      dataIndex: "status",
+      key: "Office",
+      align: "center",
+    },
+    {
       title: "Add Date",
       dataIndex: "createdAt",
       key: "createdAt",
