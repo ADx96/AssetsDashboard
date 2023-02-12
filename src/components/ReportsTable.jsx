@@ -8,8 +8,17 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
   const { success } = message;
 
   const ApiData = data?.data.map((data) => {
-    const { Serial, ItemName, Building, os, Specs, Floor, Office, createdAt } =
-      data.attributes;
+    const {
+      Serial,
+      ItemName,
+      Building,
+      os,
+      Specs,
+      Floor,
+      Office,
+      createdAt,
+      status,
+    } = data.attributes;
     const employee = data.attributes.employee.data?.attributes;
     const Name = employee?.Name;
     const EmployeeId = employee?.EmployeeId;
@@ -23,6 +32,7 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
       Building,
       Floor,
       Office,
+      status,
       createdAt,
     };
   });
@@ -70,7 +80,12 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
       key: "Office",
       align: "center",
     },
-
+    {
+      title: "STATUS",
+      dataIndex: "status",
+      key: "status",
+      align: "center",
+    },
     {
       title: "Add Date",
       dataIndex: "createdAt",
