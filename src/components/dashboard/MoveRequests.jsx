@@ -105,6 +105,7 @@ const MoveRequests = () => {
           id,
           Submit: {
             employee: record.Trans_EmpId,
+            status: "transferred",
           },
         };
 

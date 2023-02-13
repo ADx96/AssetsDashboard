@@ -48,7 +48,7 @@ const DropRequests = () => {
   const { data: id } = useGetAssetQuery(query2);
 
   const ApiData = data?.data.map((data) => {
-    const employee = data.attributes.employee.data;
+    const employee = data?.attributes?.employee?.data;
     const ReqId = data.id;
 
     return { ReqId, ...data.attributes, ...employee };
@@ -103,6 +103,7 @@ const DropRequests = () => {
           Submit: {
             employee: null,
             isDropped: true,
+            status: "dropped",
           },
         };
 

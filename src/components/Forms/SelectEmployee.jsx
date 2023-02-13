@@ -59,6 +59,7 @@ const SelectEmployee = ({ id }) => {
       Submit: {
         employee: values.employee,
         isDropped: false,
+        status: "active",
       },
     };
     updateAsset(update);

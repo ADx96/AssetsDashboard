@@ -23,7 +23,7 @@ export const AssetsApi = createAppApi({
       query: (Data) => ({
         url: `/assets/${Data.id}`,
         method: "PUT",
-        body: { data: { ...Data.Submit } },
+        body: { data: Data.Submit },
       }),
       invalidatesTags: ["Assets"],
     }),
