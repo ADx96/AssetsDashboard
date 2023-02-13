@@ -57,6 +57,30 @@ const ReportsExport = () => {
     success("The file is downloading");
   };
 
+  const PdfCol = [
+    { header: "EmployeeId", dataKey: "EmployeeId" },
+    { header: "Name", dataKey: "Name" },
+    { header: "ItemName", dataKey: "ItemName" },
+    { header: "Building", dataKey: "Building" },
+    { header: "Floor", dataKey: "Floor" },
+    { header: "Office", dataKey: "Office" },
+    { header: "Status", dataKey: "status" },
+    { header: "createdAt", dataKey: "createdAt" },
+  ];
+
+  const PdfHead = [
+    [
+      "EmployeeId",
+      "Name",
+      "Serial",
+      "ItemName",
+      "Building",
+      "Floor",
+      "Office",
+      "status",
+      "createdAt",
+    ],
+  ];
   return (
     <div style={{ marginTop: "30px", textAlign: "center" }}>
       <h2 style={{ fontSize: "30px", textAlign: "center" }}>
@@ -84,7 +108,12 @@ const ReportsExport = () => {
           </Button>
         )}
         <div onClick={() => setIsPdf(true)}>
-          <ExportPdf isPdf={isPdf} ApiData={ApiData} />
+          <ExportPdf
+            head={PdfHead}
+            PdfCol={PdfCol}
+            isPdf={isPdf}
+            ApiData={ApiData}
+          />
         </div>
       </Space>
     </div>

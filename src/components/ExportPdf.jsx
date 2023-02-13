@@ -5,7 +5,7 @@ import autoTable from "jspdf-autotable";
 import font from "../components/AmiriFont";
 import { Button } from "antd";
 
-const ExportPdf = ({ pdfRef, ApiData, isPdf }) => {
+const ExportPdf = ({ head, column, pdfRef, ApiData, isPdf }) => {
   const exportPDF = () => {
     const pdf = new jsPDF("l", "mm", "a4");
 
@@ -42,30 +42,9 @@ const ExportPdf = ({ pdfRef, ApiData, isPdf }) => {
       pdf.setFont("NotoSansArabic-VariableFont_wdth,wght", "normal");
       autoTable(pdf, {
         bodyStyles: { font: "NotoSansArabic-VariableFont_wdth,wght" },
-        head: [
-          [
-            "EmployeeId",
-            "Name",
-            "Serial",
-            "ItemName",
-            "Building",
-            "Floor",
-            "Office",
-            "status",
-            "createdAt",
-          ],
-        ],
+        head: [head],
         body: ApiData,
-        columns: [
-          { header: "EmployeeId", dataKey: "EmployeeId" },
-          { header: "Name", dataKey: "Name" },
-          { header: "ItemName", dataKey: "ItemName" },
-          { header: "Building", dataKey: "Building" },
-          { header: "Floor", dataKey: "Floor" },
-          { header: "Office", dataKey: "Office" },
-          { header: "Status", dataKey: "status" },
-          { header: "createdAt", dataKey: "createdAt" },
-        ],
+        columns: column,
       });
 
       pdf.save("download.pdf");

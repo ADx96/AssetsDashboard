@@ -3,12 +3,14 @@ import { useGetAssetsQuery } from "../Redux/Api/AssetsApi";
 import { ContextProvider } from "../Hooks/ContextProvider";
 import { Input } from "antd";
 import { EditableCell } from "../components/Forms/Editable";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import qs from "qs";
 import AddModal from "../components/AddModal";
 import SelectEmployee from "../components/Forms/SelectEmployee";
+import ExportPdf from "../components/ExportPdf";
 
 const DroppedAssets = () => {
+  const pdfRef = useRef(null);
   const [search, setSearch] = useState();
   const [id, setId] = useState(null);
   const { Search } = Input;
@@ -44,6 +46,12 @@ const DroppedAssets = () => {
   });
 
   const columns = [
+    {
+      title: "Employee Name",
+      dataIndex: "name",
+      key: "name",
+      align: "center",
+    },
     {
       title: "SERIAL NUMBER",
       dataIndex: "Serial",
@@ -130,28 +138,70 @@ const DroppedAssets = () => {
     return <h1>loading</h1>;
   }
 
+  const PdfHead = [
+    "Employee Name",
+    "Serial",
+    "ITEM",
+    "SPECIFICATION",
+    "OS",
+    "BUILDING",
+    "FLOOR",
+    "OFFICE",
+    "isDropped",
+    "createdAt",
+  ];
+
+  const PdfCol = [
+    { header: "Employee", dataKey: "Employee" },
+    { header: "Serial", dataKey: "Serial" },
+    { header: "ITEM", dataKey: "ItemName" },
+    { header: "Specification", dataKey: "Specs" },
+    { header: "OS", dataKey: "os" },
+    { header: "Building", dataKey: "Building" },
+    { header: "Floor", dataKey: "Floor" },
+    { header: "OFFICE", dataKey: "Office" },
+    { header: "isDropped", dataKey: "isDropped" },
+    { header: "createdAt", dataKey: "createdAt" },
+  ];
+
   return (
     <div style={{ overflow: "auto" }}>
-      <Search
-        style={{ width: "40%" }}
-        placeholder="Search By Item Serial"
-        onSearch={(value) => {
-          setSearch(value);
+      <div
+        style={{
+          display: "flex",
+          position: "relative",
+          marginBottom: "10px",
+          justifyContent: "space-between",
         }}
-      />
-
-      <DataTable
-        total={total}
-        PageSize={PageSize}
-        data={ApiData}
-        setCurrentPage={setCurrentPage}
-        components={{
-          body: {
-            cell: EditableCell,
-          },
-        }}
-        columns={columns}
-      />
+      >
+        <Search
+          style={{ width: "40%" }}
+          placeholder="Search By Item Serial"
+          onSearch={(value) => {
+            setSearch(value);
+          }}
+        />
+        <ExportPdf
+          head={PdfHead}
+          column={PdfCol}
+          isPdf={true}
+          ApiData={ApiData}
+        />
+      </div>
+      <div ref={pdfRef}>
+        <DataTable
+          total={total}
+          PageSize={PageSize}
+          data={ApiData}
+          setCurrentPage={setCurrentPage}
+          components={{
+            body: {
+              cell: EditableCell,
+            },
+          }}
+          columns={columns}
+        />
+      </div>
     </div>
   );
 };

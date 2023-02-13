@@ -101,7 +101,6 @@ const DropRequests = () => {
         const update = {
           id,
           Submit: {
-            employee: null,
             isDropped: true,
             status: "dropped",
           },
