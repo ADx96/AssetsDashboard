@@ -41,8 +41,9 @@ const DroppedAssets = () => {
 
   const ApiData = data?.data.map((data) => {
     const id = data.id;
+    const employee = data.attributes.employee?.data?.attributes;
     const { attributes } = data;
-    return { id, ...attributes };
+    return { id, ...attributes, ...employee };
   });
 
   const columns = [
