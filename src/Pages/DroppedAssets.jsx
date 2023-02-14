@@ -49,8 +49,8 @@ const DroppedAssets = () => {
   const columns = [
     {
       title: "Employee Name",
-      dataIndex: "name",
-      key: "name",
+      dataIndex: "Name",
+      key: "Name",
       align: "center",
     },
     {
@@ -153,7 +153,7 @@ const DroppedAssets = () => {
   ];
 
   const PdfCol = [
-    { header: "Employee", dataKey: "Employee" },
+    { header: "Employee", dataKey: "Name" },
     { header: "Serial", dataKey: "Serial" },
     { header: "ITEM", dataKey: "ItemName" },
     { header: "Specification", dataKey: "Specs" },
