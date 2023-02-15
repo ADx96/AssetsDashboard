@@ -20,8 +20,10 @@ const DroppedAssets = () => {
     {
       populate: "employee",
       filters: {
-        Serial: {
-          $contains: search,
+        employee: {
+          EmployeeId: {
+            $eq: search,
+          },
         },
         isDropped: {
           $eq: true,
@@ -177,7 +179,7 @@ const DroppedAssets = () => {
       >
         <Search
           style={{ width: "40%" }}
-          placeholder="Search By Item Serial"
+          placeholder="Search By Item Employee Id"
           onSearch={(value) => {
             setSearch(value);
           }}

@@ -14,6 +14,7 @@ import qs from "qs";
 
 const query = qs.stringify(
   {
+    populate: "employee",
     filters: {
       isApproved: {
         $eq: false,
@@ -48,9 +49,8 @@ const DropRequests = () => {
   const { data: id } = useGetAssetQuery(query2);
 
   const ApiData = data?.data.map((data) => {
-    const employee = data?.attributes?.employee?.data;
+    const employee = data.attributes.employee.data?.attributes;
     const ReqId = data.id;
-
     return { ReqId, ...data.attributes, ...employee };
   });
 
