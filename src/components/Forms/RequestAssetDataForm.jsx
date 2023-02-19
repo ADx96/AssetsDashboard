@@ -1,9 +1,9 @@
 import React, { createRef, useState, useRef } from "react";
 import { Form, Button, Input, Select } from "antd";
-import qs from "qs";
 import ReportsTable from "../ReportsTable";
 import ReportsExport from "../dashboard/ReportsExport";
 import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
+import qs from "qs";
 
 const RequestAssetDataForm = () => {
   const pdfRef = useRef(null);
@@ -12,23 +12,35 @@ const RequestAssetDataForm = () => {
   const [total, setTotal] = useState("");
   const [value, setValues] = useState("");
 
-  const FilterEmp =
-    value.selected === "EmployeeId"
-      ? { EmployeeId: { $contains: value.text } }
-      : "";
-
-  const query = qs.stringify(
-    {
-      sort: ["id"],
-      populate: "employee",
-      filters: {
-        Serial: {
-          $contains: value.selected === "Serial" ? value.text : "",
-        },
-        employee: {
-          ...FilterEmp,
+  const filter = {
+    filters: {
+      Serial: {
+        $endsWith: value.selected === "Serial" ? value.text : "",
+      },
+      employee: {
+        EmployeeId: {
+          $contains: value.selected === "EmployeeId" ? value.text : "",
         },
       },
+    },
+  };
+
+  const checkedFilter = (obj) => {
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key];
+      if (typeof value === "object") {
+        checkedFilter(value); // recursively check nested object properties
+      } else if (value === "") {
+        delete obj[key]; // delete the key if the value matches the given string
+      }
+    });
+    return obj;
+  };
+  const newFilter = checkedFilter(filter);
+  const query = qs.stringify(
+    {
+      populate: "employee",
+      ...newFilter,
       pagination: {
         pageSize: total,
       },
@@ -37,14 +49,15 @@ const RequestAssetDataForm = () => {
       encodeValuesOnly: true, // prettify URL
     }
   );
+
   const { data, isLoading, refetch } = useGetAssetsQuery(query);
 
-  const onFinish = (values) => {
-    refetch();
-    const getTotal = data?.meta.pagination.total;
+  const onFinish = async (values) => {
+    const getTotal = data?.meta.pagination.pageSize;
     setTotal(getTotal);
     setValues(values);
     formRef.current?.resetFields();
+    await refetch();
   };
   return (
     <>

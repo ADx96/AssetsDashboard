@@ -7,7 +7,7 @@ import {
   useUpdateAssetMutation,
 } from "../Redux/Api/AssetsApi";
 import { ContextProvider } from "../Hooks/ContextProvider";
-import { Space, Button, message, Popconfirm, Form, Input } from "antd";
+import { Space, Button, message, Popconfirm, Form, Input, Select } from "antd";
 import { EditableCell } from "../components/Forms/Editable";
 import { useState } from "react";
 import qs from "qs";
@@ -16,7 +16,10 @@ const Assets = () => {
   const [form] = Form.useForm();
   const [deleteAsset] = useDeleteAssetMutation();
   const [updateAsset] = useUpdateAssetMutation();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState({
+    value: "",
+    selected: "",
+  });
 
   const { Search } = Input;
   const { success } = message;
@@ -24,17 +27,40 @@ const Assets = () => {
   const [editingKey, setEditingKey] = useState("");
   const isEditing = (record) => record.id === editingKey;
 
+  const filter = {
+    filters: {
+      Serial: {
+        $eq: search.selected === "serial" ? search.value : "",
+      },
+      employee: {
+        Name: {
+          $eq: search.selected === "name" ? search.value : "",
+        },
+        EmployeeId: {
+          $eq: search.selected === "id" ? search.value : "",
+        },
+      },
+      isDropped: {
+        $eq: false,
+      },
+    },
+  };
+  const checkedFilter = (obj) => {
+    Object.keys(obj).forEach((key) => {
+      const value = obj[key];
+      if (typeof value === "object") {
+        checkedFilter(value); // recursively check nested object properties
+      } else if (value === "") {
+        delete obj[key]; // delete the key if the value matches the given string
+      }
+    });
+    return obj;
+  };
+  const newFilter = checkedFilter(filter);
   const query = qs.stringify(
     {
       populate: "employee",
-      filters: {
-        Serial: {
-          $contains: search,
-        },
-        isDropped: {
-          $eq: false,
-        },
-      },
+      ...newFilter,
       pagination: {
         page: currentPage,
         pageSize: 10,
@@ -255,9 +281,21 @@ const Assets = () => {
       <div style={{ overflow: "auto" }}>
         <Search
           style={{ width: "40%" }}
-          placeholder="Search By Serial"
+          placeholder="Search By Serial and EmployeeId"
           onSearch={(value) => {
-            setSearch(value);
+            setSearch({ ...search, value: value });
+          }}
+        />
+        <Select
+          style={{ width: 150 }}
+          placeholder="Select for search"
+          options={[
+            { value: "id", label: "Employee Id" },
+            { value: "name", label: "Employee Name" },
+            { value: "serial", label: "Serial" },
+          ]}
+          onSelect={(value) => {
+            setSearch({ ...search, selected: value });
           }}
         />
 

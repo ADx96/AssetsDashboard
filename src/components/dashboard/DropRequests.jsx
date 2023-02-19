@@ -46,7 +46,7 @@ const DropRequests = () => {
       encodeValuesOnly: true, // prettify URL
     }
   );
-  const { data: id } = useGetAssetQuery(query2);
+  const { data: ID } = useGetAssetQuery(query2);
 
   const ApiData = data?.data.map((data) => {
     const employee = data.attributes.employee.data?.attributes;
@@ -55,7 +55,7 @@ const DropRequests = () => {
   });
 
   const handleDelete = async (RequestID) => {
-    deleteDropRequest(RequestID);
+    await deleteDropRequest(RequestID);
     success("تم الحذف بنجاح");
   };
   const columns = [
@@ -99,7 +99,7 @@ const DropRequests = () => {
       key: "operation",
       render: (_, record) => {
         const update = {
-          id,
+          ID,
           Submit: {
             isDropped: true,
             status: "dropped",
@@ -111,9 +111,9 @@ const DropRequests = () => {
             <Popconfirm
               disabled={record.isApproved}
               title="Sure to update?"
-              onConfirm={() => {
-                updateAsset(update);
-                updateDropRequest(record.ReqId);
+              onConfirm={async () => {
+                await updateAsset(update);
+                await updateDropRequest(record.ReqId);
               }}
             >
               <Button
