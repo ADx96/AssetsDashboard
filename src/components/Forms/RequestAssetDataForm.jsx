@@ -9,13 +9,12 @@ const RequestAssetDataForm = () => {
   const pdfRef = useRef(null);
   const formRef = createRef();
   const { Option } = Select;
-  const [total, setTotal] = useState("");
   const [value, setValues] = useState("");
 
   const filter = {
     filters: {
       Serial: {
-        $endsWith: value.selected === "Serial" ? value.text : "",
+        $eq: value.selected === "Serial" ? value.text : "",
       },
       employee: {
         EmployeeId: {
@@ -42,7 +41,7 @@ const RequestAssetDataForm = () => {
       populate: "employee",
       ...newFilter,
       pagination: {
-        pageSize: total,
+        pageSize: 1200,
       },
     },
     {
@@ -53,8 +52,6 @@ const RequestAssetDataForm = () => {
   const { data, isLoading, refetch } = useGetAssetsQuery(query);
 
   const onFinish = async (values) => {
-    const getTotal = data?.meta.pagination.pageSize;
-    setTotal(getTotal);
     setValues(values);
     formRef.current?.resetFields();
     await refetch();

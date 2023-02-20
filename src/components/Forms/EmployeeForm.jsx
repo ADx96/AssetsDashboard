@@ -13,6 +13,7 @@ const EmployeeForm = () => {
 
   const onFinish = async (values) => {
     formRef.current?.resetFields();
+    values.EmployeeId = values.EmployeeId.replace(/\s/g, "");
     const data = { data: values };
     await createEmployee(data);
     setModal(false);

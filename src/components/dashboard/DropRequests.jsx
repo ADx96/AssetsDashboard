@@ -38,7 +38,7 @@ const DropRequests = () => {
     {
       filters: {
         Serial: {
-          $contains: serial,
+          $eq: serial,
         },
       },
     },
@@ -47,7 +47,7 @@ const DropRequests = () => {
     }
   );
   const { data: ID } = useGetAssetQuery(query2);
-
+  console.log(ID);
   const ApiData = data?.data.map((data) => {
     const employee = data.attributes.employee.data?.attributes;
     const ReqId = data.id;
@@ -118,7 +118,9 @@ const DropRequests = () => {
             >
               <Button
                 disabled={record.isApproved}
-                onClick={() => setSerial(record.ItemSerial)}
+                onClick={() => {
+                  setSerial(record.SerialNumber);
+                }}
                 style={{
                   marginRight: 8,
                 }}

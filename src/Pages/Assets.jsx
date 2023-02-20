@@ -30,11 +30,11 @@ const Assets = () => {
   const filter = {
     filters: {
       Serial: {
-        $eq: search.selected === "serial" ? search.value : "",
+        $endsWith: search.selected === "serial" ? search.value : "",
       },
       employee: {
         Name: {
-          $eq: search.selected === "name" ? search.value : "",
+          $contains: search.selected === "name" ? search.value : "",
         },
         EmployeeId: {
           $eq: search.selected === "id" ? search.value : "",
