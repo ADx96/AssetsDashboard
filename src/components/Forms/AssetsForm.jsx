@@ -38,7 +38,7 @@ const AssetsForm = () => {
   const { success } = message;
   const [createAsset, isSuccess] = useCreateAssetMutation();
   const onFinish = async (values) => {
-    values.Serial = values.Serial.replace(/\s/g, "");
+    values.Serial = values.Serial.replace(/[\t\n\s]+/g, "");
     formRef.current?.resetFields();
     const data = { data: values };
     await createAsset(data);
