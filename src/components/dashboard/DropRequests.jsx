@@ -98,6 +98,10 @@ const DropRequests = () => {
       dataIndex: "operation",
       key: "operation",
       render: (_, record) => {
+        const newRecord = (record.SerialNumber = record.SerialNumber.replace(
+          /[\t\n\s]+/g,
+          ""
+        ));
         const update = {
           ID,
           Submit: {
@@ -119,7 +123,7 @@ const DropRequests = () => {
               <Button
                 disabled={record.isApproved}
                 onClick={() => {
-                  setSerial(record.SerialNumber);
+                  setSerial(newRecord);
                 }}
                 style={{
                   marginRight: 8,

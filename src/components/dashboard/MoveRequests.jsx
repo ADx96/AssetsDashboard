@@ -101,6 +101,11 @@ const MoveRequests = () => {
       dataIndex: "operation",
       key: "operation",
       render: (_, record) => {
+        const newRecord = (record.ItemSerial = record.ItemSerial.replace(
+          /[\t\n\s]+/g,
+          ""
+        ));
+
         const update = {
           id,
           Submit: {
@@ -122,7 +127,7 @@ const MoveRequests = () => {
               >
                 <Button
                   disabled={record.isApproved}
-                  onClick={() => setSerial(record.ItemSerial)}
+                  onClick={() => setSerial(newRecord)}
                   style={{
                     marginRight: 8,
                   }}
