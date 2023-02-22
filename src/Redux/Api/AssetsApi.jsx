@@ -41,7 +41,8 @@ export const AssetsApi = createAppApi({
       }),
       transformResponse: (responseData) => {
         const id = responseData.data[0].id;
-        return id;
+        if (id) return id;
+        return;
       },
       providesTags: ["Assets"],
     }),

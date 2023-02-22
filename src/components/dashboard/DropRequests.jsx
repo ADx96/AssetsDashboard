@@ -46,7 +46,7 @@ const DropRequests = () => {
       encodeValuesOnly: true, // prettify URL
     }
   );
-  const { data: ID } = useGetAssetQuery(query2);
+  const { data: id } = useGetAssetQuery(query2);
   const ApiData = data?.data.map((data) => {
     const employee = data.attributes.employee.data?.attributes;
     const ReqId = data.id;
@@ -102,7 +102,7 @@ const DropRequests = () => {
           ""
         ));
         const update = {
-          ID,
+          id,
           Submit: {
             isDropped: true,
             status: "dropped",
