@@ -47,7 +47,6 @@ const DropRequests = () => {
     }
   );
   const { data: ID } = useGetAssetQuery(query2);
-  console.log(ID);
   const ApiData = data?.data.map((data) => {
     const employee = data.attributes.employee.data?.attributes;
     const ReqId = data.id;
