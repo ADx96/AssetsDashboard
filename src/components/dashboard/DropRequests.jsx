@@ -38,7 +38,7 @@ const DropRequests = () => {
     {
       filters: {
         Serial: {
-          $eq: serial,
+          $contains: serial,
         },
       },
     },
@@ -114,9 +114,9 @@ const DropRequests = () => {
             <Popconfirm
               disabled={record.isApproved}
               title="Sure to update?"
-              onConfirm={async () => {
-                await updateAsset(update);
-                await updateDropRequest(record.ReqId);
+              onConfirm={() => {
+                updateAsset(update);
+                updateDropRequest(record.ReqId);
               }}
             >
               <Button
