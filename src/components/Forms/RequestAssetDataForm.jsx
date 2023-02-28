@@ -11,10 +11,17 @@ const RequestAssetDataForm = () => {
   const { Option } = Select;
   const [value, setValues] = useState("");
 
+  const checkLength =
+    value.text?.length > 5
+      ? {
+          $contains: value.selected === "Serial" ? value.text : "",
+        }
+      : { $eq: value.selected === "Serial" ? value.text : "" };
+
   const filter = {
     filters: {
       Serial: {
-        $eq: value.selected === "Serial" ? value.text : "",
+        ...checkLength,
       },
       employee: {
         EmployeeId: {
