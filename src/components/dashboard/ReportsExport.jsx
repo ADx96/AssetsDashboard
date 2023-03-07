@@ -7,7 +7,6 @@ import ExportPdf from "../ExportPdf";
 
 const ReportsExport = () => {
   const [total, setTotal] = useState("");
-  const [isPdf, setIsPdf] = useState(false);
   const { success } = message;
 
   const query = qs.stringify(
@@ -25,61 +24,68 @@ const ReportsExport = () => {
   const getTotal = data?.meta.pagination.total;
 
   useEffect(() => {
-    const ChangeData = () => {
-      refetch();
+    const ChangeData = async () => {
+      await refetch();
       setTotal(getTotal);
     };
     ChangeData();
   }, [refetch, getTotal]);
 
   const ApiData = data?.data.map((data) => {
-    const { Serial, ItemName, Building, Floor, Office, createdAt, status } =
-      data.attributes;
+    const id = data.id;
+
+    const {
+      Serial,
+      ItemName,
+      Building,
+      Floor,
+      Office,
+      createdAt,
+      status,
+      isDropped,
+    } = data.attributes;
     const employee = data.attributes?.employee?.data?.attributes;
     const EmployeeId = employee?.EmployeeId;
     const Name = employee?.Name;
 
     return {
+      id,
       EmployeeId,
       Name,
       Serial,
       ItemName,
-      status,
       Building,
       Floor,
       Office,
       createdAt,
+      status,
+      isDropped,
     };
   });
+  console.log(ApiData);
 
-  const handleClick = () => {
-    setIsPdf(true);
-    success("The file is downloading");
-  };
-
+  const PdfHead = [
+    "Employee ID",
+    "Name",
+    "Serial",
+    "ItemName",
+    "Building",
+    "Floor",
+    "Office",
+    "status",
+    "createdAt",
+    "Dropped",
+  ];
   const PdfCol = [
     { header: "EmployeeId", dataKey: "EmployeeId" },
-    { header: "Name", dataKey: "Name" },
+    { header: "Employee", dataKey: "Name" },
+    { header: "Serial", dataKey: "Serial" },
     { header: "ItemName", dataKey: "ItemName" },
     { header: "Building", dataKey: "Building" },
     { header: "Floor", dataKey: "Floor" },
     { header: "Office", dataKey: "Office" },
-    { header: "Status", dataKey: "status" },
+    { header: "isDropped", dataKey: "isDropped" },
     { header: "createdAt", dataKey: "createdAt" },
-  ];
-
-  const PdfHead = [
-    [
-      "EmployeeId",
-      "Name",
-      "Serial",
-      "ItemName",
-      "Building",
-      "Floor",
-      "Office",
-      "status",
-      "createdAt",
-    ],
   ];
   return (
     <div style={{ marginTop: "30px", textAlign: "center" }}>
@@ -90,28 +96,24 @@ const ReportsExport = () => {
         {!isLoading && (
           <Button
             style={{ borderRadius: "5px", width: "150px" }}
-            onClick={handleClick}
+            onClick={() => success("The file is downloading")}
             type="primary"
             size={"large"}
           >
-            {isPdf ? (
-              <CSVLink
-                filename={"assets.csv"}
-                data={ApiData}
-                className="btn btn-primary"
-              >
-                Export to CSV
-              </CSVLink>
-            ) : (
-              "Export to CSV"
-            )}
+            <CSVLink
+              filename={"assets.csv"}
+              data={ApiData}
+              className="btn btn-primary"
+            >
+              Export to CSV
+            </CSVLink>
           </Button>
         )}
-        <div onClick={() => setIsPdf(true)}>
+        <div>
           <ExportPdf
             head={PdfHead}
-            PdfCol={PdfCol}
-            isPdf={isPdf}
+            column={PdfCol}
+            isPdf={true}
             ApiData={ApiData}
           />
         </div>
