@@ -24,6 +24,9 @@ const RequestAssetDataForm = () => {
         ...checkLength,
       },
       employee: {
+        Name: {
+          $contains: value.selected === "Name" ? value.text : "",
+        },
         EmployeeId: {
           $contains: value.selected === "EmployeeId" ? value.text : "",
         },
@@ -101,6 +104,7 @@ const RequestAssetDataForm = () => {
           >
             <Form.Item label="بحث عن طريق" name="selected">
               <Select>
+                <Option value={"Name"}>Employee ID</Option>
                 <Option value={"EmployeeId"}>Employee ID</Option>
                 <Option value={"Serial"}>Serial Number</Option>
               </Select>
