@@ -104,7 +104,7 @@ const RequestAssetDataForm = () => {
           >
             <Form.Item label="بحث عن طريق" name="selected">
               <Select>
-                <Option value={"Name"}>Employee ID</Option>
+                <Option value={"Name"}>Employee Name</Option>
                 <Option value={"EmployeeId"}>Employee ID</Option>
                 <Option value={"Serial"}>Serial Number</Option>
               </Select>

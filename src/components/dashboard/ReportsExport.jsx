@@ -1,68 +1,70 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, message, Space } from "antd";
 import { CSVLink } from "react-csv";
-import { useGetAssetsQuery } from "../../Redux/Api/AssetsApi";
 import qs from "qs";
 import ExportPdf from "../ExportPdf";
 
 const ReportsExport = () => {
-  const [total, setTotal] = useState("");
+  const [entireList, setEntireList] = useState([]);
+
   const { success } = message;
 
   const query = qs.stringify(
     {
       populate: "employee",
       pagination: {
-        limit: total,
+        limit: 9999,
       },
     },
     {
       encodeValuesOnly: true, // prettify URL
     }
   );
-  const { data, isLoading, refetch } = useGetAssetsQuery(query);
-  const getTotal = data?.meta.pagination.total;
 
-  useEffect(() => {
-    const ChangeData = async () => {
-      await refetch();
-      setTotal(getTotal);
-    };
-    ChangeData();
-  }, [refetch, getTotal]);
+  const getEntireList = async (pageNo = 1) => {
+    const response = await fetch(
+      `https://ku-assets-api.herokuapp.com/api/assets?${query}`
+    );
+    const data = await response.json();
 
-  const ApiData = data?.data.map((data) => {
-    const id = data.id;
+    const ApiData = data?.data.map((data) => {
+      const id = data.id;
 
-    const {
-      Serial,
-      ItemName,
-      Building,
-      Floor,
-      Office,
-      createdAt,
-      status,
-      isDropped,
-    } = data.attributes;
-    const employee = data.attributes?.employee?.data?.attributes;
-    const EmployeeId = employee?.EmployeeId;
-    const Name = employee?.Name;
+      const {
+        Serial,
+        ItemName,
+        Building,
+        Floor,
+        Office,
+        createdAt,
+        status,
+        isDropped,
+      } = data.attributes;
+      const employee = data.attributes?.employee?.data?.attributes;
+      const EmployeeId = employee?.EmployeeId;
+      const Name = employee?.Name;
 
-    return {
-      id,
-      EmployeeId,
-      Name,
-      Serial,
-      ItemName,
-      Building,
-      Floor,
-      Office,
-      createdAt,
-      status,
-      isDropped,
-    };
-  });
-  console.log(ApiData);
+      return {
+        id,
+        EmployeeId,
+        Name,
+        Serial,
+        ItemName,
+        Building,
+        Floor,
+        Office,
+        createdAt,
+        status,
+        isDropped,
+      };
+    });
+
+    setEntireList(ApiData);
+  };
+
+  const fetchData = async () => {
+    await getEntireList();
+  };
 
   const PdfHead = [
     "Employee ID",
@@ -72,19 +74,20 @@ const ReportsExport = () => {
     "Building",
     "Floor",
     "Office",
-    "status",
-    "createdAt",
+    "Status",
     "Dropped",
+    "createdAt",
   ];
   const PdfCol = [
     { header: "EmployeeId", dataKey: "EmployeeId" },
-    { header: "Employee", dataKey: "Name" },
+    { header: "Name", dataKey: "Name" },
     { header: "Serial", dataKey: "Serial" },
     { header: "ItemName", dataKey: "ItemName" },
     { header: "Building", dataKey: "Building" },
     { header: "Floor", dataKey: "Floor" },
     { header: "Office", dataKey: "Office" },
-    { header: "isDropped", dataKey: "isDropped" },
+    { header: "Status", dataKey: "status" },
+    { header: "Dropped", dataKey: "isDropped" },
     { header: "createdAt", dataKey: "createdAt" },
   ];
   return (
@@ -93,28 +96,34 @@ const ReportsExport = () => {
         Csv طباعة العهد جميع الموظفين
       </h2>
       <Space>
-        {!isLoading && (
-          <Button
-            style={{ borderRadius: "5px", width: "150px" }}
-            onClick={() => success("The file is downloading")}
-            type="primary"
-            size={"large"}
+        <Button
+          style={{ borderRadius: "5px", width: "150px" }}
+          onClick={async () => {
+            await fetchData();
+            success("The file is downloading");
+          }}
+          type="primary"
+          size={"large"}
+        >
+          <CSVLink
+            filename={"assets.csv"}
+            data={entireList}
+            className="btn btn-primary"
           >
-            <CSVLink
-              filename={"assets.csv"}
-              data={ApiData}
-              className="btn btn-primary"
-            >
-              Export to CSV
-            </CSVLink>
-          </Button>
-        )}
-        <div>
+            Export to CSV
+          </CSVLink>
+        </Button>
+
+        <div
+          onClick={async () => {
+            await fetchData();
+          }}
+        >
           <ExportPdf
             head={PdfHead}
             column={PdfCol}
             isPdf={true}
-            ApiData={ApiData}
+            ApiData={entireList}
           />
         </div>
       </Space>
