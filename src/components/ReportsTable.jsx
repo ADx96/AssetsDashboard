@@ -4,7 +4,7 @@ import { message } from "antd";
 import { CSVLink } from "react-csv";
 import ExportPdf from "./ExportPdf";
 
-const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
+const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
   const { success } = message;
 
   const ApiData = data?.data.map((data) => {
@@ -135,10 +135,14 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef }) => {
         <ExportPdf pdfRef={pdfRef} />
       </Space>
       <div ref={pdfRef}>
-        <div style={{ textAlign: "right" }}>
-          <h2> الاسم: {Name} </h2>
-          <h2>{Id} :الوظيفي الرقم</h2>
-        </div>
+        {value.selected !== "Name" || value.selected !== "EmployeeId" ? (
+          <div style={{ textAlign: "right" }}>
+            <h2> الاسم: {Name} </h2>
+            <h2>{Id} :الوظيفي الرقم</h2>
+          </div>
+        ) : (
+          <></>
+        )}
 
         <Table
           rowClassName={() => "editable-row"}

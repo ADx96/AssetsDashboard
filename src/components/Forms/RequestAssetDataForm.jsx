@@ -30,6 +30,18 @@ const RequestAssetDataForm = () => {
         EmployeeId: {
           $contains: value.selected === "EmployeeId" ? value.text : "",
         },
+        ItemName: {
+          $contains: value.selected === "ItemName" ? value.text : "",
+        },
+        Floor: {
+          $contains: value.selected === "Floor" ? value.text : "",
+        },
+        Building: {
+          $contains: value.selected === "Building" ? value.text : "",
+        },
+        Office: {
+          $contains: value.selected === "Office" ? value.text : "",
+        },
       },
     },
   };
@@ -72,6 +84,7 @@ const RequestAssetDataForm = () => {
         <div style={{ overflow: "auto" }}>
           <ReportsTable
             data={data}
+            value={value}
             isLoading={isLoading}
             pdfRef={pdfRef}
             setValues={setValues}
@@ -107,6 +120,10 @@ const RequestAssetDataForm = () => {
                 <Option value={"Name"}>Employee Name</Option>
                 <Option value={"EmployeeId"}>Employee ID</Option>
                 <Option value={"Serial"}>Serial Number</Option>
+                <Option value={"ItemName"}>Item Name</Option>
+                <Option value={"Floor"}>Floor</Option>
+                <Option value={"Building"}>Building</Option>
+                <Option value={"Office"}>Office</Option>
               </Select>
             </Form.Item>
             <Form.Item
