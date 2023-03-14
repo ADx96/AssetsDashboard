@@ -27,13 +27,13 @@ const RequestAssetDataForm = () => {
         $contains: value.selected === "ItemName" ? value.text : "",
       },
       Floor: {
-        $contains: value.selected === "Floor" ? value.text : "",
+        $eq: value.selected === "Floor" ? value.text : "",
       },
       Building: {
-        $contains: value.selected === "Building" ? value.text : "",
+        $eq: value.selected === "Building" ? value.text : "",
       },
       Office: {
-        $contains: value.selected === "Office" ? value.text : "",
+        $eq: value.selected === "Office" ? value.text : "",
       },
       employee: {
         Name: {
