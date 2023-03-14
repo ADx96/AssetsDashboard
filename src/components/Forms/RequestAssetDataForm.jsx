@@ -23,24 +23,24 @@ const RequestAssetDataForm = () => {
       Serial: {
         ...checkLength,
       },
+      ItemName: {
+        $contains: value.selected === "ItemName" ? value.text : "",
+      },
+      Floor: {
+        $contains: value.selected === "Floor" ? value.text : "",
+      },
+      Building: {
+        $contains: value.selected === "Building" ? value.text : "",
+      },
+      Office: {
+        $contains: value.selected === "Office" ? value.text : "",
+      },
       employee: {
         Name: {
           $contains: value.selected === "Name" ? value.text : "",
         },
         EmployeeId: {
           $contains: value.selected === "EmployeeId" ? value.text : "",
-        },
-        ItemName: {
-          $contains: value.selected === "ItemName" ? value.text : "",
-        },
-        Floor: {
-          $contains: value.selected === "Floor" ? value.text : "",
-        },
-        Building: {
-          $contains: value.selected === "Building" ? value.text : "",
-        },
-        Office: {
-          $contains: value.selected === "Office" ? value.text : "",
         },
       },
     },

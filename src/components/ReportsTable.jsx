@@ -39,6 +39,13 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
 
   const columns = [
     {
+      title: "number",
+      dataIndex: "num",
+      key: "num",
+      align: "center",
+      render: (_, __, index) => index + 1,
+    },
+    {
       title: "SERIAL NUMBER",
       dataIndex: "Serial",
       key: "Serial",
@@ -135,14 +142,18 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
         <ExportPdf pdfRef={pdfRef} />
       </Space>
       <div ref={pdfRef}>
-        {value.selected !== "Name" || value.selected !== "EmployeeId" ? (
-          <div style={{ textAlign: "right" }}>
-            <h2> الاسم: {Name} </h2>
-            <h2>{Id} :الوظيفي الرقم</h2>
-          </div>
-        ) : (
-          <></>
-        )}
+        <div style={{ textAlign: "right" }}>
+          {value.selected === "Name" ||
+          value.selected === "EmployeeId" ||
+          value.selected === "Serial" ? (
+            <>
+              <h2> الاسم: {Name} </h2>
+              <h2>{Id} :الوظيفي الرقم</h2>
+            </>
+          ) : (
+            <h1 style={{ fontSize: "30px" }}>{ApiData.length} :المجموع</h1>
+          )}
+        </div>
 
         <Table
           rowClassName={() => "editable-row"}
