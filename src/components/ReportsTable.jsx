@@ -46,6 +46,12 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
       render: (_, __, index) => index + 1,
     },
     {
+      title: "Name",
+      dataIndex: "Name",
+      key: "Name",
+      align: "center",
+    },
+    {
       title: "SERIAL NUMBER",
       dataIndex: "Serial",
       key: "Serial",
