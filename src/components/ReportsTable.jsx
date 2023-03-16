@@ -22,10 +22,12 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
     const employee = data.attributes.employee.data?.attributes;
     const Name = employee?.Name;
     const EmployeeId = employee?.EmployeeId;
+    const JobTitle = employee?.JobTitle;
     return {
       EmployeeId,
       Specs,
       Name,
+      JobTitle,
       os,
       Serial,
       ItemName,
@@ -49,6 +51,12 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
       title: "Name",
       dataIndex: "Name",
       key: "Name",
+      align: "center",
+    },
+    {
+      title: "Job Title",
+      dataIndex: "JobTitle",
+      key: "JobTitle",
       align: "center",
     },
     {

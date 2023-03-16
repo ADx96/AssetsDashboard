@@ -67,6 +67,7 @@ const Employees = () => {
     form.setFieldsValue({
       EmployeeId: record.EmployeeId,
       Name: record.Name,
+      JobTitle: record.JobTitle,
     });
     setEditingKey(record.id);
   };
@@ -86,6 +87,13 @@ const Employees = () => {
       title: "Employee I.D",
       dataIndex: "EmployeeId",
       key: "EmployeeId",
+      align: "center",
+      editable: true,
+    },
+    {
+      title: "Job Title",
+      dataIndex: "JobTitle",
+      key: "JobTitle",
       align: "center",
       editable: true,
     },
