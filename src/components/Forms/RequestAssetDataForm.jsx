@@ -11,6 +11,7 @@ const RequestAssetDataForm = () => {
   const { Option } = Select;
   const [value, setValues] = useState("");
 
+  console.log(value);
   const checkLength =
     value.text?.length > 5
       ? {
@@ -24,7 +25,8 @@ const RequestAssetDataForm = () => {
         ...checkLength,
       },
       ItemName: {
-        $contains: value.selected === "ItemName" ? value.text : "",
+        $contains:
+          value.selected === "ItemName" ? value.text : "" || value.ItemName,
       },
       Floor: {
         $eq: value.selected === "Floor" ? value.text : "",
@@ -122,7 +124,7 @@ const RequestAssetDataForm = () => {
             autoComplete="off"
           >
             <Form.Item label="بحث عن طريق" name="selected">
-              <Select>
+              <Select onChange={(val) => setValues(val)}>
                 <Option value={"Name"}>Employee Name</Option>
                 <Option value={"EmployeeId"}>Employee ID</Option>
                 <Option value={"Serial"}>Serial Number</Option>
@@ -141,7 +143,15 @@ const RequestAssetDataForm = () => {
             >
               <Input />
             </Form.Item>
-
+            {value === "JobTitle" && (
+              <Form.Item
+                label="ItemName"
+                name="ItemName"
+                rules={[{ required: true, message: "Required!" }]}
+              >
+                <Input />
+              </Form.Item>
+            )}
             <div style={{ textAlign: "center" }}>
               <Button
                 style={{ borderRadius: "5px", width: "150px" }}
