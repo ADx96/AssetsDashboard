@@ -68,6 +68,7 @@ const Employees = () => {
       EmployeeId: record.EmployeeId,
       Name: record.Name,
       JobTitle: record.JobTitle,
+      WorkPlace: record.WorkPlace,
     });
     setEditingKey(record.id);
   };
@@ -94,6 +95,13 @@ const Employees = () => {
       title: "Job Title",
       dataIndex: "JobTitle",
       key: "JobTitle",
+      align: "center",
+      editable: true,
+    },
+    {
+      title: "Work Place",
+      dataIndex: "WorkPlace",
+      key: "WorkPlace",
       align: "center",
       editable: true,
     },

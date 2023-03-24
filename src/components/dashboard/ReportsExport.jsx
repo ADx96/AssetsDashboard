@@ -43,6 +43,7 @@ const ReportsExport = () => {
       const employee = data.attributes?.employee?.data?.attributes;
       const EmployeeId = employee?.EmployeeId;
       const Name = employee?.Name;
+      const WorkPlace = employee?.WorkPlace;
 
       return {
         id,
@@ -52,6 +53,7 @@ const ReportsExport = () => {
         ItemName,
         Building,
         Floor,
+        WorkPlace,
         Office,
         createdAt,
         status,
@@ -74,6 +76,7 @@ const ReportsExport = () => {
     "Building",
     "Floor",
     "Office",
+    "WorkPlace",
     "Status",
     "Dropped",
     "createdAt",
@@ -85,6 +88,8 @@ const ReportsExport = () => {
     { header: "ItemName", dataKey: "ItemName" },
     { header: "Building", dataKey: "Building" },
     { header: "Floor", dataKey: "Floor" },
+    { header: "WorkPlace", dataKey: "WorkPlace" },
+
     { header: "Office", dataKey: "Office" },
     { header: "Status", dataKey: "status" },
     { header: "Dropped", dataKey: "isDropped" },

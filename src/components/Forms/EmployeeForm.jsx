@@ -67,6 +67,18 @@ const EmployeeForm = () => {
               />
             </Form.Item>
           </Col>
+          <Col className="gutter-row" span={24} md={{ span: 12 }}>
+            <Form.Item
+              label="Work Place"
+              name="WorkPlace"
+              rules={[{ required: true, message: "JobTitle is Required!" }]}
+            >
+              <Input
+                style={{ marginBottom: "10px" }}
+                placeholder="Basic usage"
+              />
+            </Form.Item>
+          </Col>
         </Row>
         <div style={{ textAlign: "center" }}>
           <Button

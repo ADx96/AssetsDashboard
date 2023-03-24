@@ -45,6 +45,9 @@ const RequestAssetDataForm = () => {
         JobTitle: {
           $contains: value.selected === "JobTitle" ? value.text : "",
         },
+        WorkPlace: {
+          $contains: value.selected === "WorkPlace" ? value.text : "",
+        },
       },
     },
   };
@@ -128,6 +131,7 @@ const RequestAssetDataForm = () => {
                 <Option value={"Building"}>Building</Option>
                 <Option value={"Office"}>Office</Option>
                 <Option value={"JobTitle"}>Job Title</Option>
+                <Option value={"WorkPlace"}>Work Place</Option>
               </Select>
             </Form.Item>
             <Form.Item
