@@ -121,6 +121,8 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
 
   const Name = ApiData[0]?.Name;
   const Id = ApiData[0]?.EmployeeId;
+  const EmoloyeesIds = ApiData.map((data) => data.EmployeeId);
+  const uniqueArr = [...new Set(EmoloyeesIds)];
 
   return (
     <>
@@ -165,7 +167,14 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
               <h2>{Id} :الوظيفي الرقم</h2>
             </>
           ) : (
-            <h1 style={{ fontSize: "30px" }}>{ApiData.length} :المجموع</h1>
+            <h1 style={{ fontSize: "30px" }}>{ApiData.length} :مجموع العهد</h1>
+          )}
+          {value.selected === "WorkPlace" || value.selected === "ItemName " ? (
+            <h1 style={{ fontSize: "30px" }}>
+              {uniqueArr.length} :مجموع الموظفين
+            </h1>
+          ) : (
+            <></>
           )}
         </div>
 

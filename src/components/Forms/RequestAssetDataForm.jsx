@@ -11,7 +11,6 @@ const RequestAssetDataForm = () => {
   const { Option } = Select;
   const [value, setValues] = useState("");
 
-  console.log(value);
   const checkLength =
     value.text?.length > 5
       ? {
@@ -145,9 +144,9 @@ const RequestAssetDataForm = () => {
             </Form.Item>
             {value === "JobTitle" && (
               <Form.Item
-                label="ItemName"
+                label="(اختياري) ItemName"
                 name="ItemName"
-                rules={[{ required: true, message: "Required!" }]}
+                rules={[{ message: "Required!" }]}
               >
                 <Input />
               </Form.Item>

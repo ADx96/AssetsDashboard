@@ -89,7 +89,6 @@ const ReportsExport = () => {
     { header: "Building", dataKey: "Building" },
     { header: "Floor", dataKey: "Floor" },
     { header: "WorkPlace", dataKey: "WorkPlace" },
-
     { header: "Office", dataKey: "Office" },
     { header: "Status", dataKey: "status" },
     { header: "Dropped", dataKey: "isDropped" },
