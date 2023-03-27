@@ -169,6 +169,12 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
           ) : (
             <h1 style={{ fontSize: "30px" }}>{ApiData.length} :مجموع العهد</h1>
           )}
+
+          {value.selected === "Name" && value.ItemName === "ItemName " ? (
+            <h1 style={{ fontSize: "30px" }}>{ApiData.length} :مجموع العهد</h1>
+          ) : (
+            <></>
+          )}
           {value.selected === "WorkPlace" || value.selected === "ItemName " ? (
             <h1 style={{ fontSize: "30px" }}>
               {uniqueArr.length} :مجموع الموظفين
