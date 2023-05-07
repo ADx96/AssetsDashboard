@@ -8,34 +8,19 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
   const { success } = message;
 
   const ApiData = data?.data.map((data) => {
-    const {
-      Serial,
-      ItemName,
-      Building,
-      os,
-      Specs,
-      Floor,
-      Office,
-      createdAt,
-      status,
-    } = data.attributes;
+    const { attributes } = data;
     const employee = data.attributes.employee.data?.attributes;
     const Name = employee?.Name;
     const EmployeeId = employee?.EmployeeId;
     const JobTitle = employee?.JobTitle;
+    const WorkPlace = employee?.WorkPlace;
+    console.log(employee);
     return {
       EmployeeId,
-      Specs,
+      ...attributes,
       Name,
       JobTitle,
-      os,
-      Serial,
-      ItemName,
-      Building,
-      Floor,
-      Office,
-      status,
-      createdAt,
+      WorkPlace,
     };
   });
 
@@ -54,9 +39,21 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
       align: "center",
     },
     {
+      title: "Emp ID",
+      dataIndex: "EmployeeId",
+      key: "EmployeeId",
+      align: "center",
+    },
+    {
       title: "Job Title",
       dataIndex: "JobTitle",
       key: "JobTitle",
+      align: "center",
+    },
+    {
+      title: "Work Place",
+      dataIndex: "WorkPlace",
+      key: "WorkPlace",
       align: "center",
     },
     {
