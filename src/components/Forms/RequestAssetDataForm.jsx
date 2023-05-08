@@ -151,15 +151,16 @@ const RequestAssetDataForm = () => {
                 <Input />
               </Form.Item>
             )}
-            {value === "Name" && (
-              <Form.Item
-                label="(اختياري) ItemName"
-                name="ItemName"
-                rules={[{ message: "Required!" }]}
-              >
-                <Input />
-              </Form.Item>
-            )}
+            {value === "Name" ||
+              (value === "WorkPlace" && (
+                <Form.Item
+                  label="(اختياري) ItemName"
+                  name="ItemName"
+                  rules={[{ message: "Required!" }]}
+                >
+                  <Input />
+                </Form.Item>
+              ))}
             <div style={{ textAlign: "center" }}>
               <Button
                 style={{ borderRadius: "5px", width: "150px" }}
