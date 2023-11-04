@@ -1,8 +1,8 @@
-import { Table, Button, Space } from "antd";
-import React from "react";
-import { message } from "antd";
-import { CSVLink } from "react-csv";
-import ExportPdf from "./ExportPdf";
+import { Table, Button, Space } from 'antd';
+import React from 'react';
+import { message } from 'antd';
+import { CSVLink } from 'react-csv';
+import ExportPdf from './ExportPdf';
 
 const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
   const { success } = message;
@@ -14,7 +14,6 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
     const EmployeeId = employee?.EmployeeId;
     const JobTitle = employee?.JobTitle;
     const WorkPlace = employee?.WorkPlace;
-    console.log(employee);
     return {
       EmployeeId,
       ...attributes,
@@ -26,89 +25,89 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
 
   const columns = [
     {
-      title: "number",
-      dataIndex: "num",
-      key: "num",
-      align: "center",
+      title: 'number',
+      dataIndex: 'num',
+      key: 'num',
+      align: 'center',
       render: (_, __, index) => index + 1,
     },
     {
-      title: "Name",
-      dataIndex: "Name",
-      key: "Name",
-      align: "center",
+      title: 'Name',
+      dataIndex: 'Name',
+      key: 'Name',
+      align: 'center',
     },
     {
-      title: "Emp ID",
-      dataIndex: "EmployeeId",
-      key: "EmployeeId",
-      align: "center",
+      title: 'Emp ID',
+      dataIndex: 'EmployeeId',
+      key: 'EmployeeId',
+      align: 'center',
     },
     {
-      title: "Job Title",
-      dataIndex: "JobTitle",
-      key: "JobTitle",
-      align: "center",
+      title: 'Job Title',
+      dataIndex: 'JobTitle',
+      key: 'JobTitle',
+      align: 'center',
     },
     {
-      title: "Work Place",
-      dataIndex: "WorkPlace",
-      key: "WorkPlace",
-      align: "center",
+      title: 'Work Place',
+      dataIndex: 'WorkPlace',
+      key: 'WorkPlace',
+      align: 'center',
     },
     {
-      title: "SERIAL NUMBER",
-      dataIndex: "Serial",
-      key: "Serial",
-      align: "center",
+      title: 'SERIAL NUMBER',
+      dataIndex: 'Serial',
+      key: 'Serial',
+      align: 'center',
     },
     {
-      title: "ITEM",
-      dataIndex: "ItemName",
-      key: "ItemName",
-      align: "center",
+      title: 'ITEM',
+      dataIndex: 'ItemName',
+      key: 'ItemName',
+      align: 'center',
     },
     {
-      title: "SPECIFICATION",
-      dataIndex: "Specs",
-      key: "Specs",
-      align: "center",
+      title: 'SPECIFICATION',
+      dataIndex: 'Specs',
+      key: 'Specs',
+      align: 'center',
     },
     {
-      title: "OS",
-      dataIndex: "os",
-      key: "os",
-      align: "center",
+      title: 'OS',
+      dataIndex: 'os',
+      key: 'os',
+      align: 'center',
     },
     {
-      title: "BUILDING",
-      dataIndex: "Building",
-      key: "Building",
-      align: "center",
+      title: 'BUILDING',
+      dataIndex: 'Building',
+      key: 'Building',
+      align: 'center',
     },
     {
-      title: "FlOOR",
-      dataIndex: "Floor",
-      key: "Floor",
-      align: "center",
+      title: 'FlOOR',
+      dataIndex: 'Floor',
+      key: 'Floor',
+      align: 'center',
     },
     {
-      title: "OFFICE",
-      dataIndex: "Office",
-      key: "Office",
-      align: "center",
+      title: 'OFFICE',
+      dataIndex: 'Office',
+      key: 'Office',
+      align: 'center',
     },
     {
-      title: "STATUS",
-      dataIndex: "status",
-      key: "status",
-      align: "center",
+      title: 'STATUS',
+      dataIndex: 'status',
+      key: 'status',
+      align: 'center',
     },
     {
-      title: "Add Date",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      align: "center",
+      title: 'Add Date',
+      dataIndex: 'createdAt',
+      key: 'createdAt',
+      align: 'center',
     },
   ];
 
@@ -123,30 +122,30 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
 
   return (
     <>
-      <div style={{ textAlign: "center" }}>
+      <div style={{ textAlign: 'center' }}>
         <Button
-          onClick={() => setValues("")}
-          style={{ borderRadius: "5px", width: "150px" }}
-          type="primary"
-          htmlType="submit"
-          size={"large"}
+          onClick={() => setValues('')}
+          style={{ borderRadius: '5px', width: '150px' }}
+          type='primary'
+          htmlType='submit'
+          size={'large'}
         >
           رجوع
         </Button>
       </div>
       <Space>
         <Button
-          style={{ borderRadius: "5px", width: "150px" }}
-          type="outline"
-          htmlType="submit"
-          size={"large"}
+          style={{ borderRadius: '5px', width: '150px' }}
+          type='outline'
+          htmlType='submit'
+          size={'large'}
         >
           <CSVLink
-            filename={"Expense_Table.csv"}
+            filename={'Expense_Table.csv'}
             data={ApiData}
-            className="btn btn-primary"
+            className='btn btn-primary'
             onClick={() => {
-              success("The file is downloading");
+              success('The file is downloading');
             }}
           >
             Export to CSV
@@ -155,25 +154,25 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
         <ExportPdf pdfRef={pdfRef} />
       </Space>
       <div ref={pdfRef}>
-        <div style={{ textAlign: "right" }}>
-          {value.selected === "Name" ||
-          value.selected === "EmployeeId" ||
-          value.selected === "Serial" ? (
+        <div style={{ textAlign: 'right' }}>
+          {value.selected === 'Name' ||
+          value.selected === 'EmployeeId' ||
+          value.selected === 'Serial' ? (
             <>
               <h2> الاسم: {Name} </h2>
               <h2>{Id} :الوظيفي الرقم</h2>
             </>
           ) : (
-            <h1 style={{ fontSize: "30px" }}>{ApiData.length} :مجموع العهد</h1>
+            <h1 style={{ fontSize: '30px' }}>{ApiData.length} :مجموع العهد</h1>
           )}
 
-          {value.selected === "Name" && value.ItemName === "ItemName " ? (
-            <h1 style={{ fontSize: "30px" }}>{ApiData.length} :مجموع العهد</h1>
+          {value.selected === 'Name' && value.ItemName === 'ItemName ' ? (
+            <h1 style={{ fontSize: '30px' }}>{ApiData.length} :مجموع العهد</h1>
           ) : (
             <></>
           )}
-          {value.selected === "WorkPlace" || value.selected === "ItemName " ? (
-            <h1 style={{ fontSize: "30px" }}>
+          {value.selected === 'WorkPlace' || value.selected === 'ItemName ' ? (
+            <h1 style={{ fontSize: '30px' }}>
               {uniqueArr.length} :مجموع الموظفين
             </h1>
           ) : (
@@ -182,7 +181,7 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
         </div>
 
         <Table
-          rowClassName={() => "editable-row"}
+          rowClassName={() => 'editable-row'}
           bordered
           pagination={false}
           dataSource={ApiData}
