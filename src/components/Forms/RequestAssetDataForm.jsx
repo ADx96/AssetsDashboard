@@ -111,7 +111,7 @@ const RequestAssetDataForm = () => {
     .map((item) => item.replace(/\t/g, '').trim());
 
   const onFinish = async (values) => {
-    values.text.trimEnd();
+    values.text?.trimEnd();
     setValues(values);
     await refetch();
     formRef.current?.resetFields();
