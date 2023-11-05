@@ -24,8 +24,7 @@ const RequestAssetDataForm = () => {
         ...checkLength,
       },
       ItemName: {
-        $contains:
-          value.selected === 'ItemName' ? value.text : '' || value.ItemName,
+        $contains: value.ItemName || '',
       },
       Floor: {
         $eq: value.selected === 'Floor' ? value.text : '',
@@ -41,13 +40,13 @@ const RequestAssetDataForm = () => {
           $contains: value.selected === 'Name' ? value.text : '',
         },
         EmployeeId: {
-          $contains: value.selected === 'EmployeeId' ? value.text : '',
+          $eq: value.selected === 'EmployeeId' ? value.text : '',
         },
         JobTitle: {
-          $contains: value.selected === 'JobTitle' ? value.text : '',
+          $contains: value.JobTitle || '',
         },
         WorkPlace: {
-          $contains: value.selected === 'WorkPlace' ? value.text : '',
+          $contains: value.WorkPlace || '',
         },
       },
     },
@@ -103,7 +102,7 @@ const RequestAssetDataForm = () => {
     .filter((value) => value !== undefined)
     .map((item) => item.replace(/\t/g, '').trim());
 
-  const uniqueArray = [...new Set(combinedArray)]
+  const newJobTitle = [...new Set(combinedArray)]
     .filter((value) => value !== undefined)
     .map((item) => item.replace(/\t/g, '').trim());
 
@@ -113,14 +112,13 @@ const RequestAssetDataForm = () => {
 
   const onFinish = async (values) => {
     setValues(values);
-    formRef.current?.resetFields();
     await refetch();
-    console.log(values);
+    formRef.current?.resetFields();
   };
 
   return (
     <>
-      {value.text ? (
+      {value.text || value.JobTitle || value.WorkPlace || value.ItemName ? (
         <div style={{ overflow: 'auto' }}>
           <ReportsTable
             data={data}
@@ -169,19 +167,21 @@ const RequestAssetDataForm = () => {
                 <Option value={'WorkPlace'}>Work Place</Option>
               </Select>
             </Form.Item>
-            {value !== 'JobTitle' && value !== 'WorkPlace' && (
-              <Form.Item
-                label='ادخل البيانات'
-                name='text'
-                rules={[{ required: true, message: 'Required!' }]}
-              >
-                <Input />
-              </Form.Item>
-            )}
+            {value !== 'JobTitle' &&
+              value !== 'WorkPlace' &&
+              value !== 'ItemName' && (
+                <Form.Item
+                  label='ادخل البيانات'
+                  name='text'
+                  rules={[{ required: true, message: 'Required!' }]}
+                >
+                  <Input />
+                </Form.Item>
+              )}
             {value === 'JobTitle' && (
               <Form.Item
                 label='اختر البيانات'
-                name='text'
+                name='JobTitle'
                 rules={[{ required: true, message: 'Required!' }]}
               >
                 <Select
@@ -194,8 +194,12 @@ const RequestAssetDataForm = () => {
                   {isLoading ? (
                     <>loading...</>
                   ) : (
-                    uniqueArray.map((data, index) => {
-                      return <Option key={index}>{data}</Option>;
+                    newJobTitle.map((data, index) => {
+                      return (
+                        <Option value={data} key={index}>
+                          {data}
+                        </Option>
+                      );
                     })
                   )}
                 </Select>
@@ -203,11 +207,17 @@ const RequestAssetDataForm = () => {
             )}
             {(value === 'Name' ||
               value === 'WorkPlace' ||
-              value === 'JobTitle') && (
+              value === 'JobTitle' ||
+              value === 'ItemName') && (
               <Form.Item
                 label='اختر البيانات'
                 name='ItemName'
-                rules={[{ required: true, message: 'Required!' }]}
+                rules={[
+                  {
+                    required: value === 'ItemName',
+                    message: 'Required!',
+                  },
+                ]}
               >
                 <Select
                   style={{ marginBottom: '10px', display: 'block' }}
@@ -220,7 +230,11 @@ const RequestAssetDataForm = () => {
                     <>loading...</>
                   ) : (
                     newItemName.map((data, index) => {
-                      return <Option key={index}>{data}</Option>;
+                      return (
+                        <Option value={data} key={index}>
+                          {data}
+                        </Option>
+                      );
                     })
                   )}
                 </Select>
@@ -243,7 +257,11 @@ const RequestAssetDataForm = () => {
                     <>loading...</>
                   ) : (
                     newWorkPlace.map((data, index) => {
-                      return <Option key={index}>{data}</Option>;
+                      return (
+                        <Option value={data} key={index}>
+                          {data}
+                        </Option>
+                      );
                     })
                   )}
                 </Select>
