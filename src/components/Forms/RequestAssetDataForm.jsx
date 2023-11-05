@@ -78,7 +78,7 @@ const RequestAssetDataForm = () => {
     }
   );
 
-  const { data, isLoading, refetch } = useGetAssetsQuery(query);
+  const { data, isLoading, refetch, isFetching } = useGetAssetsQuery(query);
 
   if (isLoading) {
     return <></>;
@@ -115,6 +115,7 @@ const RequestAssetDataForm = () => {
     setValues(values);
     formRef.current?.resetFields();
     await refetch();
+    console.log(values);
   };
 
   return (
@@ -124,6 +125,7 @@ const RequestAssetDataForm = () => {
           <ReportsTable
             data={data}
             value={value}
+            isFetching={isFetching}
             isLoading={isLoading}
             pdfRef={pdfRef}
             setValues={setValues}
@@ -167,14 +169,15 @@ const RequestAssetDataForm = () => {
                 <Option value={'WorkPlace'}>Work Place</Option>
               </Select>
             </Form.Item>
-            <Form.Item
-              hidden={value === 'JobTitle' || value === 'WorkPlace'}
-              label='ادخل البيانات'
-              name='text'
-              rules={[{ required: true, message: 'Required!' }]}
-            >
-              <Input />
-            </Form.Item>
+            {value !== 'JobTitle' && value !== 'WorkPlace' && (
+              <Form.Item
+                label='ادخل البيانات'
+                name='text'
+                rules={[{ required: true, message: 'Required!' }]}
+              >
+                <Input />
+              </Form.Item>
+            )}
             {value === 'JobTitle' && (
               <Form.Item
                 label='اختر البيانات'
@@ -198,56 +201,54 @@ const RequestAssetDataForm = () => {
                 </Select>
               </Form.Item>
             )}
-
-            <Form.Item
-              label='اختر البيانات'
-              name='ItemName'
-              hidden={
-                value !== 'Name' &&
-                value !== 'WorkPlace' &&
-                value !== 'JobTitle'
-              }
-              rules={[{ required: true, message: 'Required!' }]}
-            >
-              <Select
-                style={{ marginBottom: '10px', display: 'block' }}
-                showSearch
-                allowClear
-                placeholder='Select a ItemName'
-                optionFilterProp='children'
+            {(value === 'Name' ||
+              value === 'WorkPlace' ||
+              value === 'JobTitle') && (
+              <Form.Item
+                label='اختر البيانات'
+                name='ItemName'
+                rules={[{ required: true, message: 'Required!' }]}
               >
-                {isLoading ? (
-                  <>loading...</>
-                ) : (
-                  newItemName.map((data, index) => {
-                    return <Option key={index}>{data}</Option>;
-                  })
-                )}
-              </Select>
-            </Form.Item>
-
-            <Form.Item
-              label='اختر البيانات'
-              name='WorkPlace'
-              hidden={value !== 'WorkPlace'}
-              rules={[{ required: true, message: 'Required!' }]}
-            >
-              <Select
-                style={{ marginBottom: '10px', display: 'block' }}
-                showSearch
-                allowClear
-                placeholder='Select a WorkPlace'
-                optionFilterProp='children'
+                <Select
+                  style={{ marginBottom: '10px', display: 'block' }}
+                  showSearch
+                  allowClear
+                  placeholder='Select a ItemName'
+                  optionFilterProp='children'
+                >
+                  {isLoading ? (
+                    <>loading...</>
+                  ) : (
+                    newItemName.map((data, index) => {
+                      return <Option key={index}>{data}</Option>;
+                    })
+                  )}
+                </Select>
+              </Form.Item>
+            )}
+            {value === 'WorkPlace' && (
+              <Form.Item
+                label='اختر البيانات'
+                name='WorkPlace'
+                rules={[{ required: true, message: 'Required!' }]}
               >
-                {isLoading ? (
-                  <>loading...</>
-                ) : (
-                  newWorkPlace.map((data, index) => {
-                    return <Option key={index}>{data}</Option>;
-                  })
-                )}
-              </Select>
-            </Form.Item>
+                <Select
+                  style={{ marginBottom: '10px', display: 'block' }}
+                  showSearch
+                  allowClear
+                  placeholder='Select a WorkPlace'
+                  optionFilterProp='children'
+                >
+                  {isLoading ? (
+                    <>loading...</>
+                  ) : (
+                    newWorkPlace.map((data, index) => {
+                      return <Option key={index}>{data}</Option>;
+                    })
+                  )}
+                </Select>
+              </Form.Item>
+            )}
 
             <div style={{ textAlign: 'center' }}>
               <Button

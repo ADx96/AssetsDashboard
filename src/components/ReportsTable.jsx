@@ -4,7 +4,14 @@ import { message } from 'antd';
 import { CSVLink } from 'react-csv';
 import ExportPdf from './ExportPdf';
 
-const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
+const ReportsTable = ({
+  data,
+  isLoading,
+  setValues,
+  pdfRef,
+  value,
+  isFetching,
+}) => {
   const { success } = message;
 
   const ApiData = data?.data.map((data) => {
@@ -22,6 +29,10 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
       WorkPlace,
     };
   });
+
+  if (isLoading || isFetching) {
+    return <h1>loading</h1>;
+  }
 
   const columns = [
     {
@@ -110,10 +121,6 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value }) => {
       align: 'center',
     },
   ];
-
-  if (isLoading) {
-    return <h1>loading</h1>;
-  }
 
   const Name = ApiData[0]?.Name;
   const Id = ApiData[0]?.EmployeeId;
