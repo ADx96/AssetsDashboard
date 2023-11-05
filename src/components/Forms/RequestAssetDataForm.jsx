@@ -111,6 +111,7 @@ const RequestAssetDataForm = () => {
     .map((item) => item.replace(/\t/g, '').trim());
 
   const onFinish = async (values) => {
+    values.text.trimEnd();
     setValues(values);
     await refetch();
     formRef.current?.resetFields();
@@ -205,8 +206,7 @@ const RequestAssetDataForm = () => {
                 </Select>
               </Form.Item>
             )}
-            {(value === 'Name' ||
-              value === 'WorkPlace' ||
+            {(value === 'WorkPlace' ||
               value === 'JobTitle' ||
               value === 'ItemName') && (
               <Form.Item
