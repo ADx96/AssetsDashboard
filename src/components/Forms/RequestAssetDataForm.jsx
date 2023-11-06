@@ -29,6 +29,9 @@ const RequestAssetDataForm = () => {
       Floor: {
         $eq: value.selected === 'Floor' ? value.text : '',
       },
+      isDropped: {
+        $eq: value.selected === 'Dropped' ? true : false,
+      },
       Building: {
         $eq: value.selected === 'Building' ? value.text : '',
       },
@@ -111,6 +114,9 @@ const RequestAssetDataForm = () => {
     .map((item) => item.replace(/\t/g, '').trim());
 
   const onFinish = async (values) => {
+    if (values.selected === 'Dropped') {
+      values.Dropped = true;
+    }
     values.text?.trimEnd();
     setValues(values);
     await refetch();
@@ -119,7 +125,11 @@ const RequestAssetDataForm = () => {
 
   return (
     <>
-      {value.text || value.JobTitle || value.WorkPlace || value.ItemName ? (
+      {value.text ||
+      value.JobTitle ||
+      value.WorkPlace ||
+      value.ItemName ||
+      value.Dropped ? (
         <div style={{ overflow: 'auto' }}>
           <ReportsTable
             data={data}
@@ -166,11 +176,13 @@ const RequestAssetDataForm = () => {
                 <Option value={'Office'}>Office</Option>
                 <Option value={'JobTitle'}>Job Title</Option>
                 <Option value={'WorkPlace'}>Work Place</Option>
+                <Option value={'Dropped'}>Dropped Assets</Option>
               </Select>
             </Form.Item>
             {value !== 'JobTitle' &&
               value !== 'WorkPlace' &&
-              value !== 'ItemName' && (
+              value !== 'ItemName' &&
+              value !== 'Dropped' && (
                 <Form.Item
                   label='ادخل البيانات'
                   name='text'
