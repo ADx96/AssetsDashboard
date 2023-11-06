@@ -113,6 +113,12 @@ const RequestAssetDataForm = () => {
     .filter((value) => value !== undefined)
     .map((item) => item.replace(/\t/g, '').trim());
 
+  const removeDuplicatedItem = [...new Set(newItemName)];
+
+  const removeDuplicatedWorkplace = [...new Set(newWorkPlace)];
+
+  const removeDuplicatedJobTitle = [...new Set(newJobTitle)];
+
   const onFinish = async (values) => {
     if (values.selected === 'Dropped') {
       values.Dropped = true;
@@ -207,7 +213,7 @@ const RequestAssetDataForm = () => {
                   {isLoading ? (
                     <>loading...</>
                   ) : (
-                    newJobTitle.map((data, index) => {
+                    removeDuplicatedJobTitle.map((data, index) => {
                       return (
                         <Option value={data} key={index}>
                           {data}
@@ -241,7 +247,7 @@ const RequestAssetDataForm = () => {
                   {isLoading ? (
                     <>loading...</>
                   ) : (
-                    newItemName.map((data, index) => {
+                    removeDuplicatedItem.map((data, index) => {
                       return (
                         <Option value={data} key={index}>
                           {data}
@@ -268,7 +274,7 @@ const RequestAssetDataForm = () => {
                   {isLoading ? (
                     <>loading...</>
                   ) : (
-                    newWorkPlace.map((data, index) => {
+                    removeDuplicatedWorkplace.map((data, index) => {
                       return (
                         <Option value={data} key={index}>
                           {data}
