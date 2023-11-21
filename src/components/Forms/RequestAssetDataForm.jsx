@@ -24,7 +24,10 @@ const RequestAssetDataForm = () => {
         ...checkLength,
       },
       ItemName: {
-        $contains: value.ItemName || '',
+        $contains:
+          value.ItemName || value.selected === 'AllItem'
+            ? value.text
+            : '' || '',
       },
       Floor: {
         $eq: value.selected === 'Floor' ? value.text : '',
@@ -177,6 +180,7 @@ const RequestAssetDataForm = () => {
                 <Option value={'EmployeeId'}>Employee ID</Option>
                 <Option value={'Serial'}>Serial Number</Option>
                 <Option value={'ItemName'}>Item Name</Option>
+                <Option value={'AllItem'}>All Items</Option>
                 <Option value={'Floor'}>Floor</Option>
                 <Option value={'Building'}>Building</Option>
                 <Option value={'Office'}>Office</Option>
