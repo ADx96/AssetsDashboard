@@ -25,9 +25,9 @@ const RequestAssetDataForm = () => {
       },
       ItemName: {
         $contains:
-          value.ItemName || value.selected === 'AllItem'
-            ? value.text
-            : '' || '',
+          value.ItemName ||
+          (value.selected === 'AllItem' ? value.text : '') ||
+          '',
       },
       Floor: {
         $eq: value.selected === 'Floor' ? value.text : '',
