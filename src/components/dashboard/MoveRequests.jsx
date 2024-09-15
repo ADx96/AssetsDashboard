@@ -56,7 +56,7 @@ const MoveRequests = () => {
 
   const ApiData = data?.data.map((data) => {
     const ReqId = data.id
-    const employee = data.attributes.employee.data?.attributes
+    const employee = data?.attributes.employee.data?.attributes
     return { ReqId, ...data.attributes, ...employee }
   })
 
