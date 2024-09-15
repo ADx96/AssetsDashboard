@@ -87,12 +87,12 @@ const RequestAssetDataForm = () => {
   }
 
   const combinedArray = data?.data?.map((data) => {
-    const newData = data?.attributes.employee.data?.attributes.JobTitle
+    const newData = data?.attributes?.employee?.data?.attributes.JobTitle
     return newData
   })
 
   const WorkPlace = data?.data?.map((data) => {
-    const newData = data?.attributes.employee.data?.attributes.WorkPlace
+    const newData = data?.attributes?.employee?.data?.attributes.WorkPlace
     return newData
   })
 

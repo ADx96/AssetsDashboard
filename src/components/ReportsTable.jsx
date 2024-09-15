@@ -1,37 +1,30 @@
-import { Table, Button, Space } from 'antd';
-import React from 'react';
-import { message } from 'antd';
-import { CSVLink } from 'react-csv';
-import ExportPdf from './ExportPdf';
+import { Table, Button, Space } from 'antd'
+import React from 'react'
+import { message } from 'antd'
+import { CSVLink } from 'react-csv'
+import ExportPdf from './ExportPdf'
 
-const ReportsTable = ({
-  data,
-  isLoading,
-  setValues,
-  pdfRef,
-  value,
-  isFetching,
-}) => {
-  const { success } = message;
+const ReportsTable = ({ data, isLoading, setValues, pdfRef, value, isFetching }) => {
+  const { success } = message
 
   const ApiData = data?.data.map((data) => {
-    const { attributes } = data;
-    const employee = data.attributes.employee.data?.attributes;
-    const Name = employee?.Name;
-    const EmployeeId = employee?.EmployeeId;
-    const JobTitle = employee?.JobTitle;
-    const WorkPlace = employee?.WorkPlace;
+    const { attributes } = data
+    const employee = data?.attributes.employee.data?.attributes
+    const Name = employee?.Name
+    const EmployeeId = employee?.EmployeeId
+    const JobTitle = employee?.JobTitle
+    const WorkPlace = employee?.WorkPlace
     return {
       EmployeeId,
       ...attributes,
       Name,
       JobTitle,
-      WorkPlace,
-    };
-  });
+      WorkPlace
+    }
+  })
 
   if (isLoading || isFetching) {
-    return <h1>loading</h1>;
+    return <h1>loading</h1>
   }
 
   const columns = [
@@ -40,92 +33,92 @@ const ReportsTable = ({
       dataIndex: 'num',
       key: 'num',
       align: 'center',
-      render: (_, __, index) => index + 1,
+      render: (_, __, index) => index + 1
     },
     {
       title: 'Name',
       dataIndex: 'Name',
       key: 'Name',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Emp ID',
       dataIndex: 'EmployeeId',
       key: 'EmployeeId',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Job Title',
       dataIndex: 'JobTitle',
       key: 'JobTitle',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Work Place',
       dataIndex: 'WorkPlace',
       key: 'WorkPlace',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'SERIAL NUMBER',
       dataIndex: 'Serial',
       key: 'Serial',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'ITEM',
       dataIndex: 'ItemName',
       key: 'ItemName',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'SPECIFICATION',
       dataIndex: 'Specs',
       key: 'Specs',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'OS',
       dataIndex: 'os',
       key: 'os',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'BUILDING',
       dataIndex: 'Building',
       key: 'Building',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'FlOOR',
       dataIndex: 'Floor',
       key: 'Floor',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'OFFICE',
       dataIndex: 'Office',
       key: 'Office',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'STATUS',
       dataIndex: 'status',
       key: 'status',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Add Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      align: 'center',
-    },
-  ];
+      align: 'center'
+    }
+  ]
 
-  const Name = ApiData[0]?.Name;
-  const Id = ApiData[0]?.EmployeeId;
-  const EmoloyeesIds = ApiData.map((data) => data.EmployeeId);
-  const uniqueArr = [...new Set(EmoloyeesIds)];
+  const Name = ApiData[0]?.Name
+  const Id = ApiData[0]?.EmployeeId
+  const EmoloyeesIds = ApiData?.map((data) => data.EmployeeId)
+  const uniqueArr = [...new Set(EmoloyeesIds)]
 
   return (
     <>
@@ -133,26 +126,21 @@ const ReportsTable = ({
         <Button
           onClick={() => setValues('')}
           style={{ borderRadius: '5px', width: '150px' }}
-          type='primary'
-          htmlType='submit'
+          type="primary"
+          htmlType="submit"
           size={'large'}
         >
           رجوع
         </Button>
       </div>
       <Space>
-        <Button
-          style={{ borderRadius: '5px', width: '150px' }}
-          type='outline'
-          htmlType='submit'
-          size={'large'}
-        >
+        <Button style={{ borderRadius: '5px', width: '150px' }} type="outline" htmlType="submit" size={'large'}>
           <CSVLink
             filename={'Expense_Table.csv'}
             data={ApiData}
-            className='btn btn-primary'
+            className="btn btn-primary"
             onClick={() => {
-              success('The file is downloading');
+              success('The file is downloading')
             }}
           >
             Export to CSV
@@ -162,9 +150,7 @@ const ReportsTable = ({
       </Space>
       <div ref={pdfRef}>
         <div style={{ textAlign: 'right' }}>
-          {value.selected === 'Name' ||
-          value.selected === 'EmployeeId' ||
-          value.selected === 'Serial' ? (
+          {value.selected === 'Name' || value.selected === 'EmployeeId' || value.selected === 'Serial' ? (
             <>
               <h2> الاسم: {Name} </h2>
               <h2>{Id} :الوظيفي الرقم</h2>
@@ -179,24 +165,16 @@ const ReportsTable = ({
             <></>
           )}
           {value.selected === 'WorkPlace' || value.selected === 'ItemName ' ? (
-            <h1 style={{ fontSize: '30px' }}>
-              {uniqueArr.length} :مجموع الموظفين
-            </h1>
+            <h1 style={{ fontSize: '30px' }}>{uniqueArr.length} :مجموع الموظفين</h1>
           ) : (
             <></>
           )}
         </div>
 
-        <Table
-          rowClassName={() => 'editable-row'}
-          bordered
-          pagination={false}
-          dataSource={ApiData}
-          columns={columns}
-        />
+        <Table rowClassName={() => 'editable-row'} bordered pagination={false} dataSource={ApiData} columns={columns} />
       </div>
     </>
-  );
-};
+  )
+}
 
-export default ReportsTable;
+export default ReportsTable
