@@ -1,99 +1,95 @@
-import DataTable from '../components/DataTable';
-import AddModal from '../components/AddModal';
-import AssetsForm from '../components/Forms/AssetsForm';
-import {
-  useDeleteAssetMutation,
-  useGetAssetsQuery,
-  useUpdateAssetMutation,
-} from '../Redux/Api/AssetsApi';
-import { ContextProvider } from '../Hooks/ContextProvider';
-import { Space, Button, message, Popconfirm, Form, Input, Select } from 'antd';
-import { EditableCell } from '../components/Forms/Editable';
-import { useState } from 'react';
-import qs from 'qs';
+import DataTable from '../components/DataTable'
+import AddModal from '../components/AddModal'
+import AssetsForm from '../components/Forms/AssetsForm'
+import { useDeleteAssetMutation, useGetAssetsQuery, useUpdateAssetMutation } from '../Redux/Api/AssetsApi'
+import { ContextProvider } from '../Hooks/ContextProvider'
+import { Space, Button, message, Popconfirm, Form, Input, Select } from 'antd'
+import { EditableCell } from '../components/Forms/Editable'
+import { useState } from 'react'
+import qs from 'qs'
 
 const Assets = () => {
-  const [form] = Form.useForm();
-  const [deleteAsset] = useDeleteAssetMutation();
-  const [updateAsset] = useUpdateAssetMutation();
+  const [form] = Form.useForm()
+  const [deleteAsset] = useDeleteAssetMutation()
+  const [updateAsset] = useUpdateAssetMutation()
   const [search, setSearch] = useState({
     value: '',
-    selected: '',
-  });
+    selected: ''
+  })
 
-  const { Search } = Input;
-  const { success } = message;
-  const [currentPage, setCurrentPage] = useState();
-  const [editingKey, setEditingKey] = useState('');
-  const isEditing = (record) => record.id === editingKey;
+  const { Search } = Input
+  const { success } = message
+  const [currentPage, setCurrentPage] = useState()
+  const [editingKey, setEditingKey] = useState('')
+  const isEditing = (record) => record.id === editingKey
 
   const filter = {
     filters: {
       Serial: {
-        $endsWith: search.selected === 'serial' ? search.value : '',
+        $endsWith: search.selected === 'serial' ? search.value : ''
       },
       employee: {
         Name: {
-          $contains: search.selected === 'name' ? search.value : '',
+          $contains: search.selected === 'name' ? search.value : ''
         },
         EmployeeId: {
-          $eq: search.selected === 'id' ? search.value : '',
-        },
+          $eq: search.selected === 'id' ? search.value : ''
+        }
       },
       isDropped: {
-        $eq: false,
-      },
-    },
-  };
+        $eq: false
+      }
+    }
+  }
   const checkedFilter = (obj) => {
     Object.keys(obj).forEach((key) => {
-      const value = obj[key];
+      const value = obj[key]
       if (typeof value === 'object') {
-        checkedFilter(value); // recursively check nested object properties
+        checkedFilter(value) // recursively check nested object properties
       } else if (value === '') {
-        delete obj[key]; // delete the key if the value matches the given string
+        delete obj[key] // delete the key if the value matches the given string
       }
-    });
-    return obj;
-  };
-  const newFilter = checkedFilter(filter);
+    })
+    return obj
+  }
+  const newFilter = checkedFilter(filter)
   const query = qs.stringify(
     {
       populate: 'employee',
       ...newFilter,
       pagination: {
         page: currentPage,
-        pageSize: 10,
-      },
+        pageSize: 10
+      }
     },
     {
-      encodeValuesOnly: true, // prettify URL
+      encodeValuesOnly: true // prettify URL
     }
-  );
+  )
 
-  const { data, isLoading, refetch } = useGetAssetsQuery(query);
+  const { data, isLoading, refetch } = useGetAssetsQuery(query)
 
   const ApiData = data?.data.map((data) => {
-    const id = data.id;
-    const { attributes } = data;
-    const employee = data.attributes.employee?.data?.attributes;
-    return { id, ...attributes, ...employee };
-  });
+    const id = data.id
+    const { attributes } = data
+    const employee = data.attributes.employee?.data?.attributes
+    return { id, ...attributes, ...employee }
+  })
 
   const handleDelete = async (id) => {
-    deleteAsset(id);
-    success('تم الحذف بنجاح');
-  };
+    deleteAsset(id)
+    success('تم الحذف بنجاح')
+  }
 
   const save = async (key) => {
-    const Submit = await form.validateFields();
-    const id = editingKey;
-    const NewData = { Submit, id };
-    success('تم التعديل بنجاح');
-    updateAsset(NewData);
-    success('تم التعديل بنجاح');
-    setEditingKey('');
-  };
+    const Submit = await form.validateFields()
+    const id = editingKey
+    const NewData = { Submit, id }
+    success('تم التعديل بنجاح')
+    updateAsset(NewData)
+    success('تم التعديل بنجاح')
+    setEditingKey('')
+  }
 
   const edit = (record) => {
     form.setFieldsValue({
@@ -103,87 +99,101 @@ const Assets = () => {
       os: record.os,
       Building: record.Building,
       Floor: record.Floor,
-      Office: record.Office,
-    });
-    setEditingKey(record.id);
-  };
+      Office: record.Office
+    })
+    setEditingKey(record.id)
+  }
   const cancel = () => {
-    setEditingKey('');
-  };
+    setEditingKey('')
+  }
 
   const columns = [
     {
       title: 'Employee Name',
       dataIndex: 'Name',
       key: 'Name',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Employee I.D',
       dataIndex: 'EmployeeId',
       key: 'EmployeeId',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'SERIAL NUMBER',
       dataIndex: 'Serial',
       key: 'Serial',
       editable: true,
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'ITEM',
       dataIndex: 'ItemName',
       key: 'ItemName',
       editable: true,
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'SPECIFICATION',
       dataIndex: 'Specs',
       key: 'Specs',
       editable: true,
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'OS',
       dataIndex: 'os',
       key: 'os',
       align: 'center',
-      editable: true,
+      editable: true
+    },
+    {
+      title: 'EXTENSION',
+      dataIndex: 'Extension',
+      key: 'Extension',
+      align: 'center',
+      editable: true
+    },
+    {
+      title: 'MOBILE',
+      dataIndex: 'Mobile',
+      key: 'Mobile',
+      align: 'center',
+      editable: true
     },
     {
       title: 'BUILDING',
       dataIndex: 'Building',
       key: 'Building',
       editable: true,
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'FlOOR',
       dataIndex: 'Floor',
       key: 'Floor',
       align: 'center',
-      editable: true,
+      editable: true
     },
     {
       title: 'OFFICE',
       dataIndex: 'Office',
       key: 'Office',
       editable: true,
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Status',
       dataIndex: 'status',
       key: 'Office',
-      align: 'center',
+      align: 'center'
     },
     {
-      title: 'Add Date',
+      title: 'Date',
       dataIndex: 'createdAt',
       key: 'createdAt',
-      align: 'center',
+      align: 'center'
     },
     {
       title: 'Action',
@@ -191,20 +201,17 @@ const Assets = () => {
       dataIndex: 'operation',
       key: 'operation',
       render: (_, record) => {
-        const editable = isEditing(record);
+        const editable = isEditing(record)
 
         return (
           <div>
             {editable ? (
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Space>
-                  <Popconfirm
-                    title='Sure to save edit?'
-                    onConfirm={() => save(record.key)}
-                  >
+                  <Popconfirm title="Sure to save edit?" onConfirm={() => save(record.key)}>
                     <Button
                       style={{
-                        marginRight: 8,
+                        marginRight: 8
                       }}
                     >
                       Save
@@ -217,30 +224,24 @@ const Assets = () => {
             ) : (
               <div style={{ display: 'flex', justifyContent: 'center' }}>
                 <Space>
-                  <Button
-                    disabled={editingKey !== ''}
-                    onClick={() => edit(record)}
-                  >
+                  <Button disabled={editingKey !== ''} onClick={() => edit(record)}>
                     Edit
                   </Button>
-                  <Popconfirm
-                    title='Sure to delete?'
-                    onConfirm={() => handleDelete(record.id)}
-                  >
+                  <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.id)}>
                     <Button>Delete</Button>
                   </Popconfirm>
                 </Space>
               </div>
             )}
           </div>
-        );
-      },
-    },
-  ];
+        )
+      }
+    }
+  ]
 
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
-      return col;
+      return col
     }
     return {
       ...col,
@@ -249,16 +250,16 @@ const Assets = () => {
         inputType: col.dataIndex === 'age' ? 'number' : 'text',
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record),
-      }),
-    };
-  });
+        editing: isEditing(record)
+      })
+    }
+  })
 
-  const total = data?.meta.pagination.total;
-  const PageSize = data?.meta.pagination.pageSize;
+  const total = data?.meta.pagination.total
+  const PageSize = data?.meta.pagination.pageSize
 
   if (isLoading) {
-    return <h1>loading</h1>;
+    return <h1>loading</h1>
   }
 
   return (
@@ -270,7 +271,7 @@ const Assets = () => {
             <Button
               onClick={() => refetch()}
               style={{ borderRadius: '5px', textAlign: 'left' }}
-              type='primary'
+              type="primary"
               size={'large'}
             >
               Refresh
@@ -281,21 +282,21 @@ const Assets = () => {
       <div style={{ overflow: 'auto' }}>
         <Search
           style={{ width: '40%' }}
-          placeholder='Search By Serial and EmployeeId'
+          placeholder="Search By Serial and EmployeeId"
           onSearch={(value) => {
-            setSearch({ ...search, value: value });
+            setSearch({ ...search, value: value })
           }}
         />
         <Select
           style={{ width: 150 }}
-          placeholder='Select for search'
+          placeholder="Select for search"
           options={[
             { value: 'id', label: 'Employee Id' },
             { value: 'name', label: 'Employee Name' },
-            { value: 'serial', label: 'Serial' },
+            { value: 'serial', label: 'Serial' }
           ]}
           onSelect={(value) => {
-            setSearch({ ...search, selected: value });
+            setSearch({ ...search, selected: value })
           }}
         />
 
@@ -308,14 +309,14 @@ const Assets = () => {
           setCurrentPage={setCurrentPage}
           components={{
             body: {
-              cell: EditableCell,
-            },
+              cell: EditableCell
+            }
           }}
           columns={mergedColumns}
         />
       </div>
     </ContextProvider>
-  );
-};
+  )
+}
 
-export default Assets;
+export default Assets

@@ -84,6 +84,20 @@ const ReportsTable = ({ data, isLoading, setValues, pdfRef, value, isFetching })
       align: 'center'
     },
     {
+      title: 'EXTENSION',
+      dataIndex: 'Extension',
+      key: 'Extension',
+      align: 'center',
+      editable: true
+    },
+    {
+      title: 'MOBILE',
+      dataIndex: 'Mobile',
+      key: 'Mobile',
+      align: 'center',
+      editable: true
+    },
+    {
       title: 'BUILDING',
       dataIndex: 'Building',
       key: 'Building',
