@@ -11,6 +11,17 @@ const RequestAssetDataForm = () => {
   const { Option } = Select
   const [value, setValues] = useState('')
 
+  const getSelected = (value) => {
+    if (value.selected === 'Building') {
+      return value.text
+    }
+
+    if (value.selected === 'Floor') {
+      return value.Building
+    }
+    return ''
+  }
+
   const checkLength =
     value.text?.length > 5
       ? {
@@ -33,7 +44,7 @@ const RequestAssetDataForm = () => {
         $eq: value.selected === 'Dropped' ? true : false
       },
       Building: {
-        $eq: value.selected === 'Building' ? value.text : ''
+        $eq: getSelected(value)
       },
       Office: {
         $contains: value.selected === 'Office' ? value.text : ''
@@ -185,6 +196,29 @@ const RequestAssetDataForm = () => {
             {value !== 'JobTitle' && value !== 'WorkPlace' && value !== 'ItemName' && value !== 'Dropped' && (
               <Form.Item label="ادخل البيانات" name="text" rules={[{ required: true, message: 'Required!' }]}>
                 <Input />
+              </Form.Item>
+            )}
+            {value === 'Floor' && (
+              <Form.Item
+                label="اختر البيانات"
+                name="Building"
+                rules={[
+                  {
+                    required: value === 'Floor',
+                    message: 'Required!'
+                  }
+                ]}
+              >
+                <Select
+                  style={{ marginBottom: '10px', display: 'block' }}
+                  showSearch
+                  allowClear
+                  placeholder="Select a Building"
+                  optionFilterProp="children"
+                >
+                  <Option value={'north'}>{'north'}</Option>
+                  <Option value={'south'}>{'south'}</Option>
+                </Select>
               </Form.Item>
             )}
             {value === 'JobTitle' && (
