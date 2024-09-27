@@ -194,13 +194,13 @@ const RequestAssetDataForm = () => {
               </Select>
             </Form.Item>
             {value !== 'JobTitle' && value !== 'WorkPlace' && value !== 'ItemName' && value !== 'Dropped' && (
-              <Form.Item label="ادخل البيانات" name="text" rules={[{ required: true, message: 'Required!' }]}>
+              <Form.Item label={`Enter ${value}`} name="text" rules={[{ required: true, message: 'Required!' }]}>
                 <Input />
               </Form.Item>
             )}
             {value === 'Floor' && (
               <Form.Item
-                label="اختر البيانات"
+                label=" Select Building"
                 name="Building"
                 rules={[
                   {
