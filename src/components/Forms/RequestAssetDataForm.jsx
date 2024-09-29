@@ -216,8 +216,8 @@ const RequestAssetDataForm = () => {
                   placeholder="Select a Building"
                   optionFilterProp="children"
                 >
-                  <Option value={'north'}>{'north'}</Option>
-                  <Option value={'south'}>{'south'}</Option>
+                  <Option value={'North'}>{'North'}</Option>
+                  <Option value={'South'}>{'South'}</Option>
                 </Select>
               </Form.Item>
             )}

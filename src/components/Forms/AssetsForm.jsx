@@ -126,8 +126,8 @@ const AssetsForm = () => {
                 placeholder="Select a person"
                 optionFilterProp="children"
               >
-                <Option value={'north'}>{'north'}</Option>
-                <Option value={'south'}>{'south'}</Option>
+                <Option value={' North'}>{'north'}</Option>
+                <Option value={'South'}>{'south'}</Option>
               </Select>
             </Form.Item>
           </Col>
