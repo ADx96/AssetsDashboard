@@ -153,14 +153,14 @@ const Assets = () => {
       dataIndex: 'Extension',
       key: 'Extension',
       align: 'center',
-      editable: true
+      editable: false
     },
     {
       title: 'MOBILE',
       dataIndex: 'Mobile',
       key: 'Mobile',
       align: 'center',
-      editable: true
+      editable: false
     },
     {
       title: 'BUILDING',
