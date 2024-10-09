@@ -1,5 +1,5 @@
 import React, { createRef, useContext } from 'react'
-import { Col, Row, Form, Space, Button, message, Input } from 'antd'
+import { Col, Row, Form, Space, Button, message, Input, Select } from 'antd'
 
 import { useCreateEmployeeMutation } from '../../Redux/Api/EmployeesApi'
 import ModalContext from '../../Hooks/ContextProvider'
@@ -7,6 +7,31 @@ import ModalContext from '../../Hooks/ContextProvider'
 const EmployeeForm = () => {
   const formRef = createRef()
   const { setModal } = useContext(ModalContext)
+  const { Option } = Select
+  const workPlaces = [
+    'عميد كلية التربية',
+    'قسم شئون العاملين',
+    'قسم الخدمات والمتابعة',
+    'قسم المناهج وطرق التدريس',
+    'قسم علم النفس التربوي',
+    'قسم الإدارة والتخطيط التربوي',
+    'قسم أصول التربية',
+    'قسم تكنولوجيا المعلومات',
+    'قسم خدمة أعضاء هيئة التدريس',
+    'العميد المساعد للشئون الأكاديمية والأبحاث والدراسات العليا',
+    'ط والاستشارات والتدريب العميد المساعد للتخطي',
+    'العميد المساعد للشئون الطلابية',
+    'مكتب الاستشارات والتدريب',
+    'مكتب التوجيه والارشا',
+    'قسم الشئون المالية',
+    'مركز التربية العملية',
+    'مركز تطوير التعليم',
+    'قسم الوسائل التعليمية',
+    'الإنجليزية وحدة اللغة',
+    'وحدة الإرشاد النفسي',
+    'المدير الإداري',
+    'مكتب مراقب كلية التربية'
+  ]
 
   const { success } = message
   const [createEmployee] = useCreateEmployeeMutation()
@@ -54,9 +79,20 @@ const EmployeeForm = () => {
             <Form.Item
               label="Work Place"
               name="WorkPlace"
-              rules={[{ required: true, message: 'JobTitle is Required!' }]}
+              rules={[{ required: true, message: 'WorkPlace is Required!' }]}
             >
-              <Input style={{ marginBottom: '10px' }} placeholder="Basic usage" />
+              <Select
+                style={{ marginBottom: '10px', display: 'block' }}
+                showSearch
+                allowClear
+                placeholder="Select a WorkPlace"
+              >
+                {workPlaces.map((data, index) => (
+                  <Option key={index} value={data}>
+                    {data}
+                  </Option>
+                ))}
+              </Select>
             </Form.Item>
           </Col>
 

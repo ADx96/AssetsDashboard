@@ -63,6 +63,8 @@ const Employees = () => {
     form.setFieldsValue({
       EmployeeId: record.EmployeeId,
       Name: record.Name,
+      Mobile: record.Mobile,
+      Extension: record.Extension,
       JobTitle: record.JobTitle,
       WorkPlace: record.WorkPlace
     })
