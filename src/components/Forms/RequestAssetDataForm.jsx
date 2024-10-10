@@ -4,6 +4,7 @@ import ReportsTable from '../ReportsTable'
 import ReportsExport from '../dashboard/ReportsExport'
 import { useGetAssetsQuery } from '../../Redux/Api/AssetsApi'
 import qs from 'qs'
+import { workPlaces } from './helpers'
 
 const RequestAssetDataForm = () => {
   const pdfRef = useRef(null)
@@ -102,11 +103,6 @@ const RequestAssetDataForm = () => {
     return newData
   })
 
-  const WorkPlace = data?.data?.map((data) => {
-    const newData = data?.attributes?.employee?.data?.attributes.WorkPlace
-    return newData
-  })
-
   const itemName = data.data.map((data) => {
     const newData = data?.attributes.ItemName
     return newData
@@ -120,13 +116,7 @@ const RequestAssetDataForm = () => {
     .filter((value) => value !== undefined)
     .map((item) => item.replace(/\t/g, '').trim())
 
-  const newWorkPlace = [...new Set(WorkPlace)]
-    .filter((value) => value !== undefined)
-    .map((item) => item.replace(/\t/g, '').trim())
-
   const removeDuplicatedItem = [...new Set(newItemName)]
-
-  const removeDuplicatedWorkplace = [...new Set(newWorkPlace)]
 
   const removeDuplicatedJobTitle = [...new Set(newJobTitle)]
 
@@ -142,7 +132,7 @@ const RequestAssetDataForm = () => {
 
   return (
     <>
-      {value.text || value.JobTitle || value.WorkPlace || value.ItemName || value.Dropped ? (
+      {value.text || value.JobTitle || value.ItemName || value.Dropped ? (
         <div style={{ overflow: 'auto' }}>
           <ReportsTable
             data={data}
@@ -193,11 +183,60 @@ const RequestAssetDataForm = () => {
                 <Option value={'Dropped'}>Dropped Assets</Option>
               </Select>
             </Form.Item>
-            {value !== 'JobTitle' && value !== 'WorkPlace' && value !== 'ItemName' && value !== 'Dropped' && (
-              <Form.Item label={`Enter ${value}`} name="text" rules={[{ required: true, message: 'Required!' }]}>
-                <Input />
+
+            {value === 'Building' && (
+              <Form.Item
+                label=" Select Building"
+                name="Building"
+                rules={[
+                  {
+                    required: value === 'Floor',
+                    message: 'Required!'
+                  }
+                ]}
+              >
+                <Select
+                  style={{ marginBottom: '10px', display: 'block' }}
+                  showSearch
+                  allowClear
+                  placeholder="Select a Building"
+                  optionFilterProp="children"
+                >
+                  <Option value={'North'}>{'North'}</Option>
+                  <Option value={'South'}>{'South'}</Option>
+                </Select>
               </Form.Item>
             )}
+
+            {value === 'WorkPlace' && (
+              <Form.Item
+                label="Work Place"
+                name="WorkPlace"
+                rules={[{ required: true, message: 'WorkPlace is Required!' }]}
+              >
+                <Select
+                  style={{ marginBottom: '10px', display: 'block' }}
+                  showSearch
+                  allowClear
+                  placeholder="Select a WorkPlace"
+                >
+                  {workPlaces.map((data, index) => (
+                    <Option key={index} value={data}>
+                      {data}
+                    </Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            )}
+            {value !== 'JobTitle' &&
+              value !== 'WorkPlace' &&
+              value !== 'ItemName' &&
+              value !== 'Dropped' &&
+              value !== 'Building' && (
+                <Form.Item label={`Enter ${value}`} name="text" rules={[{ required: true, message: 'Required!' }]}>
+                  <Input />
+                </Form.Item>
+              )}
             {value === 'Floor' && (
               <Form.Item
                 label=" Select Building"
@@ -244,7 +283,7 @@ const RequestAssetDataForm = () => {
                 </Select>
               </Form.Item>
             )}
-            {(value === 'WorkPlace' || value === 'JobTitle' || value === 'ItemName') && (
+            {(value === 'JobTitle' || value === 'ItemName') && (
               <Form.Item
                 label="اختر البيانات"
                 name="ItemName"
@@ -266,29 +305,6 @@ const RequestAssetDataForm = () => {
                     <>loading...</>
                   ) : (
                     removeDuplicatedItem?.map((data, index) => {
-                      return (
-                        <Option value={data} key={index}>
-                          {data}
-                        </Option>
-                      )
-                    })
-                  )}
-                </Select>
-              </Form.Item>
-            )}
-            {value === 'WorkPlace' && (
-              <Form.Item label="اختر البيانات" name="WorkPlace" rules={[{ required: true, message: 'Required!' }]}>
-                <Select
-                  style={{ marginBottom: '10px', display: 'block' }}
-                  showSearch
-                  allowClear
-                  placeholder="Select a WorkPlace"
-                  optionFilterProp="children"
-                >
-                  {isLoading ? (
-                    <>loading...</>
-                  ) : (
-                    removeDuplicatedWorkplace?.map((data, index) => {
                       return (
                         <Option value={data} key={index}>
                           {data}
