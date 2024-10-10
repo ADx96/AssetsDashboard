@@ -3,35 +3,12 @@ import { Col, Row, Form, Space, Button, message, Input, Select } from 'antd'
 
 import { useCreateEmployeeMutation } from '../../Redux/Api/EmployeesApi'
 import ModalContext from '../../Hooks/ContextProvider'
+import { workPlaces } from './helpers'
 
 const EmployeeForm = () => {
   const formRef = createRef()
   const { setModal } = useContext(ModalContext)
   const { Option } = Select
-  const workPlaces = [
-    'عميد كلية التربية',
-    'قسم شئون العاملين',
-    'قسم الخدمات والمتابعة',
-    'قسم المناهج وطرق التدريس',
-    'قسم علم النفس التربوي',
-    'قسم الإدارة والتخطيط التربوي',
-    'قسم أصول التربية',
-    'قسم تكنولوجيا المعلومات',
-    'قسم خدمة أعضاء هيئة التدريس',
-    'العميد المساعد للشئون الأكاديمية والأبحاث والدراسات العليا',
-    'ط والاستشارات والتدريب العميد المساعد للتخطي',
-    'العميد المساعد للشئون الطلابية',
-    'مكتب الاستشارات والتدريب',
-    'مكتب التوجيه والارشا',
-    'قسم الشئون المالية',
-    'مركز التربية العملية',
-    'مركز تطوير التعليم',
-    'قسم الوسائل التعليمية',
-    'الإنجليزية وحدة اللغة',
-    'وحدة الإرشاد النفسي',
-    'المدير الإداري',
-    'مكتب مراقب كلية التربية'
-  ]
 
   const { success } = message
   const [createEmployee] = useCreateEmployeeMutation()
